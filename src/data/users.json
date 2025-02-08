@@ -1,0 +1,4 @@
+{
+    "john": { "name": "John Doe", "email": "john@example.com", "joinedDate": "2022-01-01", "avatar": "/john.png" },
+    "jane": { "name": "Jane Smith", "email": "jane@example.com", "joinedDate": "2023-05-10", "avatar": "/jane.png" }
+  }
