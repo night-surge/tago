@@ -1,4 +1,17 @@
 {
-    "john": { "name": "John Doe", "email": "john@example.com", "joinedDate": "2022-01-01", "avatar": "/john.png" },
-    "jane": { "name": "Jane Smith", "email": "jane@example.com", "joinedDate": "2023-05-10", "avatar": "/jane.png" }
+  "john123": {
+    "name": "John Doe",
+    "links": [
+      "https://twitter.com/johndoe",
+      "https://github.com/johndoe",
+      "https://linkedin.com/in/johndoe"
+    ]
+  },
+  "jane456": {
+    "name": "Jane Smith",
+    "links": [
+      "https://instagram.com/janesmith",
+      "https://portfolio.janesmith.com"
+    ]
   }
+}
