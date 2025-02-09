@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { 
   ExternalLink, 
   Github, 
@@ -19,16 +18,8 @@ type UserData = {
   links: string[];
 };
 
-interface LinksPageClientProps {
+interface LinksPageProps {
   initialData: UserData;
-}
-
-async function getUserProfile(user_name: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; 
-  const res = await fetch(`${baseUrl}/api/user/${user_name}`, { cache: "no-store" });
-  if (!res.ok) return null;
-  
-  return res.json();
 }
 
 const getIconForURL = (url: string) => {
@@ -66,88 +57,34 @@ const getPlatformName = (url: string): string => {
   }
 };
 
-function LinksPageClient({ initialData }: LinksPageClientProps) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+function LinksPage({ initialData }: LinksPageProps) {
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden" ref={containerRef}>
-      {/* Animated background patterns */}
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <div className="fixed inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white/10 rounded-full animate-float"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${10 + Math.random() * 10}s`
-              }}
-            />
-          ))}
-        </div>
       </div>
-
-      <div 
-        className="pointer-events-none fixed inset-0 z-10 transition duration-300"
-        style={{
-          background: `
-            radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, 
-            rgba(124,58,237,0.1), 
-            transparent 40%),
-            radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, 
-            rgba(236,72,153,0.05), 
-            transparent 40%)
-          `
-        }}
-      />
 
       <div className="max-w-3xl mx-auto px-4 py-16 space-y-12 relative z-20">
         <div className="text-center space-y-8">
-          <div className="relative inline-block animate-bounce-slow">
-            <div className="absolute inset-0 animate-spin-slow">
-              <Sparkles className="w-8 h-8 text-purple-400/50" />
-            </div>
+          <div className="relative inline-block">
+            <Sparkles className="w-8 h-8 text-purple-400/50" />
           </div>
 
           <h1 className="text-7xl sm:text-8xl font-bold tracking-tight">
             <span className="relative">
-              <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-purple-600/20 to-pink-600/20 animate-pulse" />
-              <span className="relative bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 text-transparent bg-clip-text animate-gradient-x">
+              <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-purple-600/20 to-pink-600/20" />
+              <span className="relative bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 text-transparent bg-clip-text">
                 {initialData.name}
               </span>
             </span>
           </h1>
           
           <div className="relative h-px w-32 mx-auto overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 perspective-1000">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {initialData.links.map((link, index) => {
             const Icon = getIconForURL(link);
             const brandColor = getBrandColor(link);
@@ -157,11 +94,7 @@ function LinksPageClient({ initialData }: LinksPageClientProps) {
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block transform-gpu transition-all duration-700"
-                style={{
-                  animation: `fadeSlideIn 0.5s ease-out ${index * 0.1}s both`,
-                  transform: `translateZ(${scrollPosition * 0.1}px) rotateX(${scrollPosition * 0.02}deg)`
-                }}
+                className="group block"
               >
                 <div className="relative p-6 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
                   <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl" />
@@ -202,92 +135,24 @@ function LinksPageClient({ initialData }: LinksPageClientProps) {
           })}
         </div>
       </div>
-
-      <style jsx global>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.98);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        @keyframes gradient-x {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-
-        @keyframes gradient-shift {
-          0% { opacity: 0.5; }
-          50% { opacity: 1; }
-          100% { opacity: 0.5; }
-        }
-
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        @keyframes spin-slow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-
-        .animate-gradient-x {
-          animation: gradient-x 15s linear infinite;
-          background-size: 200% auto;
-        }
-
-        .animate-shimmer {
-          animation: shimmer 2s linear infinite;
-        }
-
-        .animate-float {
-          animation: float 15s ease infinite;
-        }
-
-        .animate-gradient-shift {
-          animation: gradient-shift 3s ease-in-out infinite;
-        }
-
-        .animate-bounce-slow {
-          animation: bounce-slow 2s ease-in-out infinite;
-        }
-
-        .animate-spin-slow {
-          animation: spin-slow 4s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }
 
-// Main page component (Server Component)
-// app/[user_name]/page.tsx
+async function getUserProfile(user_name: string) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; 
+  const res = await fetch(`${baseUrl}/api/user/${user_name}`, { cache: "no-store" });
+  if (!res.ok) return null;
+  return res.json();
+}
+
 export default async function ProfilePage({ 
   params 
 }: { 
   params: { user_name: string } 
 }) {
-  const user = await getUserProfile(params.user_name);
+  const {user_name} = await params;
+  const user = await getUserProfile(user_name);
   
   if (!user) {
     return (
@@ -300,5 +165,5 @@ export default async function ProfilePage({
     );
   }
 
-  return <LinksPageClient initialData={user} />;
+  return <LinksPage initialData={user} />;
 }
