@@ -15,9 +15,10 @@ model User {
   userId        String   @unique
   userName      String
   links         String[]
-  profilePicture String?
+  profilePicture String @default("https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg")
   email         String   @unique
   password      String
+  isVerified    Boolean   @default(false)
 
   @@map("users") // This maps the model to a table named "users" in the database
   

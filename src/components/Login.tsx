@@ -18,7 +18,7 @@ const Login = () => {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData);
       
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
