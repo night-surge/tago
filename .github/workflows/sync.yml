@@ -1,4 +1,4 @@
-name: Sync Repositories
+name: Sync Repositories prod (main)
 
 on:
   # Remove automatic trigger on push
