@@ -1,10 +1,10 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import Navbar from "../components/Navbar";
-import BackgroundGrid from "../components/BackgroundGrid";
-import akIMG from "../assets/ak_bento.jpg";
+import Navbar from "../../components/Navbar";
+import BackgroundGrid from "../../components/BackgroundGrid";
+import akIMG from "@/assets/ak_bento.jpg";
 // import nilayIMG from "../assets/nilay.jpg";
-import saranshIMG from "../assets/saransh.jpg";
+import saranshIMG from "@/assets/saransh.jpg";
 
 type TeamMember = {
   name: string;

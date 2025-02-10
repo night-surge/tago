@@ -9,17 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",
+    "mongoose": "^8.10.0",
     "motion": "^12.4.1",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-element-to-jsx-string": "^17.0.0",
+    "tago": "file:",
     "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -4,7 +4,12 @@
 
 @font-face {
   font-family: 'MighaMedium';
-  src: url('./assets/Migha-Medium.otf') format('opentype');
+  src: url('../assets/Migha-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'MighaBold';
+  src: url('../assets/Migha-Bold.otf') format('opentype');
 }
 
 @layer utilities {
