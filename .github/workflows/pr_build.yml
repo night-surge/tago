@@ -1,10 +1,15 @@
 name: Next.js Build
 
 on:
-  pull_request:
+  push:
     branches:
       - main
       - develop
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   build:
@@ -23,8 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-
 
       - name: Build Next.js app
         run: npm run build
