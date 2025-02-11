@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import BackgroundGrid from './BackgroundGrid';
 import PasswordInput from './PasswordInput';
 
@@ -28,6 +29,7 @@ const Login = () => {
         }
         setIsLoading(false);
       } catch (err) {
+        console.error('Auth check failed:', err);
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         setIsLoading(false);
@@ -131,17 +133,16 @@ const Login = () => {
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
-
           <div className="text-center">
-            <a
+            <Link
               href="/signup"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
             >
-              Don't have an account? Sign up
-            </a>
+              Don&apos;t have an account? Sign up
+            </Link>
+          </div>
           </div>
         </div>
-      </div>
     </BackgroundGrid> 
   );
 };

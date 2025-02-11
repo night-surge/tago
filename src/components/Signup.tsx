@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import axios from "axios";
 import BackgroundGrid from "./BackgroundGrid";
 import PasswordInput from "./PasswordInput";
@@ -34,13 +35,14 @@ const Signup = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       router.push(`/verify-email?email=${encodeURIComponent(userEmail)}`);
-        } catch (err: any) {
-      if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError("Something went wrong. Please try again.");
-      }
-    } finally {
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Something went wrong. Please try again.");
+          }
+        }
+         finally {
       setIsLoading(false);
     }
   };
@@ -145,16 +147,14 @@ const Signup = () => {
             </button>
           </form>
 
-          <div className="text-center">
-            <a
+            <Link
               href="/login"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
             >
               Already have an account? Sign in
-            </a>
+            </Link>            
           </div>
         </div>
-      </div>
     </BackgroundGrid>
   );
 };
