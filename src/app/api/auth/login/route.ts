@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/mongodb';
-import User from '@/models/user';
+import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-
+import bcrypt from 'bcryptjs';
 
 dotenv.config();
 
+const prisma = new PrismaClient();
 const jwtSecret: string = process.env.JWT_SECRET as string;
 
 if (!process.env.JWT_SECRET) {
@@ -15,8 +15,6 @@ if (!process.env.JWT_SECRET) {
 
 export async function POST(req: Request) {
   try {
-    await connectDB();
-
     // Parse the request body
     const body = await req.json();
     const { identifier, password } = body;
@@ -30,11 +28,13 @@ export async function POST(req: Request) {
     }
 
     // Find user by username or email
-    const user = await User.findOne({
-      $or: [
-        { username: identifier },
-        { email: identifier.toLowerCase() }
-      ]
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { userName: identifier },
+          { email: identifier.toLowerCase() }
+        ]
+      }
     });
 
     if (!user) {
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     }
 
     // Verify password
-    const isMatch = await user.comparePassword(password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
         { message: 'Invalid credentials' },
@@ -55,19 +55,18 @@ export async function POST(req: Request) {
 
     // Create JWT token
     const token = jwt.sign(
-      { userId: user._id },
+      { userId: user.uid },
       jwtSecret,
       { expiresIn: '7d' }
     );
 
     // Remove password from response
-    const userResponse = user.toObject();
-    delete userResponse.password;
 
+    user.password = " ";
     return NextResponse.json(
       {
         message: 'Login successful',
-        user: userResponse,
+        user: user,
         token
       },
       { status: 200 }
@@ -79,5 +78,7 @@ export async function POST(req: Request) {
       { message: 'Error logging in' },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
