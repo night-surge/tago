@@ -17,6 +17,7 @@ export default {
       },
       fontFamily: {
         MighaHeading: ["MighaMedium", "sans-serif"],
+        MighaBold: ["MighaBold", "sans-serif"],
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",

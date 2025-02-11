@@ -1,0 +1,10 @@
+Method: PATCH
+URL: http://localhost:3000/api/user
+Headers:
+  - Authorization: Bearer your_jwt_token_here
+
+Body (raw JSON):
+{
+    "oldLink": "https://example.com",
+    "newLink": "https://updated-example.com"
+}
