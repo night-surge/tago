@@ -1,0 +1,56 @@
+name: ESLint
+
+on:
+  # For src directory changes in main
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/**'
+  # For all changes in PRs
+  pull_request:
+    branches: [ "main", "develop" ]
+
+jobs:
+  eslint-src:
+    name: Lint src directory
+    # Only run this job for pushes to main that touch src/
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install ESLint
+        run: |
+          npm install eslint@8.10.0
+          npm install @microsoft/eslint-formatter-sarif@3.1.0
+      - name: Run ESLint on src directory
+        env:
+          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
+        run: npx eslint src/
+        continue-on-error: true
+
+  eslint-full:
+    name: Lint entire repository
+    # Only run this job for pull requests
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install ESLint
+        run: |
+          npm install eslint@8.10.0
+          npm install @microsoft/eslint-formatter-sarif@3.1.0
+      - name: Run ESLint on entire repository
+        env:
+          SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
+        run: npx eslint .
+        continue-on-error: true
