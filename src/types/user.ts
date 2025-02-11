@@ -1,5 +1,4 @@
 import { Prisma } from "@prisma/client";
-import { i } from "motion/react-client";
 
 export type User = {
   uid: number;

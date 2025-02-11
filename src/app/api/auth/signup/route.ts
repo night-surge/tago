@@ -122,13 +122,14 @@ export async function POST(req: Request) {
     );
 
     // Remove password from response
-    const { password: _, ...userResponse } = user;
+    user.password = " ";
+
 
     return NextResponse.json(
       {
         message: 'User created successfully. Please check your email for verification.',
         token,
-        user: userResponse
+        user: user
       },
       { status: 201 }
     );

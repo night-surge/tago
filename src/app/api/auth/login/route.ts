@@ -61,12 +61,12 @@ export async function POST(req: Request) {
     );
 
     // Remove password from response
-    const { password: _, ...userResponse } = user;
 
+    user.password = " ";
     return NextResponse.json(
       {
         message: 'Login successful',
-        user: userResponse,
+        user: user,
         token
       },
       { status: 200 }

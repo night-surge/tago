@@ -8,6 +8,14 @@ interface VerifyResponse {
   message: string;
 }
 
+interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 type VerificationStatus = 'initial' | 'loading' | 'success' | 'error' | 'resending' | 'redirecting';
 
 const VerifyEmail = () => {
@@ -43,9 +51,10 @@ const VerifyEmail = () => {
           setTimeout(() => {
             router.push('/login');
           }, 3000);
-        } catch (error: any) {
+        } catch (error) {
+          const apiError = error as ApiError;
           setStatus('error');
-          setMessage(error.response?.data?.message || 'Failed to verify email. Please try again.');
+          setMessage(apiError.response?.data?.message || 'Failed to verify email. Please try again.');
         }
       };
 
@@ -58,7 +67,7 @@ const VerifyEmail = () => {
 
     setStatus('resending');
     try {
-      const response = await axios.post<VerifyResponse>(
+      await axios.post<VerifyResponse>(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/resend-verification`,
         { email }
       );
@@ -76,9 +85,10 @@ const VerifyEmail = () => {
           return current - 1;
         });
       }, 1000);
-    } catch (error: any) {
+    } catch (error) {
+      const apiError = error as ApiError;
       setStatus('error');
-      setMessage(error.response?.data?.message || 'Failed to resend verification email.');
+      setMessage(apiError.response?.data?.message || 'Failed to resend verification email.');
     }
   };
 
