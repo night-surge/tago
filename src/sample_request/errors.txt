@@ -1,0 +1,19 @@
+// Authentication error (401)
+{
+    "error": "Invalid token"
+}
+
+//  Validation error (400)
+{
+    "error": "Invalid link format"
+}
+
+// Not found error (404)
+{
+    "error": "User not found"
+}
+
+// Rate limit error (401)
+{
+    "error": "Rate limit exceeded"
+}

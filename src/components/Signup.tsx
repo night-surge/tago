@@ -18,6 +18,7 @@ const Signup = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const data: Record<string, string> = Object.fromEntries(formData) as Record<string, string>;
+      const userEmail = data.email;
 
       interface SignupResponse {
         message: string;
@@ -32,8 +33,8 @@ const Signup = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      router.push(`/verify-email`);
-    } catch (err: any) {
+      router.push(`/verify-email?email=${encodeURIComponent(userEmail)}`);
+        } catch (err: any) {
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
