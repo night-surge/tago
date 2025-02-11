@@ -43,12 +43,15 @@ async function authenticateRequest(request: NextRequest) {
   }
 }
 
-// GET /api/links - Get all links for a user
+// GET /api/links - Get all links and theme for a user
 export async function GET(request: NextRequest) {
   try {
     const user = await authenticateRequest(request);
-
-    return NextResponse.json({ links: user.links });
+    
+    return NextResponse.json({
+      links: user.links,
+      theme: user.theme
+    });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Server error' },
@@ -57,11 +60,33 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/links - Add a new link
+// POST /api/links - Add a new link or update theme
 export async function POST(request: NextRequest) {
   try {
     const user = await authenticateRequest(request);
-    const { link } = await request.json();
+    const body = await request.json();
+
+    // Handle theme update
+    if ('theme' in body) {
+      const { theme } = body;
+      
+      if (typeof theme !== 'number' || theme < 1) {
+        return NextResponse.json({ error: 'Invalid theme value' }, { status: 400 });
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: { uid: user.uid },
+        data: { theme }
+      });
+
+      return NextResponse.json({
+        message: 'Theme updated successfully',
+        theme: updatedUser.theme
+      });
+    }
+
+    // Handle adding new link
+    const { link } = body;
 
     if (!link || typeof link !== 'string') {
       return NextResponse.json({ error: 'Invalid link format' }, { status: 400 });
@@ -98,8 +123,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PATCH /api/links - Update a link
-export async function PATCH(request: NextRequest) {
+// PUT /api/links - Update a link
+export async function PUT(request: NextRequest) {
   try {
     const user = await authenticateRequest(request);
     const { oldLink, newLink } = await request.json();

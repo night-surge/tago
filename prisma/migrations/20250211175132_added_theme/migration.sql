@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "users" ADD COLUMN     "theme" INTEGER NOT NULL DEFAULT 1;
