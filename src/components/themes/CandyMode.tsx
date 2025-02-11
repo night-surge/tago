@@ -17,7 +17,7 @@ import {
 const LinksPageDemo = () => {
   const initialData = {
     name: "Ayush Katare",
-    interests: "ML Enthusiast | Coder | Swiftie",
+    // interests: "ML Enthusiast | Coder | Swiftie",
     tagline: "Full-stack developer & creative coder",
     links: [
       "https://github.com/Anousha-Singh",
@@ -71,7 +71,7 @@ const LinksPageDemo = () => {
         <div className="absolute inset-0 bg-[linear-gradient(45deg,#FFB6C133_1px,transparent_1px),linear-gradient(-45deg,#FFB6C133_1px,transparent_1px)] bg-[size:20px_20px]" />
       </div>
 
-      <div className="max-w-3xl mx-auto px-8 py-10 space-y-10 relative z-20">
+      <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
           <div className="relative mx-auto w-40 h-40 mb-6">
@@ -95,13 +95,13 @@ const LinksPageDemo = () => {
               </span>
             </h1>
 
-            <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
               <div className="px-4 py-1.5 rounded-full bg-white/80 border-2 border-pink-400 shadow-md">
                 <p className="text-xs font-medium bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
                   {initialData.interests}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <p className="text-m sm:text-2xl text-gray-700 font-medium tracking-wide">
               {initialData.tagline}

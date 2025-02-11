@@ -9,12 +9,11 @@ import DashMode from "@/components/themes/DashMode";
 export default function home() {
   return (
     <>
-    {/* <BackgroundGrid>
+    <BackgroundGrid>
       <Navbar />
       <PhotoCarousel scrollSpeed={1} />
       <Hero />
-    </BackgroundGrid> */}
-    <DashMode/>
+    </BackgroundGrid>
     </>
   );
 }

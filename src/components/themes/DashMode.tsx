@@ -16,7 +16,7 @@ import {
 const DashMode= () => {
   const initialData = {
     name: "Ayush Katare",
-    interests: "ML Enthusiast | Coder | Swiftie",
+    // interests: "ML Enthusiast | Coder | Swiftie",
     tagline: "Full-stack developer & creative coder",
     links: [
       "https://github.com/Anousha-Singh",
@@ -70,7 +70,7 @@ const DashMode= () => {
         <div className="absolute inset-0 bg-[linear-gradient(45deg,#F0EAF433_1px,transparent_1px),linear-gradient(-45deg,#F0EAF433_1px,transparent_1px)] bg-[size:24px_24px]" />
       </div>
 
-      <div className="max-w-3xl mx-auto px-8 py-10 space-y-10 relative z-20">
+      <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
           <div className="relative mx-auto w-40 h-40 mb-6">
@@ -94,13 +94,13 @@ const DashMode= () => {
               </span>
             </h1>
 
-            <div className="flex items-center justify-center">
+            {/* <div className="flex items-center justify-center">
               <div className="px-4 py-1.5 rounded-full bg-white/70 border border-slate-200 shadow-sm">
                 <p className="text-xs font-medium text-slate-600">
                   {initialData.interests}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <p className="text-m sm:text-2xl text-slate-600 font-light tracking-wide">
               {initialData.tagline}
