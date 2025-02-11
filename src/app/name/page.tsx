@@ -7,7 +7,7 @@ import three from '@/components/themes/three';
 
 const Page = () => {
   
-  const CurrentTheme = one; 
+  const CurrentTheme = two; 
   // call user
   const user = {
     name: "Ayush Katare",

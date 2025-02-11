@@ -15,19 +15,17 @@ import {
 
 
 
-const two = () => {
-  const initialData = {
-    name: "Ayush Katare",
-    // interests: "ML Enthusiast | Coder | Swiftie",
-    tagline: "Full-stack developer & creative coder",
-    links: [
-      "https://github.com/Anousha-Singh",
-      "https://twitter.com/sarahcodes",
-      "https://linkedin.com/in/sarahparker",
-      "https://instagram.com/sarah.creates",
-      "https://dev.to/sarahp"
-    ]
-  };
+type Props = {
+  user: {
+    name: string;
+    tagline: string;
+    links: string[];
+    picture: string;
+  }
+}
+
+// Type the component with the Props type
+const two = ({user}: Props) => {
 
   const getIconForURL = (url:string) => {
     const domain = url.toLowerCase();
@@ -77,7 +75,7 @@ const two = () => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-20 animate-pulse" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-gray-200/50 shadow-lg">
               <img
-                src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src={user.picture}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -89,7 +87,7 @@ const two = () => {
               <span className="relative">
                 <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF0080] via-[#7928CA] to-[#FF0080] animate-gradient bg-[length:200%_auto]">
-                  {initialData.name}
+                  {user.name}
                 </span>
               </span>
             </h1>
@@ -104,7 +102,7 @@ const two = () => {
 
             {/* Tagline */}
             <p className="text-m sm:text-2xl text-gray-600 font-light tracking-wide">
-              {initialData.tagline}
+              {user.tagline}
             </p>
           </div>
           
@@ -114,7 +112,7 @@ const two = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {initialData.links.map((link, index) => {
+          {user.links.map((link, index) => {
             const Icon = getIconForURL(link);
             const brandColor = getBrandColor(link);
             return (
