@@ -1,13 +1,15 @@
-"use client"
 
 import React from 'react';
 import one from '@/components/themes/one';
 import two from '@/components/themes/two';
 import three from '@/components/themes/three';
+import four from '@/components/themes/four';
+import five from '@/components/themes/five';
+import six from '@/components/themes/six';
 
 const Page = () => {
   
-  const CurrentTheme = two; 
+  const CurrentTheme = one; 
   // call user
   const user = {
     name: "Ayush Katare",
