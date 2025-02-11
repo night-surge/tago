@@ -13,7 +13,7 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const PastelMode= () => {
+const three= () => {
   const initialData = {
     name: "Ayush Katare",
     // interests: "ML Enthusiast | Coder | Swiftie",
@@ -174,4 +174,4 @@ const PastelMode= () => {
   );
 };
 
-export default PastelMode;
+export default three;

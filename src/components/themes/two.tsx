@@ -15,7 +15,7 @@ import {
 
 
 
-const LightMode = () => {
+const two = () => {
   const initialData = {
     name: "Ayush Katare",
     // interests: "ML Enthusiast | Coder | Swiftie",
@@ -178,4 +178,4 @@ const LightMode = () => {
   );
 };
 
-export default LightMode;
+export default two;

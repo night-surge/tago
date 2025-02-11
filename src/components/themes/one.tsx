@@ -14,19 +14,17 @@ import {
   Candy
 } from 'lucide-react';
 
-const CandyMode= () => {
-  const initialData = {
-    name: "Ayush Katare",
-    // interests: "ML Enthusiast | Coder | Swiftie",
-    tagline: "Full-stack developer & creative coder",
-    links: [
-      "https://github.com/Anousha-Singh",
-      "https://twitter.com/sarahcodes",
-      "https://linkedin.com/in/sarahparker",
-      "https://instagram.com/sarah.creates",
-      "https://dev.to/sarahp"
-    ]
-  };
+type Props = {
+  user: {
+    name: string;
+    tagline: string;
+    links: string[];
+    picture: string;
+  }
+}
+
+// Type the component with the Props type
+const one = ({user}: Props) => {
 
   const getIconForURL = (url: string) => {
     const domain = url.toLowerCase();
@@ -78,7 +76,7 @@ const CandyMode= () => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 blur-lg opacity-40 animate-pulse" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-pink-400 shadow-lg">
               <img
-                src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src = {user.picture}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -90,7 +88,7 @@ const CandyMode= () => {
               <span className="relative">
                 <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-pink-500/40 via-purple-500/40 to-blue-500/40" />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 animate-gradient bg-[length:200%_auto]">
-                  {initialData.name}
+                  {user.name}
                 </span>
               </span>
             </h1>
@@ -104,7 +102,7 @@ const CandyMode= () => {
             </div> */}
 
             <p className="text-m sm:text-2xl text-gray-700 font-medium tracking-wide">
-              {initialData.tagline}
+              {user.tagline}
             </p>
           </div>
           
@@ -112,7 +110,7 @@ const CandyMode= () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {initialData.links.map((link, index) => {
+          {user.links.map((link:string, index:number) => {
             const Icon = getIconForURL(link);
             const candyColor = getCandyColor(link);
             return (
@@ -173,4 +171,4 @@ const CandyMode= () => {
   );
 };
 
-export default CandyMode;
+export default one;
