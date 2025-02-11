@@ -3,7 +3,8 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import PhotoCarousel from "../components/Carousel";
 import Home from "../components/themes/LightMode";
-import CandyMode from "@/components/themes/CandyMode";
+import DashMode from "@/components/themes/DashMode";
+// import CandyMode from "@/components/themes/CandyMode";
 
 export default function home() {
   return (
@@ -13,7 +14,7 @@ export default function home() {
       <PhotoCarousel scrollSpeed={1} />
       <Hero />
     </BackgroundGrid> */}
-    <CandyMode/>
+    <DashMode/>
     </>
   );
 }
