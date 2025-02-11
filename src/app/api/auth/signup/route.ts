@@ -35,6 +35,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // todo - min character 8 , min 1 Upper Case Letter , min 1 Number
     // Check password strength
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
@@ -95,6 +96,7 @@ export async function POST(req: Request) {
     const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}`;
     
     // Send verification email
+    // todo - add email template
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -122,7 +124,7 @@ export async function POST(req: Request) {
     );
 
     // Remove password from response
-    user.password = " ";
+    user.password = "_";
 
 
     return NextResponse.json(
