@@ -34,8 +34,12 @@ async function authenticateRequest(request: NextRequest) {
     }
 
     return user;
-  } catch (error) {
-    throw new Error('Authentication failed');
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(`Authentication failed: ${error.message}`);
+    } else {
+      throw new Error('Authentication failed');
+    }
   }
 }
 
