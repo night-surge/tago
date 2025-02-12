@@ -2,8 +2,9 @@ import BackgroundGrid from "../components/BackgroundGrid";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import PhotoCarousel from "../components/Carousel";
+// import CandyMode from "@/components/themes/CandyMode";
 
-export default function Home() {
+export default function home() {
   return (
     <>
     <BackgroundGrid>
@@ -14,5 +15,3 @@ export default function Home() {
     </>
   );
 }
-
-
