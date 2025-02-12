@@ -1,46 +1,48 @@
-"use client"
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import BackgroundGrid from './BackgroundGrid';
-import PasswordInput from './PasswordInput';
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import axios from "axios";
+import BackgroundGrid from "./BackgroundGrid";
+import PasswordInput from "./PasswordInput";
 
 const Signup = () => {
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData);
-      
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      
-      const result = await response.json();
+      const data: Record<string, string> = Object.fromEntries(formData) as Record<string, string>;
+      const userEmail = data.email;
 
-      if (!response.ok) {
-        throw new Error(result.message || 'Error creating account');
+      interface SignupResponse {
+        message: string;
+        token: string;
+        user: { username: string };
       }
 
-      // Store the token
-      localStorage.setItem('token', result.token);
-      // Store user info if needed
-      localStorage.setItem('user', JSON.stringify(result.user));
-      
-      // Redirect (you'll handle the route)
-      router.push(`/${result.user.username}`);
-      
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
-    } finally {
+      const response = await axios.post<SignupResponse>("/api/auth/signup", data, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      router.push(`/verify-email?email=${encodeURIComponent(userEmail)}`);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Something went wrong. Please try again.");
+          }
+        }
+         finally {
       setIsLoading(false);
     }
   };
@@ -62,7 +64,6 @@ const Signup = () => {
           )}
 
           <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Existing form fields... */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-300">
                 Full Name
@@ -142,20 +143,18 @@ const Signup = () => {
                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white
                        transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Creating Account...' : 'Create Account'}
+              {isLoading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 
-          <div className="text-center">
-            <a
+            <Link
               href="/login"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
             >
               Already have an account? Sign in
-            </a>
+            </Link>            
           </div>
         </div>
-      </div>
     </BackgroundGrid>
   );
 };

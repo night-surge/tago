@@ -1,13 +1,43 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import BackgroundGrid from './BackgroundGrid';
 import PasswordInput from './PasswordInput';
 
 const Login = () => {
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+
+        if (token && user) {
+          // Optional: Verify token validity with your backend
+          // const response = await fetch('/api/auth/verify', {
+          //   headers: { Authorization: `Bearer ${token}` }
+          // });
+          // if (response.ok) {
+          const userData = JSON.parse(user);
+          router.push(`/${userData.username}`);
+          return;
+          // }
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Auth check failed:', err);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthStatus();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,7 +48,7 @@ const Login = () => {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData);
       
-      const response = await fetch('/api/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -30,12 +60,9 @@ const Login = () => {
         throw new Error(result.message || 'Invalid credentials');
       }
 
-      // Store the token
       localStorage.setItem('token', result.token);
-      // Store user info if needed
       localStorage.setItem('user', JSON.stringify(result.user));
       
-      // Redirect (you'll handle the route)
       router.push(`/${result.user.username}`);
       
     } catch (err) {
@@ -44,6 +71,16 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <BackgroundGrid>
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="text-white">Loading...</div>
+        </div>
+      </BackgroundGrid>
+    );
+  }
 
   return (
     <BackgroundGrid>
@@ -96,18 +133,17 @@ const Login = () => {
               {isLoading ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
-
           <div className="text-center">
-            <a
+            <Link
               href="/signup"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
             >
-              Don't have an account? Sign up
-            </a>
+              Don&apos;t have an account? Sign up
+            </Link>
+          </div>
           </div>
         </div>
-      </div>
-    </BackgroundGrid>
+    </BackgroundGrid> 
   );
 };
 

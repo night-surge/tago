@@ -1,0 +1,16 @@
+// Get theme
+const response = await fetch('/api/links?type=theme', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+});
+
+// Update theme
+const response = await fetch('/api/links', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ theme: 2 })
+});

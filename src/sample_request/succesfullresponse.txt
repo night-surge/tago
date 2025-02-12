@@ -1,0 +1,22 @@
+// GET response
+{
+    "links": ["https://example1.com", "https://example2.com"]
+}
+
+// POST response
+{
+    "message": "Link added successfully",
+    "links": ["https://example1.com", "https://example2.com"]
+}
+
+// PATCH response
+{
+    "message": "Link updated successfully",
+    "links": ["https://example1.com", "https://updated-example.com"]
+}
+
+// DELETE response
+{
+    "message": "Link deleted successfully",
+    "links": ["https://example1.com"]
+}

@@ -1,0 +1,9 @@
+Header Key: Authorization
+Header Value: Bearer your_jwt_token_here
+
+Method: GET
+URL: http://localhost:3000/api/user
+Headers: 
+  - Authorization: Bearer your_jwt_token_here
+
+No body required
