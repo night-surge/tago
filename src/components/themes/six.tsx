@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image"; 
 import { 
   ExternalLink, 
   Github, 
@@ -145,11 +146,14 @@ const six = ({user}: Props) => {
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-20 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-gray-200/50 shadow-lg">
-                <img
-                  src={user.picture}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                />
+              <Image
+                src={user.picture}
+                alt="Profile"
+                width={144} // 36 * 4 (maximum size in sm breakpoint)
+                height={144}
+                className="w-full h-full object-cover"
+                priority
+              />
               </div>
             </div>
 

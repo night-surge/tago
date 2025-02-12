@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { 
   ExternalLink, 
   Github, 
@@ -140,12 +141,14 @@ const five = ({user}: Props) => {
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] blur-2xl opacity-20 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#4A4A5C] shadow-lg group">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-                <img
-                  src={user.picture}
-                  alt="Profile"
-                  className="w-full h-full object-cover transition-all duration-500"
-                />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+              <Image
+                src={user.picture}
+                alt="Profile"
+                fill
+                sizes="(max-width: 640px) 96px, 144px"
+                className="object-cover transition-all duration-500"
+              />
               </div>
             </div>
 

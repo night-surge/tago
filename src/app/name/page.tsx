@@ -1,19 +1,27 @@
-
 import React from 'react';
-import one from '@/components/themes/one';
-import two from '@/components/themes/two';
-import three from '@/components/themes/three';
-import four from '@/components/themes/four';
-import five from '@/components/themes/five';
-import six from '@/components/themes/six';
+import dynamic from 'next/dynamic';
 
 const Page = () => {
+  // Assuming you get themeId from API (1-9)
+  const themeId = 9; // Replace with your API value
+
+  // Dynamic import based on themeId
+  const themes = {
+    1: dynamic(() => import('@/components/themes/one')),
+    2: dynamic(() => import('@/components/themes/two')),
+    3: dynamic(() => import('@/components/themes/three')),
+    4: dynamic(() => import('@/components/themes/four')),
+    5: dynamic(() => import('@/components/themes/five')),
+    6: dynamic(() => import('@/components/themes/six')),
+    7: dynamic(() => import('@/components/themes/seven')),
+    8: dynamic(() => import('@/components/themes/eight')),
+    9: dynamic(() => import('@/components/themes/nine'))
+  };
+
+  const CurrentTheme = themes[themeId];
   
-  const CurrentTheme = one; 
-  // call user
   const user = {
     name: "Ayush Katare",
-    // interests: "ML Enthusiast | Coder | Swiftie",
     tagline: "Full-stack developer & creative coder",
     links: [
       "https://github.com/sarahparker",
@@ -22,11 +30,11 @@ const Page = () => {
       "https://instagram.com/sarah.creates",
       "https://dev.to/sarahp"
     ],
-    picture:"https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600",
+    picture: "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=600",
   };
 
   return (
-    <CurrentTheme user = {user}/>
+    <CurrentTheme user={user} />
   );
 };
 

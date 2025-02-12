@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { 
   ExternalLink, 
   Github, 
@@ -9,9 +10,7 @@ import {
   Facebook, 
   Link2, 
   Twitch,
-  Globe,
-  Sparkles
-} from 'lucide-react';
+  Globe} from 'lucide-react';
 
 type Props = {
   user: {
@@ -72,16 +71,19 @@ const three = ({user}: Props) => {
       <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
-          <div className="relative mx-auto w-40 h-40 mb-6">
+            <div className="relative mx-auto w-40 h-40 mb-6">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-rose-200 via-slate-200 to-teal-200 blur-lg opacity-30 animate-pulse" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-rose-300 shadow-sm">
-              <img
-                src={user.picture}
-                alt="Profile"
-                className="w-full h-full object-cover"
+              <Image
+              src={user.picture}
+              alt="Profile"
+              width={160}
+              height={160}
+              className="object-cover"
+              priority
               />
             </div>
-          </div>
+            </div>
 
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-8xl font-bold tracking-tight">

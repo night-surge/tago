@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { 
   ExternalLink, 
   Github, 
@@ -129,12 +130,15 @@ const four = ({user}: Props) => {
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-300 to-rose-300 blur-2xl opacity-30 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/30 shadow-lg group">
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-300/30 to-rose-300/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img
-                  src={user.picture}
-                  alt="Profile"
-                  className="w-full h-full object-cover transition-all duration-500"
-                />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-300/30 to-rose-300/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <Image
+                src={user.picture}
+                alt="Profile"
+                width={144} // 36px * 4 (for larger screens)
+                height={144}
+                className="w-full h-full object-cover transition-all duration-500"
+                priority
+              />
               </div>
             </div>
 
