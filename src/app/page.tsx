@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import PhotoCarousel from "../components/Carousel";
 
-export default function home() {
+export default function Home() {
   return (
     <>
     <BackgroundGrid>
@@ -14,3 +14,5 @@ export default function home() {
     </>
   );
 }
+
+

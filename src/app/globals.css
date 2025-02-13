@@ -38,3 +38,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.debug-outline {
+  outline: 2px solid red;
+}

@@ -1,4 +1,3 @@
-// app/api/auth/resend-verification/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -35,7 +34,16 @@ export async function POST(req: Request) {
 
     // Find user by email
     const user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase() }
+      where: { 
+        email: email.toLowerCase() 
+      },
+      select: {
+        uid: true,
+        email: true,
+        userName: true,
+        Name: true,
+        isVerified: true
+      }
     });
 
     if (!user) {
@@ -55,8 +63,9 @@ export async function POST(req: Request) {
     // Generate new verification token
     const verificationToken = jwt.sign(
       { 
-        userId: user.userId,
-        email: user.email
+        uid: user.uid,
+        email: user.email,
+        userName: user.userName
       },
       jwtSecret,
       { expiresIn: '24h' }
@@ -72,7 +81,7 @@ export async function POST(req: Request) {
       subject: 'Verify your email address',
       html: `
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2>Welcome to Our App!</h2>
+          <h2>Welcome to Tago, ${user.Name}!</h2>
           <p>Please verify your email address by clicking the button below:</p>
           <a href="${verificationUrl}" 
              style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">
@@ -80,7 +89,8 @@ export async function POST(req: Request) {
           </a>
           <p>If the button doesn't work, you can also click this link:</p>
           <p>${verificationUrl}</p>
-          <p>This link will expire in 24 hours.</p>
+          <p>This verification link will expire in 24 hours.</p>
+          <p>If you didn't create a Tago account, please ignore this email.</p>
         </div>
       `
     });
