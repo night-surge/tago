@@ -22,7 +22,6 @@ type Props = {
   }
 }
 
-
 const getIconForURL = (url: string) => {
   const domain = url.toLowerCase();
   if (domain.includes('github')) return Github;
@@ -54,12 +53,12 @@ const getPlatformName = (url: string) => {
   }
 };
 
-// Updated TopNavCTA with mobile-friendly positioning
-const TopNavCTA = () => (
-  <div className="absolute left-0 right-0 top-0 flex justify-end p-3 sm:p-4 z-30">
+// Updated BottomCTA component
+const BottomCTA = () => (
+  <div className="flex justify-center w-full py-8 sm:py-12">
     <a
       href="#get-started"
-      className="group flex items-center space-x-2 relative overflow-hidden bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl text-white px-3 py-2 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 border border-white/10 shadow-lg"
+      className="group flex items-center space-x-2 relative overflow-hidden bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl text-white px-4 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 border border-white/10 shadow-lg"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-50" />
@@ -70,7 +69,6 @@ const TopNavCTA = () => (
   </div>
 );
 
-// [SocialCard component remains the same]
 const SocialCard = ({ link }: { link: string }) => {
   const Icon = getIconForURL(link);
   const brandColor = getBrandColor(link);
@@ -127,7 +125,6 @@ const SocialCard = ({ link }: { link: string }) => {
   );
 };
 
-// Updated main component with better mobile spacing
 const six = ({user}: Props) => {
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -138,22 +135,19 @@ const six = ({user}: Props) => {
       </div>
 
       <div className="relative z-20">
-        <TopNavCTA />
-        
         <div className="max-w-3xl mx-auto px-4 pt-16 sm:pt-20 pb-8 sm:pb-16 space-y-8 sm:space-y-12">
           <div className="text-center space-y-6 sm:space-y-8">
             {/* Profile Photo Section */}
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-20 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-gray-200/50 shadow-lg">
-              <Image
-                src={user.picture}
-                alt="Profile"
-                width={144} // 36 * 4 (maximum size in sm breakpoint)
-                height={144}
-                className="w-full h-full object-cover"
-                priority
-              />
+                <Image
+                  src={user.picture}
+                  alt="Profile"
+                  fill
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
             </div>
 
@@ -166,7 +160,6 @@ const six = ({user}: Props) => {
                   </span>
                 </span>
               </h1>
-              {/* <p className="text-lg sm:text-xl text-white/70">{user.tagline}</p> */}
               <p className="text-base sm:text-lg text-white/50 max-w-2xl mx-auto">{user.tagline}</p>
             </div>
           </div>
@@ -176,6 +169,9 @@ const six = ({user}: Props) => {
               <SocialCard key={index} link={link} />
             ))}
           </div>
+
+          {/* Bottom CTA */}
+          <BottomCTA />
         </div>
       </div>
     </div>

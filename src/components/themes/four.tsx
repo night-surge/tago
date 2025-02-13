@@ -35,7 +35,6 @@ const getIconForURL = (url: string) => {
 };
 
 const getBrandColor = (url: string) => {
-  // Warm, loving colors
   const domain = url.toLowerCase();
   if (domain.includes('github')) return '#FF8BA7';
   if (domain.includes('twitter')) return '#FFB3C6';
@@ -55,14 +54,14 @@ const getPlatformName = (url: string) => {
   }
 };
 
-const TopNavCTA = () => (
-  <div className="absolute left-0 right-0 top-0 flex justify-end p-3 sm:p-4 z-30">
+const FooterCTA = () => (
+  <div className="flex justify-center p-3 sm:p-4 mt-8">
     <a
       href="#get-started"
       className="group flex items-center space-x-2 bg-white/10 backdrop-blur-lg text-white px-3 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-500 hover:bg-white/20 border border-pink-200/20"
     >
       <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-pink-300 animate-pulse" />
-      <span className="text-pink-100">Get your own Tago</span>
+      <span className="text-pink-100">Get your own TAGO</span>
       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-500 text-pink-300" />
     </a>
   </div>
@@ -123,8 +122,6 @@ const four = ({user}: Props) => {
       </div>
 
       <div className="relative z-20">
-        <TopNavCTA />
-        
         <div className="max-w-3xl mx-auto px-4 pt-16 sm:pt-20 pb-8 sm:pb-16 space-y-8 sm:space-y-12">
           <div className="text-center space-y-6 sm:space-y-8">
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
@@ -134,8 +131,7 @@ const four = ({user}: Props) => {
               <Image
                 src={user.picture}
                 alt="Profile"
-                width={144} // 36px * 4 (for larger screens)
-                height={144}
+                fill
                 className="w-full h-full object-cover transition-all duration-500"
                 priority
               />
@@ -151,7 +147,6 @@ const four = ({user}: Props) => {
                   <Sparkles className="absolute -top-8 -right-8 w-6 h-6 text-pink-200 animate-bounce" />
                 </span>
               </h1>
-              {/* <p className="text-lg sm:text-xl text-pink-100">{SAMPLE_DATA.tagline}</p> */}
               <p className="text-base sm:text-lg text-pink-100/70 max-w-2xl mx-auto">{user.tagline}</p>
             </div>
           </div>
@@ -161,6 +156,8 @@ const four = ({user}: Props) => {
               <SocialCard key={index} link={link} />
             ))}
           </div>
+          
+          <FooterCTA />
         </div>
       </div>
     </div>

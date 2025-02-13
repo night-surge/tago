@@ -63,7 +63,7 @@ const Login = () => {
       localStorage.setItem('token', result.token);
       localStorage.setItem('user', JSON.stringify(result.user));
       
-      router.push(`/${result.user.userName}`);
+      router.push(`/${result.user.userName}/edit`);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');

@@ -143,7 +143,7 @@ export async function POST(req: Request) {
     const token = jwt.sign(
       authPayload,
       jwtSecret,
-      { expiresIn: '7d' }
+      { expiresIn: '2h' }
     );
 
     const safeUser = {

@@ -77,8 +77,7 @@ const three = ({user}: Props) => {
               <Image
               src={user.picture}
               alt="Profile"
-              width={160}
-              height={160}
+              fill
               className="object-cover"
               priority
               />
