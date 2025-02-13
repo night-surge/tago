@@ -2,13 +2,16 @@ import { Prisma } from "@prisma/client";
 
 export type User = {
   uid: number;
-  userId: string;
+  Name: string;
   userName: string;
   links: string[];
   profilePicture?: string | null;
   email: string;
   password: string;
   isVerified: boolean;
+  theme: number;
+  Bio: true;
+
 };
 
 export type CreateUserInput = Omit<User, "uid">;

@@ -27,6 +27,7 @@ interface User {
   isVerified: boolean;
 }
 
+
 interface ThemeProps {
   user: {
     name: string;
@@ -50,7 +51,7 @@ async function getUserData(userName: string): Promise<User | null> {
   }
 
   try {
-    const user = await prisma.user.findUnique({
+     const user = await prisma.user.findUnique({
       where: { userName },
       select: {
         uid: true,
