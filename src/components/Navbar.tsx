@@ -21,7 +21,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
           {/* Desktop Menu */}
           <div className="hidden md:flex md:items-center md:space-x-8">
             <NavLink href="/">Home</NavLink>
-            <NavLink href="/">Products</NavLink>
+            <NavLink href="/products">Products</NavLink>
             <NavLink href="/contact">Book a Call</NavLink>
           </div>
 
