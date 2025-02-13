@@ -4,8 +4,18 @@ import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import Button from "@/components/ui/button";
-import spidermanF from '../assets/spidermancardF.jpg';
 import spidermanB from '../assets/spidermancardB.jpg';
+import Card1 from '@/assets/cards/1.svg';
+import Card2 from '@/assets/cards/2.svg';
+import Card4 from '@/assets/cards/4.svg';
+import Card5 from '@/assets/cards/5.svg';
+import Card6 from '@/assets/cards/6.svg';
+import Card7 from '@/assets/cards/7.svg';
+import Card8 from '@/assets/cards/8.svg';
+import Card9 from '@/assets/cards/9.svg';
+import Card10 from '@/assets/cards/10.svg';
+import Card11 from '@/assets/cards/11.svg';
+
 
 interface SlideData {
   frontImage: string | StaticImageData;
@@ -26,28 +36,64 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   const router = useRouter();
   const defaultSlides: SlideData[] = [
     {
-      frontImage: spidermanF,
+      frontImage: Card1,
       backImage: spidermanB,
-      title: 'Nature',
-      description: 'Beautiful landscapes'
+      title: 'Card 1',
+      description: 'Description for card 1'
     },
     {
-      frontImage: spidermanF,
+      frontImage: Card2,
       backImage: spidermanB,
-      title: 'City',
-      description: 'Urban vibes'
+      title: 'Card 2',
+      description: 'Description for card 2'
     },
     {
-      frontImage: spidermanF,
+      frontImage: Card11,
       backImage: spidermanB,
-      title: 'Ocean',
-      description: 'Sea views'
+      title: 'Card 3',
+      description: 'Description for card 3'
     },
     {
-      frontImage: spidermanF,
+      frontImage: Card4,
       backImage: spidermanB,
-      title: 'Mountains',
-      description: 'Peak adventures'
+      title: 'Card 4',
+      description: 'Description for card 4'
+    },
+    {
+      frontImage: Card5,
+      backImage: spidermanB,
+      title: 'Card 5', 
+      description: 'Description for card 5'
+    },
+    {
+      frontImage: Card6,
+      backImage: spidermanB,
+      title: 'Card 6',
+      description: 'Description for card 6'
+    },
+    {
+      frontImage: Card7,
+      backImage: spidermanB,
+      title: 'Card 7',
+      description: 'Description for card 7'
+    },
+    {
+      frontImage: Card8,
+      backImage: spidermanB,
+      title: 'Card 8',
+      description: 'Description for card 8'
+    },
+    {
+      frontImage: Card9,
+      backImage: spidermanB,
+      title: 'Card 9',
+      description: 'Description for card 9'
+    },
+    {
+      frontImage: Card10,
+      backImage: spidermanB,
+      title: 'Card 10',
+      description: 'Description for card 10'
     }
   ];
 
