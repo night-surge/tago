@@ -11,6 +11,24 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
+  interface UserResponse {
+    uid: number;
+    userName: string;
+    Name: string;
+    email: string;
+    links: string[];
+    profilePicture: string;
+    isVerified: boolean;
+    theme: number;
+    Bio: string[];
+  }
+
+  interface SignupResponse {
+    message: string;
+    token: string;
+    user: UserResponse;
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -18,14 +36,13 @@ const Signup = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data: Record<string, string> = Object.fromEntries(formData) as Record<string, string>;
-      const userEmail = data.email;
-
-      interface SignupResponse {
-        message: string;
-        token: string;
-        user: { username: string };
-      }
+      const data = {
+        name: formData.get('name'),
+        username: formData.get('username'),
+        email: formData.get('email'),
+        contact: formData.get('contact'),
+        password: formData.get('password')
+      };
 
       const response = await axios.post<SignupResponse>("/api/auth/signup", data, {
         headers: { "Content-Type": "application/json" },
@@ -34,7 +51,7 @@ const Signup = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      router.push(`/verify-email?email=${encodeURIComponent(userEmail)}`);
+      router.push(`/verify-email?email=${encodeURIComponent(data.email as string)}`);
         } catch (err: unknown) {
           if (err instanceof Error) {
             setError(err.message);
@@ -53,7 +70,7 @@ const Signup = () => {
         <div className="w-full max-w-md space-y-8 bg-black p-8 rounded-xl border border-white/10">
           <div>
             <h2 className="text-3xl font-bold text-center text-white mb-8">
-              Create Account
+              Join Tago
             </h2>
           </div>
 
@@ -92,7 +109,7 @@ const Signup = () => {
                 className="mt-1 block w-full rounded-md bg-black border border-white/20 
                          text-white px-3 py-2 focus:border-white focus:ring-1 focus:ring-white
                          outline-none"
-                placeholder="username"
+                placeholder="@username"
               />
             </div>
 
@@ -113,12 +130,12 @@ const Signup = () => {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
+              <label htmlFor="contact" className="block text-sm font-medium text-gray-300">
                 Contact Number
               </label>
               <input
-                id="phone"
-                name="phone"
+                id="contact"
+                name="contact"
                 type="tel"
                 required
                 className="mt-1 block w-full rounded-md bg-black border border-white/20 
@@ -132,7 +149,15 @@ const Signup = () => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                 Password
               </label>
-              <PasswordInput id="password" name="password" required />
+              <PasswordInput 
+                id="password" 
+                name="password" 
+                required 
+                placeholder="*******"
+              />
+              <p className="mt-1 text-xs text-gray-400">
+                Must contain at least 8 characters, one uppercase letter, and one number
+              </p>
             </div>
 
             <button
@@ -147,6 +172,7 @@ const Signup = () => {
             </button>
           </form>
 
+          <div className="text-center">
             <Link
               href="/login"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
@@ -155,6 +181,7 @@ const Signup = () => {
             </Link>            
           </div>
         </div>
+      </div>
     </BackgroundGrid>
   );
 };

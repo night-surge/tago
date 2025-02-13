@@ -1,151 +1,288 @@
-import React from "react";
-import { 
-  ExternalLink, 
-  Github, 
-  Twitter, 
-  Linkedin, 
-  Instagram, 
-  Youtube, 
-  Facebook, 
-  Link2, 
-  Twitch,
-  Globe,
-  Sparkles,
-  LucideIcon
-} from "lucide-react";
+import { notFound } from 'next/navigation';
+import { prisma } from '@/lib/prisma';
+import dynamic from 'next/dynamic';
+import { revalidatePath } from 'next/cache';
+import { verify } from 'jsonwebtoken';
+import { cookies, headers } from 'next/headers';
+import AddLinkButton from './components/AddLinkButton';
+import ThemeSelector from './components/ThemeSelector';
 
-type UserData = {
-  name: string;
-  links: string[];
-};
+// Theme imports remain the same
+const themes = {
+  1: dynamic(() => import('@/components/themes/one')),
+  2: dynamic(() => import('@/components/themes/two')),
+  3: dynamic(() => import('@/components/themes/three')),
+  4: dynamic(() => import('@/components/themes/four')),
+  5: dynamic(() => import('@/components/themes/five')),
+  6: dynamic(() => import('@/components/themes/six')),
+  7: dynamic(() => import('@/components/themes/seven')),
+  8: dynamic(() => import('@/components/themes/eight')),
+  9: dynamic(() => import('@/components/themes/nine')),
+} as const;
 
-interface LinksPageProps {
-  initialData: UserData;
+interface TokenPayload {
+  userId: number;
+  userName: string;
+  email: string;
 }
 
-const PLATFORM_CONFIG: Record<string, { icon: LucideIcon; color: string }> = {
-  github: { icon: Github, color: '#171515' },
-  twitter: { icon: Twitter, color: '#1DA1F2' },
-  linkedin: { icon: Linkedin, color: '#0A66C2' },
-  instagram: { icon: Instagram, color: '#E4405F' },
-  youtube: { icon: Youtube, color: '#FF0000' },
-  facebook: { icon: Facebook, color: '#1877F2' },
-  twitch: { icon: Twitch, color: '#9146FF' },
-  'dev.to': { icon: Globe, color: '#333333' }
-};
+interface User {
+  uid: number;
+  userName: string;
+  Name: string;
+  links: string[];
+  profilePicture: string;
+  Bio: string[];
+  theme: number;
+  isVerified: boolean;
+}
 
-const getPlatformDetails = (url: string) => {
-  const domain = url.toLowerCase();
-  const platform = Object.keys(PLATFORM_CONFIG).find(key => domain.includes(key));
-  return platform ? PLATFORM_CONFIG[platform] : { icon: Link2, color: '#6366F1' };
-};
+interface ThemeProps {
+  user: {
+    name: string;
+    tagline: string;
+    links: string[];
+    picture: string;
+    isVerified: boolean;
+  };
+}
 
-const getPlatformName = (url: string): string => {
+interface PageProps {
+  params: {
+    userName: string;
+  };
+}
+
+// Verify the JWT token and return the payload if valid
+const verifyAuth = async () => {
   try {
-    const hostname = new URL(url).hostname;
-    return hostname.replace('www.', '').split('.')[0].charAt(0).toUpperCase() + 
-           hostname.replace('www.', '').split('.')[0].slice(1);
-  } catch {
-    return 'Link';
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+
+    // Add debug logging
+    // console.log('Cookie token:', token ? 'exists' : 'missing');
+
+    if (!token) {
+      return null;
+    }
+
+    const decoded = verify(token, process.env.JWT_SECRET!) as TokenPayload;
+    // console.log('Decoded token:', decoded);
+    return decoded;
+  } catch (error) {
+    console.error('Token verification failed:', error);
+    return null;
   }
 };
 
-const LinkCard = ({ link }: { link: string }) => {
-  const { icon: Icon, color: brandColor } = getPlatformDetails(link);
-  
-  return (
-    <a href={link} target="_blank" rel="noopener noreferrer" className="group block">
-      <div className="relative p-6 rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
-        <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl" />
-        <div 
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500"
-          style={{ backgroundColor: `${brandColor}10` }} 
-        />
-        <div className="absolute inset-0 rounded-2xl border border-white/[0.05] group-hover:border-white/[0.1] transition-colors duration-500" />
+// Server actions with auth checks
+async function addLink(userName: string, newLink: string) {
+  'use server';
 
-        <div className="relative flex items-center justify-between">
-          <div className="flex items-center space-x-6">
-            <div className="relative p-3 rounded-xl transition-transform duration-300 group-hover:scale-110">
-              <Icon 
-                className="w-6 h-6 transition-all duration-300" 
-                style={{ color: brandColor, filter: 'brightness(1.2)' }} 
-              />
-            </div>
-            <span className="text-xl font-medium text-white/70 group-hover:text-white/90 transition-colors duration-300">
-              {getPlatformName(link)}
-            </span>
-          </div>
-          <ExternalLink 
-            className="w-5 h-5 transition-all duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1" 
-            style={{ color: `${brandColor}99`, filter: 'brightness(1.2)' }}
-          />
-        </div>
-      </div>
-    </a>
-  );
-};
+  const auth = await verifyAuth();
+  console.log('Add Link Auth State:', auth);
 
-function LinksPage({ initialData }: LinksPageProps) {
-  return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <div className="fixed inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-      </div>
+  if (!auth || auth.userName !== userName) {
+    console.log('Add Link Authorization failed:', { auth, userName });
+    throw new Error('Unauthorized');
+  }
 
-      <div className="max-w-3xl mx-auto px-4 py-16 space-y-12 relative z-20">
-        <header className="text-center space-y-8">
-          <div className="relative inline-block">
-            <Sparkles className="w-8 h-8 text-purple-400/50" />
-          </div>
+  if (!userName || !newLink) {
+    throw new Error('Username and link are required');
+  }
 
-          <h1 className="text-7xl sm:text-8xl font-bold tracking-tight">
-            <span className="relative">
-              <span className="absolute -inset-2 blur-2xl bg-gradient-to-r from-purple-600/20 to-pink-600/20" />
-              <span className="relative bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 text-transparent bg-clip-text">
-                {initialData.name}
-              </span>
-            </span>
-          </h1>
-          
-          <div className="relative h-px w-32 mx-auto overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
-          </div>
-        </header>
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userName },
+      select: { links: true },
+    });
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {initialData.links.map((link, index) => (
-            <LinkCard key={index} link={link} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    try {
+      const url = new URL(newLink);
+      if (!['http:', 'https:'].includes(url.protocol)) {
+        throw new Error('Only HTTP and HTTPS protocols are allowed');
+      }
+    } catch {
+      throw new Error('Please enter a valid URL (e.g., https://example.com)');
+    }
+
+    await prisma.user.update({
+      where: { userName },
+      data: {
+        links: [...user.links, newLink],
+      },
+    });
+
+    revalidatePath(`/${userName}`);
+  } catch (error) {
+    console.error('Add link error:', error);
+    throw new Error(error instanceof Error ? error.message : 'Failed to add link');
+  }
 }
 
-async function getUserProfile(userName: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; 
-  const res = await fetch(`${baseUrl}/api/user/${userName}`, { cache: "no-store" });
-  if (!res.ok) return null;
-  return res.json();
+async function updateTheme(userName: string, theme: number) {
+  'use server';
+
+  const auth = await verifyAuth();
+  console.log('Update Theme Auth State:', auth);
+
+  if (!auth || auth.userName !== userName) {
+    console.log('Update Theme Authorization failed:', { auth, userName });
+    throw new Error('Unauthorized');
+  }
+
+  if (!userName || !theme) {
+    throw new Error('Username and theme are required');
+  }
+
+  try {
+    await prisma.user.update({
+      where: { userName },
+      data: { theme },
+    });
+
+    revalidatePath(`/${userName}`);
+  } catch (error) {
+    console.error('Error updating theme:', error);
+    throw new Error('Failed to update theme');
+  }
 }
 
-export default async function ProfilePage({ 
-  params 
-}: { 
-  params: { userName: string }
-}) {
-  const user = await getUserProfile(params.userName);
+async function getUserData(userName: string): Promise<User | null> {
+  if (!userName) {
+    throw new Error('Username is required');
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userName },
+      select: {
+        uid: true,
+        userName: true,
+        Name: true,
+        links: true,
+        profilePicture: true,
+        Bio: true,
+        theme: true,
+        isVerified: true,
+      },
+    });
+
+    console.log('Fetched user data:', user);
+    return user;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw new Error('Failed to fetch user data');
+  }
+}
+
+export default async function UserPage({ params }: PageProps) {
+  const { userName } = await params;
+  const user = await getUserData(userName);
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold">User not found</h1>
-          <p className="text-gray-400">The requested profile could not be found.</p>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
-  return <LinksPage initialData={user} />;
+  // Add debug logging for auth state
+  const auth = await verifyAuth();
+  const isOwner = auth?.userName === user.userName;
+
+  // const headersList = await headers();
+  // console.log('Page Auth state:', {
+  //   auth,
+  //   userName: user.userName,
+  //   isOwner,
+  //   userAgent: headersList.get('user-agent')
+  // });
+
+  const ThemeComponent = themes[user.theme as keyof typeof themes];
+
+  if (!ThemeComponent) {
+    throw new Error(`Theme ${user.theme} not found`);
+  }
+
+  const themeProps: ThemeProps = {
+    user: {
+      name: user.Name,
+      tagline: user.Bio[0] ?? "Hey there! I am using Tago.",
+      links: user.links,
+      picture: user.profilePicture,
+      isVerified: user.isVerified,
+    },
+  };
+
+  return (
+    <main className="relative min-h-screen">
+      {/* Theme Controls - Only shown to authenticated owner */}
+      {isOwner && (
+        <div className="
+    fixed 
+    top-0
+    left-0
+    w-full
+    md:w-auto
+    md:top-4 
+    md:left-4 
+    z-[99999]
+    flex 
+    flex-col 
+    md:flex-row 
+    gap-3
+    bg-white/90
+    md:bg-white/50 
+    backdrop-blur-sm 
+    p-4
+    shadow-lg
+    border-b
+    md:border
+    md:rounded-lg
+  ">
+          <div className="flex flex-row justify-center gap-3 w-full md:w-auto">
+            <AddLinkButton
+              addLink={addLink}
+              userName={user.userName}
+              themeNumber={user.theme}
+            />
+            <ThemeSelector
+              currentTheme={user.theme}
+              updateTheme={updateTheme}
+              userName={user.userName}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Theme Content */}
+      <div className="w-full">
+        <ThemeComponent {...themeProps} />
+      </div>
+
+      {/* Footer */}
+      {user.isVerified && (
+        <footer className="fixed bottom-4 right-4 text-sm text-gray-500">
+          <span className="flex items-center gap-1">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              className="w-4 h-4 text-blue-500"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Verified Profile
+          </span>
+        </footer>
+      )}
+    </main>
+  );
 }

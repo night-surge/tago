@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Tago",
-  description: "",
+  description: "Tago is a social platform for developers to share their work.",
 };
 
 export default function RootLayout({
