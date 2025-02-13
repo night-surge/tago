@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
         hostname: 'images.pexels.com',
       },
     ],
+    domains: ['ia801307.us.archive.org'],
   },
 };
 

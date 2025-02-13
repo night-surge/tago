@@ -23,7 +23,7 @@ const Login = () => {
           // });
           // if (response.ok) {
           const userData = JSON.parse(user);
-          router.push(`/${userData.username}`);
+          router.push(`/${userData.userName}`);
           return;
           // }
         }
@@ -63,7 +63,7 @@ const Login = () => {
       localStorage.setItem('token', result.token);
       localStorage.setItem('user', JSON.stringify(result.user));
       
-      router.push(`/${result.user.username}`);
+      router.push(`/${result.user.userName}`);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');

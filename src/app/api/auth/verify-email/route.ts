@@ -1,4 +1,3 @@
-// app/api/auth/verify-email/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -15,24 +14,31 @@ if (!process.env.JWT_SECRET) {
 
 export async function POST(req: Request) {
   try {
-    const { token } = await req.json();
-
-    if (!token) {
+    const body = await req.json();
+    
+    if (!body || !body.token) {
       return NextResponse.json(
         { message: 'Verification token is required' },
         { status: 400 }
       );
     }
 
-    // Verify the token
+    const { token } = body;
+
+    // Verify the token and specify the correct payload type
     const decoded = jwt.verify(token, jwtSecret) as {
-      userId: string;
+      uid: number;  // Changed from string to number to match your schema
       email: string;
+      userName: string;
     };
 
-    // Find and update the user
+    console.log('Decoded token:', decoded);
+
+    // Find the user using uid (not userId)
     const user = await prisma.user.findUnique({
-      where: { userId: decoded.userId }
+      where: { 
+        uid: decoded.uid 
+      }
     });
 
     if (!user) {
@@ -49,14 +55,42 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.user.update({
-      where: { userId: decoded.userId },
-      data: { isVerified: true }
+    // Update user using uid (not userId)
+    const updatedUser = await prisma.user.update({
+      where: { 
+        uid: decoded.uid 
+      },
+      data: { 
+        isVerified: true 
+      }
     });
 
+    // Create a new auth token for the verified user
+    const newToken = jwt.sign(
+      {
+        uid: updatedUser.uid,
+        userName: updatedUser.userName,
+        email: updatedUser.email
+      },
+      jwtSecret,
+      { expiresIn: '7d' }
+    );
+
     return NextResponse.json(
-      { message: 'Email verified successfully' },
-      { status: 200 }
+      { 
+        message: 'Email verified successfully',
+        token: newToken,
+        user: {
+          ...updatedUser,
+          password: undefined
+        }
+      },
+      { 
+        status: 200,
+        headers: {
+          'Set-Cookie': `token=${newToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${7 * 24 * 60 * 60}`
+        }
+      }
     );
 
   } catch (error) {
@@ -67,7 +101,7 @@ export async function POST(req: Request) {
       );
     }
 
-    console.error('Email verification error:', error);
+    console.error('Email verification error:', error instanceof Error ? error.message : error);
     return NextResponse.json(
       { message: 'Error verifying email' },
       { status: 500 }

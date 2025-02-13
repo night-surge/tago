@@ -12,19 +12,20 @@ datasource db {
 
 model User {
   uid           Int      @id @default(autoincrement())
-  userId        String   @unique
-  userName      String
+  userName        String   @unique
+  Name      String
   links         String[]
   profilePicture String @default("https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg")
   email         String   @unique
   password      String
   isVerified    Boolean   @default(false)
   theme         Int       @default(1)
+  Bio           String[]    @default(["Hey there! I am using Tago."])
 
   @@map("users") // This maps the model to a table named "users" in the database
   
   // Indexes for better query performance
-  @@index([userId])
+  @@index([userName])
   @@index([email])
 }
 

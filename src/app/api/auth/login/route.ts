@@ -27,13 +27,25 @@ export async function POST(req: Request) {
       );
     }
 
-    // Find user by username or email
+    // Find user by username or email (case-insensitive search)
     const user = await prisma.user.findFirst({
       where: {
         OR: [
-          { userName: identifier },
-          { email: identifier.toLowerCase() }
+          { userName: { equals: identifier, mode: 'insensitive' } },
+          { email: { equals: identifier.toLowerCase(), mode: 'insensitive' } }
         ]
+      },
+      select: {
+        uid: true,
+        userName: true,
+        Name: true,
+        links: true,
+        profilePicture: true,
+        email: true,
+        password: true,
+        isVerified: true,
+        theme: true,
+        Bio: true
       }
     });
 
@@ -55,21 +67,34 @@ export async function POST(req: Request) {
 
     // Create JWT token
     const token = jwt.sign(
-      { userId: user.uid },
+      {
+        userId: user.uid,
+        userName: user.userName,
+        email: user.email
+      },
       jwtSecret,
       { expiresIn: '7d' }
     );
 
-    // Remove password from response
+    // Create a safe user object without password
+    const safeUser = {
+      ...user,
+      password: undefined
+    };
 
-    user.password = " ";
+    // In your login API route
     return NextResponse.json(
       {
         message: 'Login successful',
-        user: user,
+        user: safeUser,
         token
       },
-      { status: 200 }
+      {
+        status: 200,
+        headers: {
+          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${7 * 24 * 60 * 60}; SameSite=Lax` // Changed SameSite to Lax
+        }
+      }
     );
 
   } catch (error) {

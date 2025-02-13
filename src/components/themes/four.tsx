@@ -62,7 +62,7 @@ const TopNavCTA = () => (
       className="group flex items-center space-x-2 bg-white/10 backdrop-blur-lg text-white px-3 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-500 hover:bg-white/20 border border-pink-200/20"
     >
       <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-pink-300 animate-pulse" />
-      <span className="text-pink-100">Share the love</span>
+      <span className="text-pink-100">Get your own Tago</span>
       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-500 text-pink-300" />
     </a>
   </div>
