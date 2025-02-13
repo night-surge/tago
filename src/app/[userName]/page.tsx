@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 
 const Page = () => {
   // Assuming you get themeId from API (1-9)
-  const themeId = 9; // Replace with your API value
+  const themeId = 3; // Replace with your API value
 
   // Dynamic import based on themeId
   const themes = {

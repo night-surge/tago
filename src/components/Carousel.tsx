@@ -1,9 +1,11 @@
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import spidermanF from '../assets/spidermancardF.jpg'
-import spidermanB from '../assets/spidermancardB.jpg'
+import { useRouter } from 'next/navigation';
+import { ChevronRight } from 'lucide-react';
+import Button from "@/components/ui/button";
+import spidermanF from '../assets/spidermancardF.jpg';
+import spidermanB from '../assets/spidermancardB.jpg';
 
 interface SlideData {
   frontImage: string | StaticImageData;
@@ -21,6 +23,7 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   scrollSpeed = 0.5,
   customSlides
 }) => {
+  const router = useRouter();
   const defaultSlides: SlideData[] = [
     {
       frontImage: spidermanF,
@@ -60,7 +63,11 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   const animationFrameId = useRef<number>(0);
   const hasFlippedCardRef = useRef(false);
 
-  const duplicatedSlides = [...slides, ...slides, ...slides, ...slides, ...slides,...slides, ...slides, ...slides, ...slides, ...slides,...slides, ...slides, ...slides, ...slides, ...slides];
+  const duplicatedSlides = [...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides, ...slides];
+
+  const handleShowMore = () => {
+    router.push('/products');
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -163,87 +170,100 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   };
 
   return (
-    <div className="mt-6 relative w-full bg-black/0 overflow-hidden">
-      <div className="w-full md:max-w-[900px] md:mx-auto relative">
-        {!isMobile && (
-          <>
-            <div 
-              className="absolute left-0 top-0 w-24 h-full z-20 pointer-events-none hidden md:block"
-              style={{
-                background: 'linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 100%)',
-              }}
-            />
-            <div 
-              className="absolute right-0 top-0 w-24 h-full z-20 pointer-events-none hidden md:block"
-              style={{
-                background: 'linear-gradient(-90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 100%)',
-              }}
-            />
-          </>
-        )}
-        
-        <div 
-          ref={containerRef}
-          className="flex gap-4 py-8 px-4 md:px-8 relative overflow-x-auto overflow-y-hidden no-scrollbar touch-pan-x"
-          style={{ 
-            scrollBehavior: 'auto',
-            WebkitOverflowScrolling: 'touch'
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {duplicatedSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`relative perspective min-w-[190px] h-[300px] transition-all duration-300
-                ${!flippedCards[index] ? 'hover:scale-105 md:hover:scale-110' : ''}
-                group`}
-              onClick={() => handleCardInteraction(index, !flippedCards[index])}
-              onMouseEnter={() => !isMobile && handleCardInteraction(index, true)}
-              onMouseLeave={() => !isMobile && handleCardInteraction(index, false)}
-            >
+    <div className="relative">
+      <div className="mt-6 relative w-full bg-black/0 overflow-hidden">
+        <div className="w-full md:max-w-[900px] md:mx-auto relative">
+          {!isMobile && (
+            <>
               <div 
-                className={`w-full h-full transition-transform duration-500 preserve-3d will-change-transform
-                  ${flippedCards[index] ? 'rotate-y-180' : ''}`}
+                className="absolute left-0 top-0 w-24 h-full z-20 pointer-events-none hidden md:block"
+                style={{
+                  background: 'linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 100%)',
+                }}
+              />
+              <div 
+                className="absolute right-0 top-0 w-24 h-full z-20 pointer-events-none hidden md:block"
+                style={{
+                  background: 'linear-gradient(-90deg, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 100%)',
+                }}
+              />
+            </>
+          )}
+          
+          <div 
+            ref={containerRef}
+            className="flex gap-4 py-8 px-4 md:px-8 relative overflow-x-auto overflow-y-hidden no-scrollbar touch-pan-x"
+            style={{ 
+              scrollBehavior: 'auto',
+              WebkitOverflowScrolling: 'touch'
+            }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {duplicatedSlides.map((slide, index) => (
+              <div
+                key={index}
+                className={`relative perspective min-w-[190px] h-[300px] transition-all duration-300
+                  ${!flippedCards[index] ? 'hover:scale-105 md:hover:scale-110' : ''}
+                  group`}
+                onClick={() => handleCardInteraction(index, !flippedCards[index])}
+                onMouseEnter={() => !isMobile && handleCardInteraction(index, true)}
+                onMouseLeave={() => !isMobile && handleCardInteraction(index, false)}
               >
-                <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={slide.frontImage}
-                      alt={slide.title}
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-black/20 transition-opacity group-hover:opacity-50" />
-                    <div className="absolute bottom-4 left-4 text-white">
-                      <h2 className="text-xl font-bold">{slide.title}</h2>
+                <div 
+                  className={`w-full h-full transition-transform duration-500 preserve-3d will-change-transform
+                    ${flippedCards[index] ? 'rotate-y-180' : ''}`}
+                >
+                  <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={slide.frontImage}
+                        alt={slide.title}
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/20 transition-opacity group-hover:opacity-50" />
+                      <div className="absolute bottom-4 left-4 text-white">
+                        <h2 className="text-xl font-bold">{slide.title}</h2>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden rotate-y-180">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={slide.backImage}
-                      alt={`${slide.title} - Back`}
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                    <div className="absolute inset-0 bg-black/60">
-                      <div className="flex flex-col items-center justify-center h-full text-white p-6">
-                        <h2 className="text-xl font-bold mb-3">{slide.title}</h2>
-                        <p className="text-center text-sm">{slide.description}</p>
+                  <div className="absolute w-full h-full backface-hidden rounded-lg overflow-hidden rotate-y-180">
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={slide.backImage}
+                        alt={`${slide.title} - Back`}
+                        fill
+                        className="object-cover"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/60">
+                        <div className="flex flex-col items-center justify-center h-full text-white p-6">
+                          <h2 className="text-xl font-bold mb-3">{slide.title}</h2>
+                          <p className="text-center text-sm">{slide.description}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+      </div>
+      
+      {/* Show More Products Button */}
+      <div className="flex justify-center mt-8 mb-12">
+        <Button 
+          onClick={handleShowMore}
+          className="bg-primary hover:bg-primary/90 text-white gap-2"
+        >
+          Show More Products
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
