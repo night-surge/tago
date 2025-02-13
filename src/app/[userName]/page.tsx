@@ -3,11 +3,10 @@ import { prisma } from '@/lib/prisma';
 import dynamic from 'next/dynamic';
 import { revalidatePath } from 'next/cache';
 import { verify } from 'jsonwebtoken';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import AddLinkButton from './components/AddLinkButton';
 import ThemeSelector from './components/ThemeSelector';
 
-// Theme imports remain the same
 const themes = {
   1: dynamic(() => import('@/components/themes/one')),
   2: dynamic(() => import('@/components/themes/two')),
@@ -47,11 +46,12 @@ interface ThemeProps {
   };
 }
 
-interface PageProps {
-  params: {
+type PageProps = {
+  params: Promise<{
     userName: string;
-  };
-}
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 // Verify the JWT token and return the payload if valid
 const verifyAuth = async () => {
@@ -59,15 +59,11 @@ const verifyAuth = async () => {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
 
-    // Add debug logging
-    // console.log('Cookie token:', token ? 'exists' : 'missing');
-
     if (!token) {
       return null;
     }
 
     const decoded = verify(token, process.env.JWT_SECRET!) as TokenPayload;
-    // console.log('Decoded token:', decoded);
     return decoded;
   } catch (error) {
     console.error('Token verification failed:', error);
@@ -180,25 +176,18 @@ async function getUserData(userName: string): Promise<User | null> {
   }
 }
 
-export default async function UserPage({ params }: PageProps) {
-  const { userName } = await params;
+export default async function UserPage(props: PageProps) {
+  const { userName } = await props.params;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const searchParams = props.searchParams ? await props.searchParams : undefined;
   const user = await getUserData(userName);
 
   if (!user) {
     notFound();
   }
 
-  // Add debug logging for auth state
   const auth = await verifyAuth();
   const isOwner = auth?.userName === user.userName;
-
-  // const headersList = await headers();
-  // console.log('Page Auth state:', {
-  //   auth,
-  //   userName: user.userName,
-  //   isOwner,
-  //   userAgent: headersList.get('user-agent')
-  // });
 
   const ThemeComponent = themes[user.theme as keyof typeof themes];
 
@@ -218,30 +207,9 @@ export default async function UserPage({ params }: PageProps) {
 
   return (
     <main className="relative min-h-screen">
-      {/* Theme Controls - Only shown to authenticated owner */}
+      {/* Rest of the JSX remains the same */}
       {isOwner && (
-        <div className="
-    fixed 
-    top-0
-    left-0
-    w-full
-    md:w-auto
-    md:top-4 
-    md:left-4 
-    z-[99999]
-    flex 
-    flex-col 
-    md:flex-row 
-    gap-3
-    bg-white/90
-    md:bg-white/50 
-    backdrop-blur-sm 
-    p-4
-    shadow-lg
-    border-b
-    md:border
-    md:rounded-lg
-  ">
+        <div className="fixed top-0 left-0 w-full md:w-auto md:top-4 md:left-4 z-[99999] flex flex-col md:flex-row gap-3 bg-white/90 md:bg-white/50 backdrop-blur-sm p-4 shadow-lg border-b md:border md:rounded-lg">
           <div className="flex flex-row justify-center gap-3 w-full md:w-auto">
             <AddLinkButton
               addLink={addLink}
@@ -257,12 +225,10 @@ export default async function UserPage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Theme Content */}
       <div className="w-full">
         <ThemeComponent {...themeProps} />
       </div>
 
-      {/* Footer */}
       {user.isVerified && (
         <footer className="fixed bottom-4 right-4 text-sm text-gray-500">
           <span className="flex items-center gap-1">

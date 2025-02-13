@@ -17,11 +17,11 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  },);
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('/api/links', {
+      const res = await fetch('/api/user', {
         headers: {
           'Cookie': document.cookie
         }

@@ -13,7 +13,6 @@ const userSelect = {
   Bio: true
 };
 
-
 type UpdateUserInput = Partial<{
   Name: string;
   links: string[];
@@ -23,12 +22,17 @@ type UpdateUserInput = Partial<{
   Bio: string[];
 }>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type RouteContext = {
+  params: Promise<{ userName: string }>;
+};
+
 export async function GET(
   request: Request,
-  { params }: { params: { userName: string } }
+  { params }: { params: Promise<{ userName: string }> }
 ) {
   try {
-    const userName = params.userName;
+    const { userName } = await params;
 
     if (!userName) {
       return NextResponse.json(
@@ -64,10 +68,10 @@ export async function GET(
 
 export async function HEAD(
   request: Request,
-  { params }: { params: { userName: string } }
+  { params }: { params: Promise<{ userName: string }> }
 ) {
   try {
-    const userName = params.userName;
+    const { userName } = await params;
     const user = await prisma.user.findUnique({
       where: {
         userName: userName,
@@ -89,10 +93,10 @@ export async function HEAD(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { userName: string } }
+  { params }: { params: Promise<{ userName: string }> }
 ) {
   try {
-    const userName = params.userName;
+    const { userName } = await params;
     
     if (!userName) {
       return NextResponse.json(
