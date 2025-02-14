@@ -1,5 +1,6 @@
 import React from "react";
-import Image from "next/image"; 
+import Image from "next/image";
+import Link from "next/link";
 import { 
   ExternalLink, 
   Github, 
@@ -35,7 +36,7 @@ const getIconForURL = (url: string) => {
 
 const getBrandColor = (url: string) => {
   const domain = url.toLowerCase();
-  if (domain.includes('github')) return '#171515';
+  if (domain.includes('github')) return '#ffffff';
   if (domain.includes('twitter')) return '#1DA1F2';
   if (domain.includes('linkedin')) return '#0A66C2';
   if (domain.includes('instagram')) return '#E4405F';
@@ -53,11 +54,10 @@ const getPlatformName = (url: string) => {
   }
 };
 
-// Updated BottomCTA component
 const BottomCTA = () => (
-  <div className="flex justify-center w-full py-8 sm:py-12">
-    <a
-      href="#get-started"
+  <div className="absolute bottom-8 left-0 right-0 flex justify-center w-full">
+    <Link
+      href="/products"
       className="group flex items-center space-x-2 relative overflow-hidden bg-gradient-to-r from-purple-600/20 to-pink-600/20 backdrop-blur-xl text-white px-4 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 border border-white/10 shadow-lg"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -65,7 +65,7 @@ const BottomCTA = () => (
       <Star className="w-3 h-3 sm:w-4 sm:h-4 relative animate-pulse" />
       <span className="relative">Get your Tago card</span>
       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 relative group-hover:translate-x-1 transition-transform" />
-    </a>
+    </Link>
   </div>
 );
 
@@ -135,9 +135,8 @@ const six = ({user}: Props) => {
       </div>
 
       <div className="relative z-20">
-        <div className="max-w-3xl mx-auto px-4 pt-16 sm:pt-20 pb-8 sm:pb-16 space-y-8 sm:space-y-12">
+        <div className="max-w-3xl mx-auto px-4 pt-16 sm:pt-20 pb-24 sm:pb-32 space-y-8 sm:space-y-12">
           <div className="text-center space-y-6 sm:space-y-8">
-            {/* Profile Photo Section */}
             <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-20 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-gray-200/50 shadow-lg">
@@ -169,11 +168,9 @@ const six = ({user}: Props) => {
               <SocialCard key={index} link={link} />
             ))}
           </div>
-
-          {/* Bottom CTA */}
-          <BottomCTA />
         </div>
       </div>
+      <BottomCTA />
     </div>
   );
 };

@@ -9,10 +9,11 @@ import {
   Youtube, 
   Link2, 
   Globe,
-  ArrowRight,
   Heart,
+  ArrowRight,
   Sparkles
 } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
   user: {
@@ -55,16 +56,15 @@ const getPlatformName = (url: string) => {
 };
 
 const FooterCTA = () => (
-  <div className="flex justify-center p-3 sm:p-4 mt-8">
-    <a
-      href="#get-started"
-      className="group flex items-center space-x-2 bg-white/10 backdrop-blur-lg text-white px-3 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-500 hover:bg-white/20 border border-pink-200/20"
+  <div className="fixed bottom-0 left-0 right-0 z-30 flex justify-center p-4 bg-white/10 backdrop-blur-lg">
+    <Link
+      href="/products"
+      className="group flex items-center space-x-2 text-white px-6 py-3 rounded-full text-base font-medium transition-all duration-500 hover:bg-white/20 border border-pink-200/20"
     >
-      <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-pink-300 animate-pulse" />
-
+      <Heart className="w-4 h-4 text-pink-300 animate-pulse" />
       <span className="text-pink-100">Get your own TAGO</span>
-      <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-500 text-pink-300" />
-    </a>
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500 text-pink-300" />
+    </Link>
   </div>
 );
 
@@ -158,9 +158,9 @@ const four = ({user}: Props) => {
             ))}
           </div>
           
-          <FooterCTA />
         </div>
       </div>
+      <FooterCTA />
     </div>
   );
 };

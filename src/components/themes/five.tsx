@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Music
 } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
   user: {
@@ -55,15 +56,15 @@ const getPlatformName = (url: string) => {
 };
 
 const FooterCTA = () => (
-  <div className="flex justify-center mt-8">
-    <a
-      href="#get-started"
+  <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+    <Link
+      href="/products"
       className="group flex items-center space-x-2 bg-[#2A2A3C] text-white px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-500 hover:bg-[#3A3A4C] border border-[#4A4A5C] hover:border-[#FFB5E8]"
     >
       <Music className="w-3 h-3 sm:w-4 sm:h-4 text-[#FFB5E8] animate-bounce" />
       <span className="bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] text-transparent bg-clip-text">Get your own TAGO</span>
       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-500 text-[#86E3CE]" />
-    </a>
+    </Link>
   </div>
 );
 
@@ -166,9 +167,10 @@ const five = ({user}: Props) => {
             ))}
           </div>
 
-          <FooterCTA />
+          
         </div>
       </div>
+      <FooterCTA />
     </div>
   );
 };

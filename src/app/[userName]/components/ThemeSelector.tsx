@@ -9,15 +9,15 @@ interface ThemeSelectorProps {
 }
 
 const THEMES = [
-  { id: 1, name: 'Classic', description: 'Clean and minimal design' },
-  { id: 2, name: 'Modern', description: 'Sleek and contemporary' },
-  { id: 3, name: 'Bold', description: 'High contrast and impactful' },
-  { id: 4, name: 'Elegant', description: 'Sophisticated and refined' },
-  { id: 5, name: 'Vibrant', description: 'Colorful and energetic' },
+  { id: 1, name: 'Candy Floss', description: 'Dreamy pastels with candy accents' },
+  { id: 2, name: 'Glassmorphic', description: 'Elegant glass-like minimalist design aesthetic' },
+  { id: 3, name: 'SoftScape', description: 'Gentle gradients with pastel accents' },
+  { id: 4, name: 'Glow Links', description: 'Beautiful personal links in pink' },
+  { id: 5, name: 'AuroraFlow', description: 'Flowing colors in cosmic space' },
   { id: 6, name: 'Minimal', description: 'Simple and focused' },
-  { id: 7, name: 'Dark', description: 'Dark mode optimized' },
-  { id: 8, name: 'Light', description: 'Bright and airy' },
-  { id: 9, name: 'Professional', description: 'Business-focused design' },
+  { id: 7, name: 'Dark Crystal', description: 'Frosted glass with ethereal glow' },
+  { id: 8, name: 'Obsidian', description: 'Sharp black with white accents' },
+  { id: 9, name: 'Morning Mist', description: 'Light airy pastels and gradients' },
 ];
 
 export default function ThemeSelector({ currentTheme, updateTheme, userName }: ThemeSelectorProps) {
