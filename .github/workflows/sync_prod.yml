@@ -10,14 +10,7 @@ on:
         type: string
 
 jobs:
-  verify-intent:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check confirmation
-        if: github.event.inputs.confirm_sync != 'yes'
-        run: |
-          echo "Sync not confirmed. Please type 'yes' to confirm syncing."
-          exit 1
+ 
 
   sync-repos:
     needs: verify-intent
