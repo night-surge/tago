@@ -143,6 +143,27 @@ export async function reorderLinks(userName: string, fromIndex: number, toIndex:
   }
 }
 
+export async function updateBio(userName: string, bio: string[]) {
+  'use server';
+
+  const auth = await verifyAuth();
+
+  if (!auth || auth.userName !== userName) {
+    throw new Error('Unauthorized');
+  }
+
+  try {
+    await prisma.user.update({
+      where: { userName },
+      data: { Bio: bio },
+    });
+
+    revalidatePath(`/${userName}/edit`);
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : 'Failed to update bio');
+  }
+}
+
 export async function updateTheme(userName: string, theme: number) {
   'use server';
 

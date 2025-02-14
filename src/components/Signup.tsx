@@ -69,8 +69,8 @@ const Signup = () => {
       <div className="relative flex min-h-screen items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8 bg-black p-8 rounded-xl border border-white/10">
           <div>
-            <h2 className="text-3xl font-bold text-center text-white mb-8">
-              Join Tago
+            <h2 className="text-3xl font-semibold text-center text-white mb-8 font-poppins">
+              Join <span className="font-[MighaMedium] ">Tago</span>
             </h2>
           </div>
 
@@ -177,7 +177,7 @@ const Signup = () => {
               href="/login"
               className="text-white/60 hover:text-white text-sm transition-colors duration-200"
             >
-              Already have an account? Sign in
+              Already have an account? Log in
             </Link>            
           </div>
         </div>

@@ -1,15 +1,22 @@
-"use client"
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
 interface PasswordInputProps {
   id: string;
-  name: string;
-  placeholder?: string;
+  name?: string;
   required?: boolean;
+  value?: string;
+  placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PasswordInput = ({ id, name, placeholder = "••••••••", required = false }: PasswordInputProps) => {
+const PasswordInput: React.FC<PasswordInputProps> = ({ 
+  id, 
+  name = 'password',
+  required = false,
+  value,
+  onChange
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -17,18 +24,19 @@ const PasswordInput = ({ id, name, placeholder = "••••••••", req
       <input
         id={id}
         name={name}
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         required={required}
+        value={value}
+        onChange={onChange}
         className="mt-1 block w-full rounded-md bg-black border border-white/20 
                  text-white px-3 py-2 focus:border-white focus:ring-1 focus:ring-white
-                 outline-none pr-10" // Added pr-10 for icon space
-        placeholder={placeholder}
+                 outline-none pr-10"
+        placeholder="Enter password"
       />
       <button
         type="button"
-        className="absolute inset-y-0 right-0 flex items-center pr-3 mt-1
-                 text-white/60 hover:text-white transition-colors duration-200"
         onClick={() => setShowPassword(!showPassword)}
+        className="absolute inset-y-0 right-0 flex items-center pr-3 text-white/60 hover:text-white"
       >
         {showPassword ? (
           <EyeOff className="h-5 w-5" />
