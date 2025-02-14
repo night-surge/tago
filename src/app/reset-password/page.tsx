@@ -1,14 +1,17 @@
 import BackgroundGrid from "@/components/BackgroundGrid";
 import Navbar from "@/components/Navbar";
 import ResetPassword from "@/components/ResetPassword";
+import { Suspense } from "react";
 
 export default function Home() { 
     return(
         <>
-        <BackgroundGrid>
-            <Navbar />
-            <ResetPassword />
-        </BackgroundGrid>    
+        <Suspense>
+            <BackgroundGrid>
+                <Navbar />
+                <ResetPassword />
+            </BackgroundGrid>
+        </Suspense>    
         </>
     )
 }
