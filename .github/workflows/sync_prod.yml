@@ -1,38 +1,43 @@
 name: Sync Repositories prod (main)
 
-on: push
-  
-jobs:
- 
+on:
+  push:
+    branches:
+      - main  # Specify the branch that triggers this workflow
 
+jobs:
   sync-repos:
-    needs: verify-intent
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout source repository (Repo B)
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           path: repo-b
-          
+
       - name: Checkout target repository (Repo A)
         uses: actions/checkout@v4
         with:
           repository: g4ze/tago  # Replace with actual owner/repo-name
           token: ${{ secrets.PAT_TOKEN }}  # Personal Access Token with repo access
+          fetch-depth: 0
           path: repo-a
           
-      - name: Copy files and push
+      - name: Sync files from Repo B to Repo A
         run: |
-          # Copy all files from repo B to repo A (excluding .git directory)
-          cp -r repo-b/* repo-a/
+          rsync -av --exclude=".git" repo-b/ repo-a/
           cd repo-a
           
           # Configure Git
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           
-          # Stage, commit and push changes
-          git add .
-          git commit -m "Sync changes from repository B" || echo "No changes to commit"
-          git push origin main
+          # Check for changes
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add .
+            git commit -m "Sync changes from repository B"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
