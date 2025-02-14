@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// app/api/auth/verify-email/route.ts
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -14,15 +18,22 @@ if (!process.env.JWT_SECRET) {
 
 export async function POST(req: Request) {
   try {
+<<<<<<< HEAD
     const body = await req.json();
     
     if (!body || !body.token) {
+=======
+    const { token } = await req.json();
+
+    if (!token) {
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
       return NextResponse.json(
         { message: 'Verification token is required' },
         { status: 400 }
       );
     }
 
+<<<<<<< HEAD
     const { token } = body;
 
     // Verify the token and specify the correct payload type
@@ -39,6 +50,17 @@ export async function POST(req: Request) {
       where: { 
         uid: decoded.uid 
       }
+=======
+    // Verify the token
+    const decoded = jwt.verify(token, jwtSecret) as {
+      userId: string;
+      email: string;
+    };
+
+    // Find and update the user
+    const user = await prisma.user.findUnique({
+      where: { userId: decoded.userId }
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     });
 
     if (!user) {
@@ -55,6 +77,7 @@ export async function POST(req: Request) {
       );
     }
 
+<<<<<<< HEAD
     // Update user using uid (not userId)
     const updatedUser = await prisma.user.update({
       where: { 
@@ -91,6 +114,16 @@ export async function POST(req: Request) {
           'Set-Cookie': `token=${newToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${7 * 24 * 60 * 60}`
         }
       }
+=======
+    await prisma.user.update({
+      where: { userId: decoded.userId },
+      data: { isVerified: true }
+    });
+
+    return NextResponse.json(
+      { message: 'Email verified successfully' },
+      { status: 200 }
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     );
 
   } catch (error) {
@@ -101,7 +134,11 @@ export async function POST(req: Request) {
       );
     }
 
+<<<<<<< HEAD
     console.error('Email verification error:', error instanceof Error ? error.message : error);
+=======
+    console.error('Email verification error:', error);
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     return NextResponse.json(
       { message: 'Error verifying email' },
       { status: 500 }

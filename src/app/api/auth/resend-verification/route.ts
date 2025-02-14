@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// app/api/auth/resend-verification/route.ts
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -34,6 +38,7 @@ export async function POST(req: Request) {
 
     // Find user by email
     const user = await prisma.user.findUnique({
+<<<<<<< HEAD
       where: { 
         email: email.toLowerCase() 
       },
@@ -44,6 +49,9 @@ export async function POST(req: Request) {
         Name: true,
         isVerified: true
       }
+=======
+      where: { email: email.toLowerCase() }
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     });
 
     if (!user) {
@@ -63,9 +71,14 @@ export async function POST(req: Request) {
     // Generate new verification token
     const verificationToken = jwt.sign(
       { 
+<<<<<<< HEAD
         uid: user.uid,
         email: user.email,
         userName: user.userName
+=======
+        userId: user.userId,
+        email: user.email
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
       },
       jwtSecret,
       { expiresIn: '24h' }
@@ -81,7 +94,11 @@ export async function POST(req: Request) {
       subject: 'Verify your email address',
       html: `
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+<<<<<<< HEAD
           <h2>Welcome to Tago, ${user.Name}!</h2>
+=======
+          <h2>Welcome to Our App!</h2>
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
           <p>Please verify your email address by clicking the button below:</p>
           <a href="${verificationUrl}" 
              style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">
@@ -89,8 +106,12 @@ export async function POST(req: Request) {
           </a>
           <p>If the button doesn't work, you can also click this link:</p>
           <p>${verificationUrl}</p>
+<<<<<<< HEAD
           <p>This verification link will expire in 24 hours.</p>
           <p>If you didn't create a Tago account, please ignore this email.</p>
+=======
+          <p>This link will expire in 24 hours.</p>
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
         </div>
       `
     });

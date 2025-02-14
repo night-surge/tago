@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// app/api/auth/signup/route.ts
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -10,7 +14,11 @@ dotenv.config();
 const prisma = new PrismaClient();
 const jwtSecret: string = process.env.JWT_SECRET as string;
 
+<<<<<<< HEAD
 if (!jwtSecret) {
+=======
+if (!process.env.JWT_SECRET) {
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
   throw new Error('Please add your JWT_SECRET to .env.local');
 }
 
@@ -25,6 +33,7 @@ const transporter = nodemailer.createTransport({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+<<<<<<< HEAD
     if (!body || typeof body !== 'object') {
       console.error("Invalid request body:", body);
       return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
@@ -37,10 +46,22 @@ export async function POST(req: Request) {
     if (!name || !username || !email || !password) {
       return NextResponse.json(
         { message: 'Name, username, email, and password are required' },
+=======
+    const { name, username, email, phone, password } = body;
+
+    if (!name || !username || !email || !phone || !password) {
+      return NextResponse.json(
+        { message: 'All fields are required' },
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
         { status: 400 }
       );
     }
 
+<<<<<<< HEAD
+=======
+    // todo - min character 8 , min 1 Upper Case Letter , min 1 Number
+    // Check password strength
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!passwordRegex.test(password)) {
       return NextResponse.json(
@@ -51,6 +72,10 @@ export async function POST(req: Request) {
       );
     }
 
+<<<<<<< HEAD
+=======
+    // Check if username or email already exists
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
@@ -70,6 +95,7 @@ export async function POST(req: Request) {
       );
     }
 
+<<<<<<< HEAD
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user according to schema
@@ -105,10 +131,34 @@ export async function POST(req: Request) {
 
     const verificationToken = jwt.sign(
       verificationPayload,
+=======
+    // Hash password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
+    const user = await prisma.user.create({
+      data: {
+        userId: crypto.randomUUID(),
+        userName: username,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        links: [],
+        profilePicture: undefined,
+      }
+    });
+
+    // Generate email verification token
+    const verificationToken = jwt.sign(
+      { 
+        userId: user.userId,
+        email: user.email
+      },
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
       jwtSecret,
       { expiresIn: '24h' }
     );
 
+<<<<<<< HEAD
     const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     await transporter.sendMail({
@@ -119,18 +169,38 @@ export async function POST(req: Request) {
         <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2>Welcome to Tago, ${name}!</h2>
           <p>Thank you for joining us. Please verify your email address by clicking the button below:</p>
+=======
+    // Create verification URL
+    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}`;
+    
+    // Send verification email
+    // todo - add email template
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Verify your email address',
+      html: `
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2>Welcome to Our App!</h2>
+          <p>Please verify your email address by clicking the button below:</p>
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
           <a href="${verificationUrl}" 
              style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">
             Verify Email
           </a>
           <p>If the button doesn't work, you can also click this link:</p>
           <p>${verificationUrl}</p>
+<<<<<<< HEAD
           <p>This verification link will expire in 24 hours.</p>
           <p>If you didn't create a Tago account, please ignore this email.</p>
+=======
+          <p>This link will expire in 24 hours.</p>
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
         </div>
       `
     });
 
+<<<<<<< HEAD
     // Create auth payload
     const authPayload = {
       uid: user.uid,
@@ -169,6 +239,32 @@ export async function POST(req: Request) {
     console.error('Signup error:', error instanceof Error ? error.message : error);
     return NextResponse.json(
       { message: 'Error creating account' },
+=======
+    // Generate auth token
+    const token = jwt.sign(
+      { userId: user.uid, userName: user.userName },
+      jwtSecret,
+      { expiresIn: '1d' }
+    );
+
+    // Remove password from response
+    user.password = "_";
+
+
+    return NextResponse.json(
+      {
+        message: 'User created successfully. Please check your email for verification.',
+        token,
+        user: user
+      },
+      { status: 201 }
+    );
+
+  } catch (error) {
+    console.error('Signup error:', error);
+    return NextResponse.json(
+      { message: 'Error creating user' },
+>>>>>>> 220f5346cc5467116d281ffa3b2bee9a2063dff1
       { status: 500 }
     );
   } finally {
