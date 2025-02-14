@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -21,10 +22,8 @@ type Props = {
   }
 }
 
-// Type the component with the Props type
 const three = ({user}: Props) => {
   
-
   const getIconForURL = (url: string) => {
     const domain = url.toLowerCase();
     if (domain.includes('github')) return Github;
@@ -94,14 +93,6 @@ const three = ({user}: Props) => {
               </span>
             </h1>
 
-            {/* <div className="flex items-center justify-center">
-              <div className="px-4 py-1.5 rounded-full bg-white/70 border border-slate-200 shadow-sm">
-                <p className="text-xs font-medium text-slate-600">
-                  {initialData.interests}
-                </p>
-              </div>
-            </div> */}
-
             <p className="text-m sm:text-2xl text-slate-600 font-light tracking-wide">
               {user.tagline}
             </p>
@@ -160,15 +151,18 @@ const three = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        <div className="text-center pt-6">
+      {/* Absolute positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 text-center pb-6">
+        <Link href="/products">
           <p className="text-sm text-slate-500">
             Get your own{' '}
             <span className="font-medium text-slate-600">
               TAGO
             </span>
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -22,7 +23,6 @@ type Props = {
   }
 }
 
-// Type the component with the Props type
 const one = ({user}: Props) => {
 
   const getIconForURL = (url: string) => {
@@ -40,16 +40,15 @@ const one = ({user}: Props) => {
 
   const getCandyColor = (url: string) => {
     const domain = url.toLowerCase();
-    // More vibrant candy colors
-    if (domain.includes('github')) return '#9B6B9E'; // Lavender Purple
-    if (domain.includes('twitter')) return '#87CEEB'; // Bubble Gum
-    if (domain.includes('linkedin')) return '#00BFFF'; // Lollipop Blue
-    if (domain.includes('instagram')) return '#FF66B2'; // Cotton Candy
-    if (domain.includes('youtube')) return '#FF3333'; // Cherry Red
-    if (domain.includes('facebook')) return '#1E90FF'; // Dodger Blue
-    if (domain.includes('twitch')) return '#FF69FF'; // Hot Pink
-    if (domain.includes('dev.to')) return '#32CD32'; // Lime Green
-    return '#FF8C69'; // Salmon Pink
+    if (domain.includes('github')) return '#9B6B9E';
+    if (domain.includes('twitter')) return '#87CEEB';
+    if (domain.includes('linkedin')) return '#00BFFF';
+    if (domain.includes('instagram')) return '#FF66B2';
+    if (domain.includes('youtube')) return '#FF3333';
+    if (domain.includes('facebook')) return '#1E90FF';
+    if (domain.includes('twitch')) return '#FF69FF';
+    if (domain.includes('dev.to')) return '#32CD32';
+    return '#FF8C69';
   };
 
   const getPlatformName = (url: string) => {
@@ -93,14 +92,6 @@ const one = ({user}: Props) => {
                 </span>
               </span>
             </h1>
-
-            {/* <div className="flex items-center justify-center">
-              <div className="px-4 py-1.5 rounded-full bg-white/80 border-2 border-pink-400 shadow-md">
-                <p className="text-xs font-medium bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
-                  {initialData.interests}
-                </p>
-              </div>
-            </div> */}
 
             <p className="text-m sm:text-2xl text-gray-700 font-medium tracking-wide">
               {user.tagline}
@@ -158,15 +149,18 @@ const one = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        <div className="text-center pt-6">
+      {/* Absolute positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 text-center pb-6">
+        <Link href="/products">
           <p className="text-sm font-medium text-gray-600">
             Get your own{' '}
             <span className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
               TAGO
             </span>
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

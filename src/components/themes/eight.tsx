@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -147,15 +148,16 @@ const BlackThemeLinks = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        <div className="text-center pt-6">
-          <p className="text-sm font-medium text-gray-500">
-            Get your own{' '}
-            <span className="font-bold text-white">
-              TAGO
-            </span>
-          </p>
-        </div>
+      {/* Absolutely positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
+        <p className="text-sm font-medium text-gray-500">
+          Get your own{' '}
+          <Link href="/products" className="font-bold text-white">
+            TAGO
+          </Link>
+        </p>
       </div>
     </div>
   );

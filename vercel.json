@@ -1,0 +1,34 @@
+{
+    "version": 2,
+    "buildCommand": "npx prisma generate && npm run build",
+    "env": {
+      "NODE_ENV": "production",
+      "DATABASE_URL": "@my_database_url"
+    },
+    "regions": ["bom1"],
+    "functions": {
+      "api/*.js": {
+        "memory": 1024,
+        "maxDuration": 10
+      }
+    },
+    "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "X-XSS-Protection", "value": "1; mode=block" }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/:path*",
+        "destination": "/api/:path*"
+      }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }
+  

@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -148,15 +149,16 @@ const DarkGlassLinks = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        <div className="text-center pt-6">
-          <p className="text-sm font-medium text-gray-400">
-            Get your own{' '}
-            <span className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-              TAGO
-            </span>
-          </p>
-        </div>
+      {/* Absolutely positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
+        <p className="text-sm font-medium text-gray-400">
+          Get your own{' '}
+          <Link href="/products" className="font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 hover:opacity-80 transition-opacity">
+            TAGO
+          </Link>
+        </p>
       </div>
     </div>
   );
