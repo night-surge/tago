@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   distDir: 'build',
+  
   images: {
     disableStaticImages: false,
     remotePatterns: [
