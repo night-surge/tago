@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       });
 
       // Send email
-      const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${resetToken}`;
+      const resetUrl = `/reset-password?token=${resetToken}`;
       
       await transporter.sendMail({
         from: process.env.EMAIL_USER,

@@ -35,7 +35,7 @@ const VerifyEmail = () => {
 
         try {
           const response = await axios.post<VerifyResponse>(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-email`,
+            `/api/auth/verify-email`,
             { token }
           );
           setStatus('success');
@@ -68,7 +68,7 @@ const VerifyEmail = () => {
     setStatus('resending');
     try {
       await axios.post<VerifyResponse>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/resend-verification`,
+        `/api/auth/resend-verification`,
         { email }
       );
       setMessage('Verification email sent successfully! Please check your inbox.');

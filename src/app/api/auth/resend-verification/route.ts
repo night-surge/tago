@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     );
 
     // Create verification URL
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     // Send verification email
     await transporter.sendMail({
