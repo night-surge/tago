@@ -26,15 +26,23 @@ jobs:
           
       - name: Copy files and push
         run: |
-          # Copy all files from repo B to repo A (excluding .git directory)
-          cp -r repo-b/* repo-a/
+          # Remove all contents of Repo A except .git directory
+          find repo-a -mindepth 1 -not -name ".git" -exec rm -rf {} +
+
+          # Copy everything from Repo B to Repo A (excluding .git)
+          cp -a repo-b/. repo-a/
+          
           cd repo-a
           
           # Configure Git
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           
-          # Stage, commit and push changes
-          git add .
-          git commit -m "Sync changes from repository B" || echo "No changes to commit"
-          git push origin main
+          # Check for changes
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git add .
+            git commit -m "Hard sync from Repo B (overwriting all files)"
+            git push origin main --force
+          else
+            echo "No changes to commit"
+          fi
