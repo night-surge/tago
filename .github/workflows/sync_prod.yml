@@ -1,14 +1,7 @@
 name: Sync Repositories prod (main)
 
-on:
-  # Remove automatic trigger on push
-  workflow_dispatch:
-    inputs:
-      confirm_sync:
-        description: 'Are you sure you want to sync repositories? Type "yes" to confirm'
-        required: true
-        type: string
-
+on: push
+  
 jobs:
  
 
