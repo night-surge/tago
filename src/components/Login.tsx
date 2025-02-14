@@ -47,13 +47,13 @@ const Login = () => {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData);
-      
+
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      
+
       const result = await response.json();
 
       if (!response.ok) {
@@ -62,9 +62,9 @@ const Login = () => {
 
       localStorage.setItem('token', result.token);
       localStorage.setItem('user', JSON.stringify(result.user));
-      
+
       router.push(`/${result.user.userName}/edit`);
-      
+
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
@@ -84,10 +84,10 @@ const Login = () => {
 
   return (
     <BackgroundGrid>
-      <div className="relative flex min-h-screen items-center justify-center p-4">
+      <div className="relative flex h-[85vh] items-center justify-center p-4">
         <div className="w-full max-w-md space-y-8 bg-black p-8 rounded-xl border border-white/10">
           <div>
-            <h2 className="text-3xl font-bold text-center text-white mb-8">
+            <h2 className="text-3xl font-semibold text-center text-white mb-8 font-poppins">
               Welcome Back
             </h2>
           </div>
@@ -98,7 +98,7 @@ const Login = () => {
             </div>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="identifier" className="block text-sm font-medium text-gray-300">
                 Username or Email
@@ -111,7 +111,7 @@ const Login = () => {
                 className="mt-1 block w-full rounded-md bg-black border border-white/20 
                          text-white px-3 py-2 focus:border-white focus:ring-1 focus:ring-white
                          outline-none"
-                placeholder="username or email"
+                placeholder="Username or Email"
               />
             </div>
 
@@ -120,6 +120,15 @@ const Login = () => {
                 Password
               </label>
               <PasswordInput id="password" name="password" required />
+            </div>
+
+            <div className="text-center mt-4">
+              <Link
+                href="/forgot-password"
+                className="text-white/60 hover:text-white text-sm transition-colors duration-200"
+              >
+                Forgot your password?
+              </Link>
             </div>
 
             <button
@@ -141,9 +150,9 @@ const Login = () => {
               Don&apos;t have an account? Sign up
             </Link>
           </div>
-          </div>
         </div>
-    </BackgroundGrid> 
+      </div>
+    </BackgroundGrid>
   );
 };
 

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { verify } from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import EditPageClient from './EditPageClient';
-import { addLink, deleteLink, reorderLinks, updateTheme } from './actions';
+import { addLink, deleteLink, reorderLinks, updateBio, updateTheme } from './actions';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const themes = {
@@ -112,6 +112,7 @@ export default async function EditPage(props: PageProps) {
         deleteLink={deleteLink}
         reorderLinks={reorderLinks}
         updateTheme={updateTheme}
+        updateBio={updateBio}
       />
     </div>
   );

@@ -21,6 +21,8 @@ model User {
   isVerified    Boolean   @default(false)
   theme         Int       @default(1)
   Bio           String[]    @default(["Hey there! I am using Tago."])
+  resetToken       String?
+  resetTokenExpiry DateTime?
 
   @@map("users") // This maps the model to a table named "users" in the database
   
