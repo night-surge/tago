@@ -1,18 +1,6 @@
 {
     "version": 2,
-    "buildCommand": "npm run build",
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/next"
-      }
-    ],
-    "build": {
-      "env": {
-        "PRISMA_GENERATE": "true",
-        "NEXT_TELEMETRY_DISABLED": "1"
-      }
-    },
+    "buildCommand": "npx prisma generate && npm run build",
     "env": {
       "NODE_ENV": "production",
       "DATABASE_URL": "@my_database_url"
@@ -28,18 +16,9 @@
       {
         "source": "/(.*)",
         "headers": [
-          {
-            "key": "X-Content-Type-Options",
-            "value": "nosniff"
-          },
-          {
-            "key": "X-Frame-Options",
-            "value": "DENY"
-          },
-          {
-            "key": "X-XSS-Protection",
-            "value": "1; mode=block"
-          }
+          { "key": "X-Content-Type-Options", "value": "nosniff" },
+          { "key": "X-Frame-Options", "value": "DENY" },
+          { "key": "X-XSS-Protection", "value": "1; mode=block" }
         ]
       }
     ],
@@ -52,3 +31,4 @@
     "cleanUrls": true,
     "trailingSlash": false
   }
+  
