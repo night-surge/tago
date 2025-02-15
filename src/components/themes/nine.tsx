@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import { 
   ExternalLink, 
@@ -70,7 +70,7 @@ const LightCheerfulLinks = ({user}: Props) => {
       <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
-          <div className="relative mx-auto w-40 h-40 mb-6">
+          {/* <div className="relative mx-auto w-40 h-40 mb-6">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 blur-lg opacity-70" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-lg">
               <Image
@@ -81,7 +81,7 @@ const LightCheerfulLinks = ({user}: Props) => {
                 priority
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-8xl font-bold tracking-tight">
