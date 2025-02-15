@@ -27,7 +27,6 @@ interface User {
   isVerified: boolean;
 }
 
-
 interface ThemeProps {
   user: {
     name: string;
@@ -96,9 +95,13 @@ export default async function UserPage(props: PageProps) {
     },
   };
 
-
   return (
     <main className="relative min-h-screen">
+      {/* Splash Animation */}
+      <div className="fixed inset-0 bg-black z-[100000] flex items-center justify-center animate-splash-slide">
+        <div className="text-white text-4xl font-bold tracking-widest">TAGO</div>
+      </div>
+      
       {/* Login/Edit Button */}
       <div className="fixed top-4 left-4 z-[99999]">
         <Link href={`/${userName}/edit`} className="block rounded-full bg-black p-2">
