@@ -14,6 +14,8 @@ if (!jwtSecret) {
   throw new Error('Please add your JWT_SECRET to .env.local');
 }
 
+// Email configuration preserved for future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -32,7 +34,7 @@ export async function POST(req: Request) {
 
     const { name, username, email, contact, password } = body;
 
-    console.log("Received signup request:", { name, username, email, contact });
+    // console.log("Received signup request:", { name, username, email, contact });
 
     if (!name || !username || !email || !password) {
       return NextResponse.json(
@@ -69,7 +71,7 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user according to schema
+    // Modified user creation to set isVerified to true by default
     const user = await prisma.user.create({
       data: {
         userName: username,
@@ -79,18 +81,19 @@ export async function POST(req: Request) {
         links: [],
         Bio: ["Hey there! I am using Tago."],
         theme: 1,
-        isVerified: false,
+        isVerified: true, // Changed to true to skip verification
         profilePicture: "https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg"
       }
     });
 
-    console.log("Created user:", { ...user, password: '[REDACTED]' });
+    // console.log("Created user:", { ...user, password: '[REDACTED]' });
 
     if (!user || !user.uid) {
       console.error("User creation failed");
       return NextResponse.json({ message: "User creation failed" }, { status: 500 });
     }
 
+    /* Commented out verification email logic for future use
     // Create verification payload
     const verificationPayload = {
       uid: user.uid,
@@ -127,6 +130,7 @@ export async function POST(req: Request) {
         </div>
       `
     });
+    */
 
     // Create auth payload
     const authPayload = {
@@ -150,7 +154,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: 'Account created successfully. Please check your email for verification.',
+        message: 'Account created successfully', // Removed verification message
         token,
         user: safeUser
       },

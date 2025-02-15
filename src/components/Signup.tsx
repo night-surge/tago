@@ -51,15 +51,15 @@ const Signup = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      router.push(`/verify-email?email=${encodeURIComponent(data.email as string)}`);
-        } catch (err: unknown) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("Something went wrong. Please try again.");
-          }
-        }
-         finally {
+      // Changed to route directly to username page instead of email verification
+      router.push(`/${data.username}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
