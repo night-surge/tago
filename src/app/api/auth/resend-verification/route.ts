@@ -1,5 +1,4 @@
 
-// app/api/auth/resend-verification/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -74,7 +73,7 @@ export async function POST(req: Request) {
     );
 
     // Create verification URL
-    const verificationUrl = `/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `mytago.tech/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     // Send verification email
     await transporter.sendMail({
