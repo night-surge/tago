@@ -28,7 +28,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await fetch('/api/auth/reset-password', {
+      const response = await fetch('mytago.tech/api/auth/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password }),

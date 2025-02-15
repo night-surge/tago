@@ -41,16 +41,13 @@ export async function POST(req: Request) {
       );
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
+    if (password.length < 8) {
       return NextResponse.json(
-        { 
-          message: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number'
-        },
+        { message: 'Password must be at least 8 characters long' },
         { status: 400 }
       );
     }
-
+    
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [

@@ -35,7 +35,7 @@ const VerifyEmail = () => {
 
         try {
           const response = await axios.post<VerifyResponse>(
-            `/api/auth/verify-email`,
+            `mytago.tech/api/auth/verify-email`,
             { token }
           );
           setStatus('success');
@@ -68,7 +68,7 @@ const VerifyEmail = () => {
     setStatus('resending');
     try {
       await axios.post<VerifyResponse>(
-        `/api/auth/resend-verification`,
+        `mytago.tech/api/auth/resend-verification`,
         { email }
       );
       setMessage('Verification email sent successfully! Please check your inbox.');
