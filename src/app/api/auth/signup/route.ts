@@ -32,6 +32,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, username, email, contact, password } = body;
 
     // console.log("Received signup request:", { name, username, email, contact });
