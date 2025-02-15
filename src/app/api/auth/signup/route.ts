@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    
+
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
@@ -106,7 +106,7 @@ export async function POST(req: Request) {
       { expiresIn: '24h' }
     );
 
-    const verificationUrl = `/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `mytago.tech/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
