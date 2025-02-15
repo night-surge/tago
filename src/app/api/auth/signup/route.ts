@@ -109,7 +109,7 @@ export async function POST(req: Request) {
       { expiresIn: '24h' }
     );
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
