@@ -23,7 +23,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
             <NavLink href="/">Home</NavLink>
             <NavLink href="/products">Products</NavLink>
             <NavLink href="/contact">Book a Call</NavLink>
-            <NavLink href="/contact">Manage your Tago</NavLink>
+            <NavLink href="/login">Manage your Tago</NavLink>
           </div>
 
           {/* Mobile menu button */}
