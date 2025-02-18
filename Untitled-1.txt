@@ -1,0 +1,19 @@
+// longest plain in String
+abbbba
+abbbbaaaa
+x2
+//python:
+str="ghhaghagsabbcbbamjjjasbb""feaaabdbaaaff"  "abcd"/1
+check_palin(i, j):
+    
+    for k in range(i, len(str)):
+        if str[k]==str[j]:
+            j--
+    return j-i
+
+max_len_palin=0
+
+for i in range ()
+
+    
+    
