@@ -70,9 +70,10 @@ export async function POST(req: Request) {
       {
         userId: user.uid,
         userName: user.userName,
-        email: user.email
+        email: user.email,
+        role: user.userName === 'admin' ? 'admin' : 'user'
       },
-      jwtSecret,
+      jwtSecret
     );
 
     // Create a safe user object without password
