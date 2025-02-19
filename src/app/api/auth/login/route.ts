@@ -73,7 +73,6 @@ export async function POST(req: Request) {
         email: user.email
       },
       jwtSecret,
-      { expiresIn: '7d' }
     );
 
     // Create a safe user object without password
