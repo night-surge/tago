@@ -20,7 +20,9 @@ export async function middleware(request: NextRequest) {
         role: string
       }
 
-      if (decoded.role !== 'admin') {
+
+      if (decoded.userName !== 'admin') {
+
         return NextResponse.json(
           { error: 'Not authorized - Admin access required' },
           { status: 403 }
