@@ -29,6 +29,7 @@ export async function middleware(request: NextRequest) {
 
       return NextResponse.next()
     } catch (error) {
+      console.error('Error fetching user:', error);
       return NextResponse.json(
         { error: 'Invalid token' },
         { status: 401 }
