@@ -2,28 +2,35 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User } from '@/types/user';
+import { redirect } from 'next/navigation';
 
 export default function AdminPanel() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [sortConfig, setSortConfig] = useState<{ key: keyof User; direction: 'ascending' | 'descending' } | null>(null);
-
   // Fetch users from the API
   useEffect(() => {
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
+   
     try {
       const response = await axios.get<{ users: User[] }>('/api/users', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('admin-token')}`
         }
       });
+      if (response.status === 401) {
+        
+
+        redirect('/login');
+      }
       setUsers(response.data.users);
     } catch (error) {
       console.error('Error fetching users:', error);
+      redirect('/login');
     }
   };
 
