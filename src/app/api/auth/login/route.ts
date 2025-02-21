@@ -64,9 +64,13 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-
+    let token=null
+    if (user.userName ==='admin'){
+      console.log('admin user logging in, returning token')
+      token=jwt.sign("admin",jwtSecret)
+    } else{
     // Create JWT token
-    const token = jwt.sign(
+    token = jwt.sign(
       {
         userId: user.uid,
         userName: user.userName,
@@ -75,7 +79,7 @@ export async function POST(req: Request) {
       },
       jwtSecret
     );
-
+  }
     // Create a safe user object without password
     const safeUser = {
       ...user,
@@ -91,9 +95,6 @@ export async function POST(req: Request) {
       },
       {
         status: 200,
-        headers: {
-          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${7 * 24 * 60 * 60}; SameSite=Lax` // Changed SameSite to Lax
-        }
       }
     );
 

@@ -1,12 +1,47 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { verify, JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+    const authHeader = request.headers.get('authorization')
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+    }
+
+    try {
+      const token = authHeader.split(' ')[1] // Extract token
+      const secret = process.env.JWT_SECRET
+
+      if (!secret) {
+        console.error('JWT_SECRET is not defined in environment variables')
+        return NextResponse.json({ error: 'Server error' }, { status: 500 })
+      }
+
+      const decoded = verify(token, secret) 
+      console.log('Decoded token:', decoded)
+      
+      if (decoded !== 'admin') {
+        return NextResponse.json({ error: 'Not authorized - Admin access required' }, { status: 403 })
+
+      }
+    } catch (error) {
+      console.error('Error verifying token:', error)
+
+      if (error instanceof TokenExpiredError) {
+        return NextResponse.json({ error: 'Token expired' }, { status: 401 })
+      } else if (error instanceof JsonWebTokenError) {
+        return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+      }
+
+      return NextResponse.json({ error: 'Authentication error' }, { status: 401 })
+    }
+
+
+
   try {
-    // Middleware has already handled authentication
-    // We can now safely fetch all users
-    
+
     const users = await prisma.user.findMany({
       select: {
         uid: true,
