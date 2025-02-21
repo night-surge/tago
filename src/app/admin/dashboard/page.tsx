@@ -24,8 +24,7 @@ export default function AdminPanel() {
       });
       if (response.status === 401) {
         
-
-        redirect('/login');
+        redirect('/admin/login');
       }
       setUsers(response.data.users);
     } catch (error) {
