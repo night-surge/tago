@@ -6,6 +6,7 @@ import { verify, JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 export async function GET(request: NextRequest) {
     const authHeader = request.headers.get('Authorization')
     console.log('Auth header:', authHeader)
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
