@@ -31,6 +31,7 @@ const Login = () => {
 
         if (token && user) {
           redirect(`/admin/dashboard`);
+
         }
       } catch (err) {
         console.error('Auth check failed:', err);
@@ -66,6 +67,7 @@ const Login = () => {
       }
 
       localStorage.setItem('admin-token', result.token);
+
 
       router.replace(`/admin/dashboard`);
 
