@@ -55,9 +55,14 @@ export async function POST(req: Request) {
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
-          { userName: username },
-          { email: email.toLowerCase() }
+          { email: email },
+          { userName: username }
         ]
+      },
+      select: {
+        email: true,
+        userName: true,
+        uid: true
       }
     });
 
@@ -84,6 +89,7 @@ export async function POST(req: Request) {
         Bio: ["Hey there! I am using Tago."],
         theme: 1,
         isVerified: false,
+        contactNumber: contact,
         profilePicture: "https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg"
       }
     });
