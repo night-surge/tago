@@ -26,6 +26,8 @@ const Login = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
 

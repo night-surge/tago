@@ -15,11 +15,9 @@ if (!process.env.JWT_SECRET) {
 
 export async function POST(req: Request) {
   try {
-    // Parse the request body
     const body = await req.json();
     const { identifier, password } = body;
 
-    // Validate required fields
     if (!identifier || !password) {
       return NextResponse.json(
         { message: 'All fields are required' },
@@ -27,7 +25,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Find user by username or email (case-insensitive search)
     const user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -56,7 +53,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -65,7 +61,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create JWT token
     const token = jwt.sign(
       {
         userId: user.uid,
@@ -76,7 +71,6 @@ export async function POST(req: Request) {
       { expiresIn: '7d' }
     );
 
-    // Create a safe user object without password
     const safeUser = {
       ...user,
       password: undefined

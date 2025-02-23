@@ -96,13 +96,13 @@ export default async function EditPage(props: PageProps) {
     notFound();
   }
 
-  if (!auth) {
+  if (!auth || auth.userName !== user.userName) {
     redirect('/login');
   }
 
-  if (auth.userName !== user.userName) {
-    redirect(`/${userName}`);
-  }
+  // if (auth.userName !== user.userName) {
+  //   redirect(`/${userName}`);
+  // }
 
   return (
     <div className="bg-black text-white min-h-screen">
