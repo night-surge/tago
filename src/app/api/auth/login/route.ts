@@ -1,3 +1,4 @@
+// app/api/auth/login/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
@@ -61,22 +62,28 @@ export async function POST(req: Request) {
       );
     }
 
+    // Calculate expiration time (7 days)
+    const expiresIn = '7d';
+    const maxAge = 7 * 24 * 60 * 60; // 7 days in seconds
+
+    // Create token with uid (not userId)
     const token = jwt.sign(
       {
-        userId: user.uid,
+        uid: user.uid,
         userName: user.userName,
         email: user.email
       },
       jwtSecret,
-      { expiresIn: '7d' }
+      { expiresIn }
     );
 
+    // Remove password from user object
     const safeUser = {
       ...user,
       password: undefined
     };
 
-    // In your login API route
+    // Return response with token in both body and cookie
     return NextResponse.json(
       {
         message: 'Login successful',
@@ -86,7 +93,7 @@ export async function POST(req: Request) {
       {
         status: 200,
         headers: {
-          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${7 * 24 * 60 * 60}; SameSite=Lax` // Changed SameSite to Lax
+          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${maxAge}; SameSite=Lax`
         }
       }
     );
