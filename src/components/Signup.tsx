@@ -31,7 +31,6 @@ const Signup = () => {
   }
 
   const validateUsername = (username: string) => {
-    // Check for uppercase letters
     if (username !== username.toLowerCase()) {
       setUsernameError("Username must be in lowercase letters only");
       return false;

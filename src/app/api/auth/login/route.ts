@@ -1,17 +1,13 @@
-// app/api/auth/login/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 
-dotenv.config();
-
 const prisma = new PrismaClient();
-const jwtSecret: string = process.env.JWT_SECRET as string;
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('Please add your JWT_SECRET to .env.local');
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+  console.error('JWT_SECRET environment variable is not set');
 }
 
 export async function POST(req: Request) {
@@ -62,28 +58,24 @@ export async function POST(req: Request) {
       );
     }
 
-    // Calculate expiration time (7 days)
-    const expiresIn = '7d';
-    const maxAge = 7 * 24 * 60 * 60; // 7 days in seconds
-
-    // Create token with uid (not userId)
     const token = jwt.sign(
       {
         uid: user.uid,
         userName: user.userName,
         email: user.email
       },
-      jwtSecret,
-      { expiresIn }
+      jwtSecret as string,
+      { expiresIn: '30d' }
     );
 
-    // Remove password from user object
     const safeUser = {
       ...user,
       password: undefined
     };
 
-    // Return response with token in both body and cookie
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30);
+
     return NextResponse.json(
       {
         message: 'Login successful',
@@ -93,7 +85,7 @@ export async function POST(req: Request) {
       {
         status: 200,
         headers: {
-          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${maxAge}; SameSite=Lax`
+          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Expires=${expirationDate.toUTCString()}; SameSite=Lax; Secure`
         }
       }
     );
@@ -101,7 +93,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { message: 'Error logging in' },
+      { message: 'An error occurred during login. Please try again.' },
       { status: 500 }
     );
   } finally {

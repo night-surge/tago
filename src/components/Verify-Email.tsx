@@ -42,13 +42,11 @@ const VerifyEmail = () => {
           setStatus('success');
           setMessage(response.data.message || 'Email verified successfully!');
           
-          // Show redirecting state
           setTimeout(() => {
             setStatus('redirecting');
             setMessage('Redirecting to login...');
           }, 1500);
 
-          // Actual redirect after showing the redirecting state
           setTimeout(() => {
             router.push('/login');
           }, 3000);
@@ -75,7 +73,6 @@ const VerifyEmail = () => {
       setMessage('Verification email sent successfully! Please check your inbox.');
       setStatus('initial');
       
-      // Start cooldown
       setResendCooldown(60);
       const interval = setInterval(() => {
         setResendCooldown((current) => {

@@ -35,13 +35,14 @@ const Login = () => {
       try {
         const { isAuthenticated, user } = await checkAuthStatus();
         
-        // If already authenticated, redirect to user page
         if (isAuthenticated && user) {
           router.push(`/${user.userName}`);
           return;
         }
       } catch (err) {
         console.error('Auth check failed:', err);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
       } finally {
         setIsInitialLoading(false);
       }
