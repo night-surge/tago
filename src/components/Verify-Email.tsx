@@ -59,7 +59,7 @@ const VerifyEmail = () => {
 
       verifyEmail();
     }
-  }, [token,url, router]);
+  }, [token, router]);
 
   const handleResendVerification = async () => {
     if (!email || resendCooldown > 0) return;
