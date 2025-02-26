@@ -4,6 +4,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 
 const prisma = new PrismaClient();
+const url = process.env.NEXT_PUBLIC_URL;
 
 // Email configuration
 const transporter = nodemailer.createTransport({
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
       });
 
       // Send email
-      const resetUrl = `/reset-password?token=${resetToken}`;
+      const resetUrl = `${url}/reset-password?token=${resetToken}`;
       
       await transporter.sendMail({
         from: process.env.EMAIL_USER,

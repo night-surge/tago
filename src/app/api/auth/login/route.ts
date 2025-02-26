@@ -1,25 +1,20 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 
-dotenv.config();
-
 const prisma = new PrismaClient();
-const jwtSecret: string = process.env.JWT_SECRET as string;
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('Please add your JWT_SECRET to .env.local');
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+  console.error('JWT_SECRET environment variable is not set');
 }
 
 export async function POST(req: Request) {
   try {
-    // Parse the request body
     const body = await req.json();
     const { identifier, password } = body;
 
-    // Validate required fields
     if (!identifier || !password) {
       return NextResponse.json(
         { message: 'All fields are required' },
@@ -27,7 +22,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Find user by username or email (case-insensitive search)
     const user = await prisma.user.findFirst({
       where: {
         OR: [
@@ -56,7 +50,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -72,21 +65,22 @@ export async function POST(req: Request) {
     // Create JWT token
     token = jwt.sign(
       {
-        userId: user.uid,
+        uid: user.uid,
         userName: user.userName,
         email: user.email,
         role: user.userName === 'admin' ? 'admin' : 'user'
       },
       jwtSecret
     );
-  }
-    // Create a safe user object without password
+
     const safeUser = {
       ...user,
       password: undefined
     };
 
-    // In your login API route
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30);
+
     return NextResponse.json(
       {
         message: 'Login successful',
@@ -95,13 +89,16 @@ export async function POST(req: Request) {
       },
       {
         status: 200,
+        headers: {
+          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Expires=${expirationDate.toUTCString()}; SameSite=Lax; Secure`
+        }
       }
     );
 
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { message: 'Error logging in' },
+      { message: 'An error occurred during login. Please try again.' },
       { status: 500 }
     );
   } finally {

@@ -4,6 +4,12 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import BackgroundGrid from './BackgroundGrid';
 import PasswordInput from './PasswordInput';
+import { checkAuthStatus, saveAuthData } from '../utils/authUtils';
+
+interface FormData {
+  identifier: string;
+  password: string;
+}
 
 const LoadingSpinner = () => {
   return (
@@ -23,15 +29,14 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  // Check if user is already logged in on component mount
   useEffect(() => {
-    const checkAuthStatus = async () => {
+    const checkAuth = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-
-        if (token && user) {
-          const userData = JSON.parse(user);
-          router.push(`/${userData.userName}`);
+        const { isAuthenticated, user } = await checkAuthStatus();
+        
+        if (isAuthenticated && user) {
+          router.push(`/${user.userName}`);
           return;
         }
       } catch (err) {
@@ -43,7 +48,7 @@ const Login = () => {
       }
     };
 
-    checkAuthStatus();
+    checkAuth();
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +58,7 @@ const Login = () => {
 
     try {
       const formData = new FormData(e.currentTarget);
-      const data = Object.fromEntries(formData);
+      const data = Object.fromEntries(formData) as unknown as FormData;
 
       const response = await fetch('/api/auth/login', {
         method: 'POST',
@@ -67,9 +72,10 @@ const Login = () => {
         throw new Error(result.message || 'Invalid credentials');
       }
 
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('user', JSON.stringify(result.user));
-
+      // Save authentication data to localStorage
+      saveAuthData(result.token, result.user);
+      
+      // Redirect to edit page
       router.push(`/${result.user.userName}/edit`);
 
     } catch (err) {

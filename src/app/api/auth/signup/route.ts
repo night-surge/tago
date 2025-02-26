@@ -9,13 +9,12 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 const jwtSecret: string = process.env.JWT_SECRET as string;
+const url = process.env.NEXT_PUBLIC_URL;
 
 if (!jwtSecret) {
   throw new Error('Please add your JWT_SECRET to .env.local');
 }
 
-// Email configuration preserved for future use
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -32,10 +31,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, username, email, contact, password } = body;
 
-    // console.log("Received signup request:", { name, username, email, contact });
+    console.log("Received signup request:", { name, username, email, contact });
 
     if (!name || !username || !email || !password) {
       return NextResponse.json(
@@ -44,9 +42,12 @@ export async function POST(req: Request) {
       );
     }
 
-    if (password.length < 8) {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
       return NextResponse.json(
-        { message: 'Password must be at least 8 characters long' },
+        { 
+          message: 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number'
+        },
         { status: 400 }
       );
     }
@@ -54,9 +55,14 @@ export async function POST(req: Request) {
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
-          { userName: username },
-          { email: email.toLowerCase() }
+          { email: email },
+          { userName: username }
         ]
+      },
+      select: {
+        email: true,
+        userName: true,
+        uid: true
       }
     });
 
@@ -72,7 +78,7 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Modified user creation to set isVerified to true by default
+    // Create new user according to schema
     const user = await prisma.user.create({
       data: {
         userName: username,
@@ -82,19 +88,19 @@ export async function POST(req: Request) {
         links: [],
         Bio: ["Hey there! I am using Tago."],
         theme: 1,
-        isVerified: true, // Changed to true to skip verification
+        isVerified: false,
+        contactNumber: contact,
         profilePicture: "https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg"
       }
     });
 
-    // console.log("Created user:", { ...user, password: '[REDACTED]' });
+    console.log("Created user:", { ...user, password: '[REDACTED]' });
 
     if (!user || !user.uid) {
       console.error("User creation failed");
       return NextResponse.json({ message: "User creation failed" }, { status: 500 });
     }
 
-    /* Commented out verification email logic for future use
     // Create verification payload
     const verificationPayload = {
       uid: user.uid,
@@ -110,7 +116,7 @@ export async function POST(req: Request) {
       { expiresIn: '24h' }
     );
 
-    const verificationUrl = `mytago.tech/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `${url}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -131,7 +137,6 @@ export async function POST(req: Request) {
         </div>
       `
     });
-    */
 
     // Create auth payload
     const authPayload = {
@@ -155,7 +160,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        message: 'Account created successfully', // Removed verification message
+        message: 'Account created successfully. Please check your email for verification.',
         token,
         user: safeUser
       },

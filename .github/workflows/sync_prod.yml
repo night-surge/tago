@@ -18,7 +18,7 @@ jobs:
       - name: Checkout target repository (Repo A)
         uses: actions/checkout@v4
         with:
-          repository: g4ze/tago
+          repository: my-tago/tago
           token: ${{ secrets.PAT_TOKEN }}
           path: repo-a
           fetch-depth: 0  # Fetch complete history
