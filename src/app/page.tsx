@@ -1,5 +1,4 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -10,19 +9,9 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import GlobalStyles from '@/components/GlobalStyles';
+import ScrollNavWrapper from '@/components/ScrollNavWrapper';
 
 const LandingPage = () => {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
       <Head>
@@ -32,9 +21,9 @@ const LandingPage = () => {
       </Head>
       <GlobalStyles />
       <div className="min-h-screen bg-black text-white overflow-hidden">
-        <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl border-b border-zinc-800' : ''}`}>
+        <ScrollNavWrapper>
           <Navbar />
-        </nav>
+        </ScrollNavWrapper>
         
         <HeroSection />
         <FeaturedDesigns />
