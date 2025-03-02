@@ -18,14 +18,12 @@ const TestimonialsSection = () => {
       name: "David Park",
       role: "Marketing Director",
       content: "Tago has simplified our networking process. One tap and our entire team's contact info is shared professionally.",
-      // Using initials-based avatar
       image: "https://avatar.iran.liara.run/username?username=David+Park"
     },
     {
       name: "Emma Watson",
       role: "Tech Entrepreneur",
       content: "The premium feel of Tago cards perfectly matches our brand image. The seamless sharing experience is incredible.",
-      // Using initials-based avatar
       image: "https://avatar.iran.liara.run/username?username=Emma+Watson"
     }
   ];
@@ -38,7 +36,6 @@ const TestimonialsSection = () => {
       variants={stagger}
       className="py-20 px-4 bg-zinc-900/20 relative"
     >
-      {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0 bg-[url('/api/placeholder/20/20')] bg-repeat opacity-5"></div>
       </div>
@@ -87,7 +84,6 @@ const TestimonialsSection = () => {
         </div>
       </div>
       
-      {/* Visual section separator */}
       <div className="absolute bottom-0 left-0 right-0">
         <div className="section-divider"></div>
         <div className="h-12 w-full bg-gradient-to-b from-zinc-900/20 to-black"></div>
