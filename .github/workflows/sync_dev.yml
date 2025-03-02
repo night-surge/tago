@@ -2,7 +2,8 @@ name: Sync Repositories dev (develop)
 on: 
   push:
     branches:
-      - develop 
+      - develop
+  workflow_dispatch:  # Allows manual trigger
   
 jobs:
   sync-repos:
