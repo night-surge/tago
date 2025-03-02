@@ -60,7 +60,8 @@ jobs:
             git add -A
             git commit -m "Sync: Update from source repository $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "Pushing changes..."
-            git push origin develop
+            git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/my-tago/tago.git develop
+
           else
             echo "No changes detected"
           fi
