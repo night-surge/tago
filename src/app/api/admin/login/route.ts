@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +14,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
 
-    const passwordMatch = password==admin.password;
+    const passwordMatch = password === admin.password;
     if (!passwordMatch) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
@@ -26,7 +25,7 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json({ token });
-  } catch (error) {
+  } catch (_) {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 } 

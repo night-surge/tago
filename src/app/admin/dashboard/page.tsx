@@ -29,6 +29,30 @@ export default function AdminDashboard() {
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
   const router = useRouter();
 
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch('/api/admin/users', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 401) {
+        localStorage.removeItem('adminToken');
+        router.push('/admin/login');
+        return;
+      }
+
+      const data = await response.json();
+      setUsers(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -36,7 +60,7 @@ export default function AdminDashboard() {
       return;
     }
     fetchUsers();
-  }, []);
+  }, [router]);
 
   // Apply search and sort whenever users, searchTerm, or sort parameters change
   useEffect(() => {
@@ -70,29 +94,6 @@ export default function AdminDashboard() {
     
     setFilteredUsers(result);
   }, [users, searchTerm, sortField, sortOrder]);
-
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem('adminToken');
-      const response = await fetch('/api/admin/users', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.status === 401) {
-        localStorage.removeItem('adminToken');
-        router.push('/admin/login');
-        return;
-      }
-
-      const data = await response.json();
-      setUsers(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
 
   const handleDelete = async (uid: number) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
