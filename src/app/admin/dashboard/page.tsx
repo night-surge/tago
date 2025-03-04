@@ -11,7 +11,6 @@ interface User {
   isVerified: boolean;
   theme: number;
   profilePicture: string;
-  contactNumber: string | null;
   links: string[];
   Bio: string[];
 }
@@ -27,31 +26,8 @@ export default function AdminDashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('uid');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [render, setRender] = useState(false);
   const router = useRouter();
-
-  const fetchUsers = async () => {
-    try {
-      const token = localStorage.getItem('adminToken');
-      const response = await fetch('/api/admin/users', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (response.status === 401) {
-        localStorage.removeItem('adminToken');
-        router.push('/admin/login');
-        return;
-      }
-
-      const data = await response.json();
-      setUsers(data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -59,8 +35,31 @@ export default function AdminDashboard() {
       router.push('/admin/login');
       return;
     }
+    const fetchUsers = async () => {
+      try {
+        const token = localStorage.getItem('adminToken');
+        const response = await fetch('/api/admin/users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+    
+        if (response.status === 401) {
+          localStorage.removeItem('adminToken');
+          router.push('/admin/login');
+          return;
+        }
+    
+        const data = await response.json();
+        setUsers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+  
     fetchUsers();
-  }, [router]);
+  }, [render]);
 
   // Apply search and sort whenever users, searchTerm, or sort parameters change
   useEffect(() => {
@@ -95,6 +94,7 @@ export default function AdminDashboard() {
     setFilteredUsers(result);
   }, [users, searchTerm, sortField, sortOrder]);
 
+
   const handleDelete = async (uid: number) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
 
@@ -114,8 +114,7 @@ export default function AdminDashboard() {
         router.push('/admin/login');
         return;
       }
-
-      fetchUsers();
+      setRender(!render);
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -140,7 +139,7 @@ export default function AdminDashboard() {
       }
 
       setEditingUser(null);
-      fetchUsers();
+      setRender(!render);
     } catch (error) {
       console.error('Error updating user:', error);
     }
@@ -170,6 +169,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
+        {/* Header section */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Admin Dashboard
@@ -204,6 +204,7 @@ export default function AdminDashboard() {
           </div>
         </div>
         
+        {/* Table section */}
         <div className="overflow-x-auto rounded-lg border border-gray-700">
           <table className="min-w-full divide-y divide-gray-700">
             <thead className="bg-gray-800">

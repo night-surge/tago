@@ -10,7 +10,8 @@ const verifyAdminToken = (req: Request) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     return decoded;
-  } catch (_) {
+  } catch (error) {
+    console.error('Token verification error:', error);
     return null;
   }
 };
@@ -38,7 +39,8 @@ export async function GET(req: Request) {
     });
 
     return NextResponse.json(users);
-  } catch (_) {
+  } catch (error) {
+    console.error('Error fetching users:', error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -58,7 +60,8 @@ export async function DELETE(req: Request) {
     });
 
     return NextResponse.json(deletedUser);
-  } catch (_) {
+  } catch (error) {
+    console.error('Error deleting user:', error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
@@ -79,7 +82,8 @@ export async function PATCH(req: Request) {
     });
 
     return NextResponse.json(updatedUser);
-  } catch (_) {
+  } catch (error) {
+    console.error('Error updating user:', error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 } 

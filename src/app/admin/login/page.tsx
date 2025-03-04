@@ -30,7 +30,8 @@ export default function AdminLogin() {
       } else {
         setError(data.error || 'Login failed');
       }
-    } catch (_) {
+    } catch (error) {
+      console.error('Login error:', error);
       setError('An error occurred during login');
     }
   };
