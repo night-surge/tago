@@ -66,7 +66,8 @@ async function getUserData(userName: string): Promise<User | null> {
 
     return user;
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error('Error fetching user:');
+    console.dir(error, { depth: null }); // This may provide more information
     throw new Error('Failed to fetch user data');
   }
 }

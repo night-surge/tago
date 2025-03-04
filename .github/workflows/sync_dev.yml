@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
           echo "Contents of current directory: $(ls -la)"
+
           
           # Ensure target directory exists
           if [ ! -d "repo-a" ]; then
@@ -60,6 +61,7 @@ jobs:
             git add -A
             git commit -m "Sync: Update from source repository $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "Pushing changes..."
+
             git push origin develop
           else
             echo "No changes detected"

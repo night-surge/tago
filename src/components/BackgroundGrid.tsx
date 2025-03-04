@@ -9,7 +9,6 @@ const BackgroundGrid = ({ className, children }: BackgroundGridProps) => {
   return (
     <div className={`relative min-h-screen bg-black ${className || ''}`}>
       <div className="absolute inset-0">
-        {/* Large grid */}
         <div 
           className="absolute inset-0"
           style={{
@@ -22,7 +21,6 @@ const BackgroundGrid = ({ className, children }: BackgroundGridProps) => {
           }}
         />
         
-        {/* Small grid */}
         <div 
           className="absolute inset-0"
           style={{
