@@ -22,14 +22,39 @@ export default {
       },
       animation: {
         shimmer: "shimmer 2s linear infinite",
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.5s ease-out',
+      },
+      perspective: {
+        '1000': '1000px',
+        '2000': '2000px',
       },
       keyframes: {
         shimmer: {
           "0%": { backgroundPosition: "200% 0" },
           "100%": { backgroundPosition: "-200% 0" },
         },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.perspective-1000': {
+          perspective: '1000px',
+        },
+        '.perspective-2000': {
+          perspective: '2000px',
+        },
+      })
+    },
+  ],
 } satisfies Config;

@@ -59,3 +59,18 @@
   pointer-events: none;
 }
 
+/* Add these styles for the 3D card effect */
+/* .perspective-[1000px] {
+  perspective: 1000px;
+} */
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
