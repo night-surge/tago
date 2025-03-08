@@ -9,6 +9,7 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 const jwtSecret: string = process.env.JWT_SECRET as string;
+const url = process.env.NEXT_PUBLIC_URL;
 
 if (!jwtSecret) {
   throw new Error('Please add your JWT_SECRET to .env.local');
@@ -54,9 +55,14 @@ export async function POST(req: Request) {
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
-          { userName: username },
-          { email: email.toLowerCase() }
+          { email: email },
+          { userName: username }
         ]
+      },
+      select: {
+        email: true,
+        userName: true,
+        uid: true
       }
     });
 
@@ -83,6 +89,7 @@ export async function POST(req: Request) {
         Bio: ["Hey there! I am using Tago."],
         theme: 1,
         isVerified: false,
+        contactNumber: contact,
         profilePicture: "https://ia801307.us.archive.org/1/items/instagram-plain-round/instagram%20dip%20in%20hair.jpg"
       }
     });
@@ -109,7 +116,7 @@ export async function POST(req: Request) {
       { expiresIn: '24h' }
     );
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
+    const verificationUrl = `${url}/verify-email?token=${verificationToken}&email=${encodeURIComponent(email)}`;
     
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -143,7 +150,7 @@ export async function POST(req: Request) {
     const token = jwt.sign(
       authPayload,
       jwtSecret,
-      { expiresIn: '7d' }
+      { expiresIn: '2h' }
     );
 
     const safeUser = {

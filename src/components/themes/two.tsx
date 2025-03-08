@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -12,8 +13,6 @@ import {
   Twitch,
   Globe} from 'lucide-react';
 
-
-
 type Props = {
   user: {
     name: string;
@@ -23,7 +22,6 @@ type Props = {
   }
 }
 
-// Type the component with the Props type
 const two = ({user}: Props) => {
 
   const getIconForURL = (url:string) => {
@@ -70,19 +68,18 @@ const two = ({user}: Props) => {
       <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
-            <div className="relative mx-auto w-40 h-40 mb-6">
+            {/* <div className="relative mx-auto w-40 h-40 mb-6">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 blur-lg opacity-20 animate-pulse" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-gray-200/50 shadow-lg">
               <Image
               src={user.picture}
               alt="Profile"
-              width={160}
-              height={160}
+              fill
               className="object-cover"
               priority
               />
             </div>
-            </div>
+            </div> */}
 
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-8xl font-bold tracking-tight">
@@ -93,14 +90,6 @@ const two = ({user}: Props) => {
                 </span>
               </span>
             </h1>
-
-            {/* <div className="flex items-center justify-center">
-              <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-50 via-purple-50 to-indigo-50 border border-gray-200/50 shadow-sm">
-                <p className="text-xs font-medium bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
-                  {initialData.interests}
-                </p>
-              </div>
-            </div> */}
 
             {/* Tagline */}
             <p className="text-m sm:text-2xl text-gray-600 font-light tracking-wide">
@@ -163,16 +152,18 @@ const two = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        {/* TAGO branding */}
-        <div className="text-center pt-6">
+      {/* Absolute positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 text-center pb-6">
+        <Link href="/products">
           <p className="text-sm text-gray-500">
-            Get you own{' '}
+            Get your own{' '}
             <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
               TAGO
             </span>
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   );

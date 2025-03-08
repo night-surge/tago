@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { themeStyles } from '@/types/theme';
 
 interface AddLinkButtonProps {
   addLink: (userName: string, link: string) => Promise<void>;
@@ -10,13 +9,11 @@ interface AddLinkButtonProps {
   themeNumber: number;
 }
 
-export default function AddLinkButton({ addLink, userName, themeNumber }: AddLinkButtonProps) {
+export default function AddLinkButton({ addLink, userName }: AddLinkButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [link, setLink] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  
-  const styles = themeStyles[themeNumber];
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,15 +34,15 @@ export default function AddLinkButton({ addLink, userName, themeNumber }: AddLin
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className={`${styles.buttonPrimary} px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300`}
+        className="px-4 py-2 rounded-lg border border-zinc-800 text-white hover:border-white transition-all duration-300"
       >
         Add Link
       </button>
 
       {isModalOpen && (
-        <div className={`fixed inset-0 flex items-center justify-center z-[9999] ${styles.modalOverlay}`}>
-          <div className={`${styles.modal} p-6 w-full max-w-md mx-auto`}>
-            <h3 className="text-lg font-semibold mb-4">Add New Link</h3>
+        <div className="fixed inset-0 flex items-center justify-center z-[9999] bg-black/80">
+          <div className="bg-black border border-zinc-800 p-6 w-full max-w-md mx-auto rounded-lg">
+            <h3 className="text-lg font-semibold mb-4 text-white">Add New Link</h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -53,7 +50,7 @@ export default function AddLinkButton({ addLink, userName, themeNumber }: AddLin
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
                 placeholder="Enter URL..."
-                className={`w-full px-4 py-2 rounded-lg ${styles.input}`}
+                className="w-full px-4 py-2 rounded-lg bg-black border border-zinc-800 text-white placeholder-zinc-500 focus:border-white focus:outline-none transition-colors"
                 required
               />
               
@@ -61,14 +58,14 @@ export default function AddLinkButton({ addLink, userName, themeNumber }: AddLin
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className={`${styles.buttonSecondary} px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200`}
+                  className="px-4 py-2 rounded-lg border border-zinc-800 text-zinc-400 hover:text-white hover:border-white transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`${styles.buttonPrimary} px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50`}
+                  className="px-4 py-2 rounded-lg border border-white text-white hover:bg-white hover:text-black transition-all duration-200 disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-white"
                 >
                   {isLoading ? 'Adding...' : 'Add Link'}
                 </button>

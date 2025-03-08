@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": " next build",
     "start": "next start",
     "seed": "node prisma/seed.js",
     "lint": "next lint"
@@ -19,11 +19,12 @@
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
+    "framer-motion": "^12.4.7",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",
     "mongoose": "^8.10.0",
     "motion": "^12.4.1",
-    "next": "^15.1.6",
+    "next": "^15.1.7",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.0",
     "pg": "^8.13.1",

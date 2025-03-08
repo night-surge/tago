@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import Link from 'next/link';
 import { 
   ExternalLink, 
   Github, 
@@ -69,19 +69,18 @@ const BlackThemeLinks = ({user}: Props) => {
       <div className="max-w-3xl mx-auto px-8 py-10 space-y-6 relative z-20">
         <div className="text-center space-y-4">
           {/* Profile Photo Section */}
-          <div className="relative mx-auto w-40 h-40 mb-6">
+          {/* <div className="relative mx-auto w-40 h-40 mb-6">
             <div className="absolute inset-0 rounded-full bg-white/10 blur-lg opacity-20" />
             <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/20 shadow-2xl">
               <Image
                 src={user.picture}
                 alt="Profile"
-                width={160}
-                height={160}
+                fill
                 className="object-cover"
                 priority
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-8xl font-bold tracking-tight">
@@ -148,15 +147,16 @@ const BlackThemeLinks = ({user}: Props) => {
             );
           })}
         </div>
+      </div>
 
-        <div className="text-center pt-6">
-          <p className="text-sm font-medium text-gray-500">
-            Get your own{' '}
-            <span className="font-bold text-white">
-              TAGO
-            </span>
-          </p>
-        </div>
+      {/* Absolutely positioned footer */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
+        <p className="text-sm font-medium text-gray-500">
+          Get your own{' '}
+          <Link href="/products" className="font-bold text-white">
+            TAGO
+          </Link>
+        </p>
       </div>
     </div>
   );

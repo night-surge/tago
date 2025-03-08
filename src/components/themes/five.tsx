@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { 
   ExternalLink, 
   Github, 
@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Music
 } from "lucide-react";
+import Link from "next/link";
 
 type Props = {
   user: {
@@ -19,6 +20,7 @@ type Props = {
     tagline: string;
     links: string[];
     picture: string;
+    isVerified: boolean;
   }
 }
 
@@ -34,15 +36,14 @@ const getIconForURL = (url: string) => {
 };
 
 const getBrandColor = (url: string) => {
-  // Vibrant pastel colors
   const domain = url.toLowerCase();
-  if (domain.includes('github')) return '#FF9AA2';  // Pastel Red
-  if (domain.includes('twitter')) return '#86E3CE';  // Pastel Mint
-  if (domain.includes('linkedin')) return '#B5B8FF';  // Pastel Blue
-  if (domain.includes('instagram')) return '#FFB5E8';  // Pastel Pink
-  if (domain.includes('youtube')) return '#FFC8A2';  // Pastel Orange
-  if (domain.includes('dev.to')) return '#E7FFAC';  // Pastel Yellow
-  return '#DCD3FF';  // Pastel Purple
+  if (domain.includes('github')) return '#FF9AA2';
+  if (domain.includes('twitter')) return '#86E3CE';
+  if (domain.includes('linkedin')) return '#B5B8FF';
+  if (domain.includes('instagram')) return '#FFB5E8';
+  if (domain.includes('youtube')) return '#FFC8A2';
+  if (domain.includes('dev.to')) return '#E7FFAC';
+  return '#DCD3FF';
 };
 
 const getPlatformName = (url: string) => {
@@ -54,16 +55,16 @@ const getPlatformName = (url: string) => {
   }
 };
 
-const TopNavCTA = () => (
-  <div className="absolute left-0 right-0 top-0 flex justify-end p-3 sm:p-4 z-30">
-    <a
-      href="#get-started"
+const FooterCTA = () => (
+  <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+    <Link
+      href="/products"
       className="group flex items-center space-x-2 bg-[#2A2A3C] text-white px-3 py-2 sm:px-6 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-all duration-500 hover:bg-[#3A3A4C] border border-[#4A4A5C] hover:border-[#FFB5E8]"
     >
       <Music className="w-3 h-3 sm:w-4 sm:h-4 text-[#FFB5E8] animate-bounce" />
-      <span className="bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] text-transparent bg-clip-text">Get your Tago card</span>
+      <span className="bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] text-transparent bg-clip-text">Get your own TAGO</span>
       <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform duration-500 text-[#86E3CE]" />
-    </a>
+    </Link>
   </div>
 );
 
@@ -134,23 +135,21 @@ const five = ({user}: Props) => {
       </div>
 
       <div className="relative z-20">
-        <TopNavCTA />
-        
         <div className="max-w-3xl mx-auto px-4 pt-16 sm:pt-20 pb-8 sm:pb-16 space-y-8 sm:space-y-12">
           <div className="text-center space-y-6 sm:space-y-8">
-            <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
+            {/* <div className="relative mx-auto w-24 h-24 sm:w-36 sm:h-36 mb-6 sm:mb-8">
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] blur-2xl opacity-20 animate-pulse" />
               <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#4A4A5C] shadow-lg group">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
-              <Image
-                src={user.picture}
-                alt="Profile"
-                fill
-                sizes="(max-width: 640px) 96px, 144px"
-                className="object-cover transition-all duration-500"
-              />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FFB5E8] to-[#86E3CE] opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+                <Image
+                  src={user.picture}
+                  alt="Profile"
+                  fill
+                  sizes="(max-width: 640px) 96px, 144px"
+                  className="object-cover transition-all duration-500"
+                />
               </div>
-            </div>
+            </div> */}
 
             <div className="space-y-3 sm:space-y-4">
               <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight">
@@ -158,7 +157,6 @@ const five = ({user}: Props) => {
                   {user.name}
                 </span>
               </h1>
-              {/* <p className="text-lg sm:text-xl text-[#B5B8FF]">{SAMPLE_DATA.tagline}</p> */}
               <p className="text-base sm:text-lg text-white/50 max-w-2xl mx-auto">{user.tagline}</p>
             </div>
           </div>
@@ -168,8 +166,11 @@ const five = ({user}: Props) => {
               <SocialCard key={index} link={link} />
             ))}
           </div>
+
+          
         </div>
       </div>
+      <FooterCTA />
     </div>
   );
 };

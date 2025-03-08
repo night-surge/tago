@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  distDir: 'build',
+
   images: {
     disableStaticImages: false,
     remotePatterns: [
