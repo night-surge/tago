@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - main 
-  
+  workflow_dispatch: # Added manual trigger
+
 jobs:
   sync-repos:
     runs-on: ubuntu-latest
@@ -18,7 +19,7 @@ jobs:
       - name: Checkout target repository (Repo A)
         uses: actions/checkout@v4
         with:
-          repository: g4ze/tago
+          repository: my-tago/tago
           token: ${{ secrets.PAT_TOKEN }}
           path: repo-a
           fetch-depth: 0  # Fetch complete history
@@ -35,15 +36,22 @@ jobs:
             exit 1
           fi
           
+          # Create temporary exclusion file for rsync
+          cat > exclude.txt << EOL
+          .git
+          .github
+          EOL
+          
           # Remove contents of Repo A (excluding .git)
           echo "Cleaning repo-a directory..."
           cd repo-a
-          git ls-files | grep -v "^.git/" | xargs rm -f
+          find . -type f -not -path "./.git/*" -not -path "./.github/*" -delete
+          find . -type d -empty -not -path "./.git*" -not -path "./.github*" -delete 2>/dev/null || true
           cd ..
           
-          # Copy files from Repo B to Repo A
+          # Copy files from Repo B to Repo A using rsync for better error handling
           echo "Copying files from repo-b to repo-a..."
-          cp -rv repo-b/* repo-a/ || {
+          rsync -av --exclude-from=exclude.txt repo-b/ repo-a/ || {
             echo "Error during file copy"
             exit 1
           }
@@ -62,7 +70,11 @@ jobs:
             git add -A
             git commit -m "Sync: Update from source repository $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "Pushing changes..."
-            git push origin main
+            git push origin main || {
+              echo "Push failed, trying to pull and push again..."
+              git pull --rebase origin main
+              git push origin main
+            }
           else
             echo "No changes detected"
           fi
