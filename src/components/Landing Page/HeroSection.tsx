@@ -1,129 +1,134 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import RotatingCard from '@/components/Landing Page/RotatingCard';
+import Head from 'next/head';
 
 const HeroSection = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 768);
-    
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
-      {!isMobile && (
-        <div className="relative min-h-screen flex items-center justify-center px-4 pt-5">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
-          </div>
-          <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-2 gap-12 items-center py-12">
-            <div className="text-left">
-              <div className="inline-block mb-4">
-                <span className="px-4 py-2 rounded-full text-sm bg-zinc-900/80 border border-zinc-700 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-zinc-400" />
-                  Tap and Go Technology
-                </span>
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6">
-                Share Your World
-                <span className="block bg-gradient-to-r from-zinc-400 to-white text-transparent bg-clip-text">
-                  With One Tap
-                </span>
-              </h1>
-              <p className="text-lg text-zinc-400 mb-8 max-w-md">
-                Experience the future of networking with Tago&apos;s premium NFC cards. Share your complete digital identity instantly.
-              </p>
-              <div className="flex flex-row gap-4 justify-start">
-                <Link href="/login">
-                  <button className="px-8 py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">
-                    <span className="flex items-center justify-center font-medium">
-                      Get Your Card
-                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </button>
-                </Link>
-                <Link href="/products">
-                  <button className="px-8 py-4 rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-300 transform hover:scale-105 border border-zinc-700">
-                    See Designs
-                  </button>
-                </Link>
-              </div>
-            </div>
-            <div className="flex justify-center items-center scale-110">
-              <RotatingCard />
-            </div>
-          </div>
-          
-          <div className="absolute bottom-0 left-0 right-0">
-            <div className="h-1 w-full bg-zinc-800"></div>
-          </div>
+      <Head>
+        <title>Tago - Premium NFC Business Cards for Instant Digital Identity Sharing</title>
+        <meta name="description" content="Experience the future of networking with Tago's premium NFC cards. Share your complete digital identity with a single tap." />
+        <meta name="keywords" content="NFC cards, digital business cards, networking, tap and go, digital identity" />
+        <meta property="og:title" content="Tago - Share Your World With One Tap" />
+        <meta property="og:description" content="Premium NFC cards for seamless digital identity sharing. The future of networking is here." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/images/tago-card-preview.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Tago - Premium NFC Business Cards" />
+        <meta name="twitter:description" content="Share your complete digital identity instantly with Tago's premium NFC cards." />
+        <link rel="canonical" href="https://tagocard.com" />
+      </Head>
+
+      {/* Desktop version */}
+      <div className="relative min-h-screen flex items-center justify-center px-4 pt-5 hidden md:flex" aria-label="Tago NFC Card Hero Section">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
         </div>
-      )}
-      
-      {isMobile && (
-        <div className="relative h-screen w-screen flex flex-col justify-between px-4 pt-8 overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
-          </div>
-          
-          <div className="relative z-10 flex flex-col h-full py-8">
-            <div className="text-center mt-4">
-              <div className="inline-block mb-4">
-                <span className="px-3 py-1.5 rounded-full text-xs bg-zinc-900/80 border border-zinc-700 flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-zinc-400" />
-                  Tap and Go Technology
-                </span>
-              </div>
-              <h1 className="text-4xl font-bold mb-4">
-                Share Your World
-                <span className="block bg-gradient-to-r from-zinc-400 to-white text-transparent bg-clip-text">
-                  With One Tap
-                </span>
-              </h1>
-              <p className="text-base text-zinc-400 mb-6 max-w-xs mx-auto">
-                Experience the future of networking with Tago&apos;s premium NFC cards.
-              </p>
+        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-2 gap-12 items-center py-12">
+          <div className="text-left">
+            <div className="inline-block mb-4">
+              <span className="px-4 py-2 rounded-full text-sm bg-zinc-900/80 border border-zinc-700 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-zinc-400" aria-hidden="true" />
+                <span>Tap and Go Technology</span>
+              </span>
             </div>
-            
-            <div className="flex justify-center items-center my-4 scale-90">
-              <RotatingCard />
-            </div>
-            
-            <div className="flex flex-col gap-3 mt-auto mb-8">
-              <Link href="/login" className="w-full">
-                <button className="w-full px-6 py-3.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300">
+            <h1 className="text-5xl lg:text-6xl font-bold mb-6">
+              Share Your World
+              <span className="block bg-gradient-to-r from-zinc-400 to-white text-transparent bg-clip-text">
+                With One Tap
+              </span>
+            </h1>
+            <p className="text-lg text-zinc-400 mb-8 max-w-md">
+              Experience the future of networking with Tago&apos;s premium NFC cards. Share your complete digital identity instantly.
+            </p>
+            <div className="flex flex-row gap-4 justify-start">
+              <Link href="/login" aria-label="Get your Tago NFC card">
+                <button className="px-8 py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">
                   <span className="flex items-center justify-center font-medium">
                     Get Your Card
-                    <ArrowRight className="ml-2 w-4 h-4" />
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </span>
                 </button>
               </Link>
-              <Link href="/products" className="w-full">
-                <button className="w-full px-6 py-3.5 rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-300 border border-zinc-700">
+              <Link href="/products" aria-label="View Tago card designs">
+                <button className="px-8 py-4 rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-300 transform hover:scale-105 border border-zinc-700">
                   See Designs
                 </button>
               </Link>
             </div>
+            <div className="mt-8 text-sm text-zinc-500">
+              <p>Trusted by professionals worldwide. Join thousands of networkers enhancing their digital presence.</p>
+              <ul className="flex gap-4 mt-2">
+                <li>✓ One-tap sharing</li>
+                <li>✓ Premium design</li>
+                <li>✓ Unlimited contacts</li>
+              </ul>
+            </div>
           </div>
-          
-          <div className="absolute bottom-0 left-0 right-0">
-            {/* Clear separator line */}
-            <div className="h-1 w-full bg-zinc-800"></div>
+          <div className="flex justify-center items-center scale-110">
+            <RotatingCard />
           </div>
         </div>
-      )}
+        
+        <div className="absolute bottom-0 left-0 right-0">
+          <div className="h-1 w-full bg-zinc-800"></div>
+        </div>
+      </div>
+      
+      {/* Mobile version */}
+      <div className="relative h-screen w-screen flex flex-col justify-between px-4 pt-8 overflow-hidden md:hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
+        </div>
+        
+        <div className="relative z-10 flex flex-col h-full py-8">
+          <div className="text-center mt-4">
+            <div className="inline-block mb-4">
+              <span className="px-3 py-1.5 rounded-full text-xs bg-zinc-900/80 border border-zinc-700 flex items-center gap-1.5">
+                <Sparkles className="w-3 h-3 text-zinc-400" aria-hidden="true" />
+                Tap and Go Technology
+              </span>
+            </div>
+            <h1 className="text-4xl font-bold mb-4">
+              Share Your World
+              <span className="block bg-gradient-to-r from-zinc-400 to-white text-transparent bg-clip-text">
+                With One Tap
+              </span>
+            </h1>
+            <p className="text-base text-zinc-400 mb-6 max-w-xs mx-auto">
+              Experience the future of networking with Tago&apos;s premium NFC cards.
+            </p>
+          </div>
+          
+          <div className="flex justify-center items-center my-4 scale-90">
+            <RotatingCard />
+          </div>
+          
+          <div className="flex flex-col gap-3 mt-auto mb-8">
+            <Link href="/login" className="w-full" aria-label="Get your Tago NFC card">
+              <button className="w-full px-6 py-3.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300">
+                <span className="flex items-center justify-center font-medium">
+                  Get Your Card
+                  <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
+                </span>
+              </button>
+            </Link>
+            <Link href="/products" className="w-full" aria-label="View Tago card designs">
+              <button className="w-full px-6 py-3.5 rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-300 border border-zinc-700">
+                See Designs
+              </button>
+            </Link>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 right-0">
+          <div className="h-1 w-full bg-zinc-800"></div>
+        </div>
+      </div>
     </>
   );
 };
