@@ -5,27 +5,22 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import RotatingCard from '@/components/Landing Page/RotatingCard';
 
 const HeroSection = () => {
-  // Client-side media query detection
   const [isMobile, setIsMobile] = useState(false);
   
   useEffect(() => {
-    // Set initial value
     setIsMobile(window.innerWidth <= 768);
     
-    // Add event listener for resize
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
     
     window.addEventListener('resize', handleResize);
     
-    // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
     <>
-      {/* Desktop Hero Section */}
       {!isMobile && (
         <div className="relative min-h-screen flex items-center justify-center px-4 pt-5">
           <div className="absolute inset-0">
@@ -71,13 +66,11 @@ const HeroSection = () => {
           </div>
           
           <div className="absolute bottom-0 left-0 right-0">
-            {/* Clear separator line */}
             <div className="h-1 w-full bg-zinc-800"></div>
           </div>
         </div>
       )}
       
-      {/* Mobile Hero Section */}
       {isMobile && (
         <div className="relative h-screen w-screen flex flex-col justify-between px-4 pt-8 overflow-hidden">
           <div className="absolute inset-0">
@@ -86,7 +79,6 @@ const HeroSection = () => {
           </div>
           
           <div className="relative z-10 flex flex-col h-full py-8">
-            {/* Top section with text content */}
             <div className="text-center mt-4">
               <div className="inline-block mb-4">
                 <span className="px-3 py-1.5 rounded-full text-xs bg-zinc-900/80 border border-zinc-700 flex items-center gap-1.5">
@@ -105,12 +97,10 @@ const HeroSection = () => {
               </p>
             </div>
             
-            {/* Middle section with card */}
             <div className="flex justify-center items-center my-4 scale-90">
               <RotatingCard />
             </div>
             
-            {/* Bottom section with CTA buttons */}
             <div className="flex flex-col gap-3 mt-auto mb-8">
               <Link href="/login" className="w-full">
                 <button className="w-full px-6 py-3.5 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300">
