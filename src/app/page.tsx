@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/Landing Page/HeroSection';
 import FeaturedDesigns from '@/components/Landing Page/FeaturedDesigns';
-import StatsSection from '@/components/Landing Page/StatsSection';
 import FeaturesSection from '@/components/Landing Page/FeaturesSection';
 import TestimonialsSection from '@/components/Landing Page/TestimonialsSection';
 import CTASection from '@/components/Landing Page/CTASection';
@@ -26,7 +25,6 @@ const LandingPage = () => {
         </ScrollNavWrapper> 
         <HeroSection />
         <FeaturedDesigns />
-        <StatsSection />
         <FeaturesSection />
         <TestimonialsSection />
         <CTASection />

@@ -15,16 +15,11 @@ const FeaturedDesigns = () => {
       whileInView="visible"
       viewport={{ once: true }}
       variants={fadeInUp}
-      className="py-20 px-4 bg-black relative" // Changed from bg-zinc-950 to bg-black
+      className="py-20 px-4 bg-black relative"
     >
-      {/* Section background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle,#ffffff_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-      </div>
-      
-      {/* Top gradient transition */}
-      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black to-transparent"></div>
-      
+      </div>      
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-12">
           <motion.span 
@@ -41,10 +36,8 @@ const FeaturedDesigns = () => {
         </motion.div>
       </div>
       
-      {/* Visual section separator - improved for smoother transition */}
       <div className="absolute bottom-0 left-0 right-0">
-        <div className="section-divider"></div>
-        <div className="h-12 w-full bg-gradient-to-b from-black to-black/90"></div> {/* Changed from from-zinc-950 to from-black */}
+        <div className="h-1 w-full bg-zinc-800"></div>
       </div>
     </motion.div>
   );
