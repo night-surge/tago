@@ -3,7 +3,6 @@ import Image, { StaticImageData } from "next/image";
 import Navbar from "../../components/Navbar";
 import BackgroundGrid from "../../components/BackgroundGrid";
 import akIMG from "@/assets/ak_bento.jpg";
-// import nilayIMG from "../assets/nilay.jpg";
 import saranshIMG from "@/assets/saransh.jpg";
 
 type TeamMember = {
@@ -28,12 +27,7 @@ const teamMembers: TeamMember[] = [
     phone: "+91-7838075004",
     imageUrl: saranshIMG
   },
-  {
-    name: "Nilay Gupta",
-    email: "nilayguptaforwork@gmail.com",
-    phone: "+91-8960710445",
-    imageUrl: "/api/placeholder/150/150"
-  },
+  
   
 ];
 

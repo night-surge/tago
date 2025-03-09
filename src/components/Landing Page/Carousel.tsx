@@ -4,17 +4,27 @@ import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import Button from "@/components/ui/button";
-import spidermanB from '../assets/spidermancardB.jpg';
-import Card1 from '@/assets/cards/1.svg';
-import Card2 from '@/assets/cards/2.svg';
-import Card4 from '@/assets/cards/4.svg';
-import Card5 from '@/assets/cards/5.svg';
-import Card6 from '@/assets/cards/6.svg';
-import Card7 from '@/assets/cards/7.svg';
-import Card8 from '@/assets/cards/8.svg';
-import Card9 from '@/assets/cards/9.svg';
-import Card10 from '@/assets/cards/10.svg';
-import Card11 from '@/assets/cards/11.svg';
+import Card1 from "@/assets/cards/1.svg";
+import Card2 from "@/assets/cards/2.svg";
+import Card4 from "@/assets/cards/4.svg";
+import Card5 from "@/assets/cards/5.svg";
+import Card6 from "@/assets/cards/6.svg";
+import Card7 from "@/assets/cards/7.svg";
+import Card8 from "@/assets/cards/8.svg";
+import Card9 from "@/assets/cards/9.svg";
+import Card10 from "@/assets/cards/10.svg";
+import Card11 from "@/assets/cards/11.svg";
+import Card101 from "@/assets/cards/101.svg";
+import Card102 from "@/assets/cards/102.svg";
+import Card104 from "@/assets/cards/104.svg";
+import Card105 from "@/assets/cards/105.svg";
+import Card106 from "@/assets/cards/106.svg";
+import Card107 from "@/assets/cards/107.svg";
+import Card108 from "@/assets/cards/108.svg";
+import Card109 from "@/assets/cards/109.svg";
+import Card110 from "@/assets/cards/110.svg";
+import Card111 from "@/assets/cards/111.svg";
+
 
 
 interface SlideData {
@@ -37,63 +47,63 @@ const PhotoCarousel: React.FC<PhotoCarouselProps> = ({
   const defaultSlides: SlideData[] = [
     {
       frontImage: Card1,
-      backImage: spidermanB,
-      title: 'Card 1',
-      description: 'Description for card 1'
+      backImage: Card101,
+      title: '1989 Wonderland',
+      description: "A dreamy tribute to 1989 (Taylor's Version)"
     },
     {
       frontImage: Card2,
-      backImage: spidermanB,
-      title: 'Card 2',
-      description: 'Description for card 2'
+      backImage: Card102,
+      title: 'Marvel Mayhem',
+      description: "A bold and chaotic fusion of Marvel's classic comic action"
     },
     {
       frontImage: Card11,
-      backImage: spidermanB,
-      title: 'Card 3',
-      description: 'Description for card 3'
+      backImage: Card111,
+      title: 'Neon Drift',
+      description: "A lone machine hums under the city's neon glow"
     },
     {
       frontImage: Card4,
-      backImage: spidermanB,
-      title: 'Card 4',
-      description: 'Description for card 4'
+      backImage: Card104,
+      title: "Abstract Edge",
+      description: "Geometric design with unique patterns"
     },
     {
       frontImage: Card5,
-      backImage: spidermanB,
-      title: 'Card 5', 
-      description: 'Description for card 5'
+      backImage: Card105,
+      title: "Shadow Crewmate", 
+      description: "Silent. Stealthy. Sus."
     },
     {
       frontImage: Card6,
-      backImage: spidermanB,
-      title: 'Card 6',
-      description: 'Description for card 6'
+      backImage: Card106,
+      title: "Lunar Gold",
+      description: "A luminous golden moon over silent peaks"
     },
     {
       frontImage: Card7,
-      backImage: spidermanB,
-      title: 'Card 7',
-      description: 'Description for card 7'
+      backImage: Card107,
+      title: "Shadow Persona",
+      description: "A masked enigma lost in the echoes of the night"
     },
     {
       frontImage: Card8,
-      backImage: spidermanB,
-      title: 'Card 8',
-      description: 'Description for card 8'
+      backImage: Card108,
+      title: "Shadow Hustler",
+      description: "Moving in silence, chasing dreams in the shadows"
     },
     {
       frontImage: Card9,
-      backImage: spidermanB,
-      title: 'Card 9',
-      description: 'Description for card 9'
+      backImage: Card109,
+      title: "Silver Stallion",
+      description: "A masterpiece of speed and elegance"
     },
     {
       frontImage: Card10,
-      backImage: spidermanB,
-      title: 'Card 10',
-      description: 'Description for card 10'
+      backImage: Card110,
+      title: "Speeding Lights",
+      description: "A sleek symphony of shadow and speed"
     }
   ];
 
