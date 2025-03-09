@@ -22,7 +22,7 @@ const HeroSection = () => {
       </Head>
 
       {/* Desktop version */}
-      <div className="relative min-h-screen flex items-center justify-center px-4 pt-5 hidden md:flex" aria-label="Tago NFC Card Hero Section">
+      <div className="relative min-h-screen flex items-center justify-center px-4 pt-5 md:flex" aria-label="Tago NFC Card Hero Section">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
