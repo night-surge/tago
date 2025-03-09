@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import RotatingCard from './RotatingCard'; 
+import RotatingCard from '@/components/Landing Page/RotatingCard';
 const HeroSection = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 pt-16 md:pt-5">
@@ -18,7 +18,7 @@ const HeroSection = () => {
             </span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-            Share Your World
+    Share Your World
             <span className="block bg-gradient-to-r from-zinc-400 to-white text-transparent bg-clip-text">
               With One Tap
             </span>
