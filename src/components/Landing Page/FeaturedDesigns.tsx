@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import PhotoCarousel from '@/components/Carousel';
+import PhotoCarousel from '@/components/Landing Page/Carousel';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },

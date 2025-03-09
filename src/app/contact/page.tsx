@@ -28,12 +28,7 @@ const teamMembers: TeamMember[] = [
     phone: "+91-7838075004",
     imageUrl: saranshIMG
   },
-  {
-    name: "Nilay Gupta",
-    email: "nilayguptaforwork@gmail.com",
-    phone: "+91-8960710445",
-    imageUrl: "/api/placeholder/150/150"
-  },
+  
   
 ];
 
