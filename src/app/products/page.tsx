@@ -1,9 +1,9 @@
+"use client";
+import { motion } from "framer-motion";
+import { ArrowLeft, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
-// Import card images
 import Card1 from "@/assets/cards/1.svg";
 import Card2 from "@/assets/cards/2.svg";
 import Card3 from "@/assets/cards/3.svg";
@@ -20,22 +20,6 @@ import Card13 from "@/assets/cards/13.svg";
 import Card14 from "@/assets/cards/14.svg";
 import Card15 from "@/assets/cards/15.svg";
 import Card16 from "@/assets/cards/16.svg";
-import Card101 from "@/assets/cards/101.svg";
-import Card102 from "@/assets/cards/102.svg";
-import Card103 from "@/assets/cards/103.svg";
-import Card104 from "@/assets/cards/104.svg";
-import Card105 from "@/assets/cards/105.svg";
-import Card106 from "@/assets/cards/106.svg";
-import Card107 from "@/assets/cards/107.svg";
-import Card108 from "@/assets/cards/108.svg";
-import Card109 from "@/assets/cards/109.svg";
-import Card110 from "@/assets/cards/110.svg";
-import Card111 from "@/assets/cards/111.svg";
-import Card112 from "@/assets/cards/112.svg";
-import Card113 from "@/assets/cards/113.svg";
-import Card114 from "@/assets/cards/114.svg";
-import Card115 from "@/assets/cards/115.svg";
-import Card116 from "@/assets/cards/116.svg";
 
 interface Design {
   id: number;
@@ -47,6 +31,8 @@ interface Design {
 }
 
 const DesignCard = ({ design }: { design: Design }) => {
+  // const [isPressed, setIsPressed] = useState(false);
+
   return (
     <Card className="relative overflow-hidden bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-xl border border-white/5 w-full">
       <CardContent className="p-4 sm:p-6">
@@ -82,10 +68,11 @@ const DesignCard = ({ design }: { design: Design }) => {
                 </div>
               </div>
             </div>
+
           </div>
 
           {/* Card Info */}
-          <div className="pt-7 text-center mb-3 sm:mb-4">
+          <div className= "pt-7 text-center mb-3 sm:mb-4">
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2">
               <h3 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-white via-white to-gray-400 bg-clip-text text-transparent">
                 {design.name}
@@ -122,146 +109,144 @@ const DesignCard = ({ design }: { design: Design }) => {
   );
 };
 
-// Create the design data outside the component
-const designs = [
-  {
-    id: 1,
-    name: "1989 Wonderland",
-    description: "A dreamy tribute to 1989 (Taylor's Version)",
-    imageSrc: Card1,
-    backimg: Card101,
-    rating: "4.9",
-  },
-  {
-    id: 2,
-    name: "Marvel Mayhem",
-    description: "A bold and chaotic fusion of Marvel's classic comic action",
-    imageSrc: Card2,
-    backimg: Card102,
-    rating: "4.8",
-  },
-  {
-    id: 3,
-    name: "Chibi Naruto",
-    description: "A cute and cheerful chibi version of Naruto",
-    imageSrc: Card3,
-    backimg: Card103,
-    rating: "4.7",
-  },
-  {
-    id: 4,
-    name: "Abstract Edge",
-    description: "Geometric design with unique patterns",
-    imageSrc: Card4,
-    backimg: Card104,
-    rating: "4.9",
-  },
-  {
-    id: 5,
-    name: "Shadow Crewmate",
-    description: "Silent. Stealthy. Sus.",
-    imageSrc: Card5,
-    backimg: Card105,
-    rating: "4.8",
-  },
-  {
-    id: 6,
-    name: "Lunar Gold",
-    description: "A luminous golden moon over silent peaks",
-    imageSrc: Card6,
-    backimg: Card106,
-    rating: "4.9",
-  },
-  {
-    id: 7,
-    name: "Shadow Persona",
-    description: "A masked enigma lost in the echoes of the night",
-    imageSrc: Card7,
-    backimg: Card107,
-    rating: "4.8",
-  },
-  {
-    id: 8,
-    name: "Shadow Hustler",
-    description: "Moving in silence, chasing dreams in the shadows",
-    imageSrc: Card8,
-    backimg: Card108,
-    rating: "4.7",
-  },
-  {
-    id: 9,
-    name: "Silver Stallion",
-    description: "A masterpiece of speed and elegance",
-    imageSrc: Card9,
-    backimg: Card109,
-    rating: "4.9",
-  },
-  {
-    id: 10,
-    name: "Speeding Lights",
-    description: "A sleek symphony of shadow and speed",
-    imageSrc: Card10,
-    backimg: Card110,
-    rating: "4.8",
-  },
-  {
-    id: 11,
-    name: "Neon Drift",
-    description: "A lone machine hums under the city's neon glow",
-    imageSrc: Card11,
-    backimg: Card111,
-    rating: "4.9",
-  },
-  {
-    id: 12,
-    name: "Urban Horizon",
-    description: "The city awakens, engines roar, and dreams race with the dawn",
-    imageSrc: Card12,
-    backimg: Card112,
-    rating: "4.8",
-  },
-  {
-    id: 13,
-    name: "Pika Hustle",
-    description: "Pikachu with urban styles and electric vibes",
-    imageSrc: Card13,
-    backimg: Card113,
-    rating: "4.7",
-  },
-  {
-    id: 14,
-    name: "Spidey Skies",
-    description: "Weaving webs between the stars and the city lights",
-    imageSrc: Card14,
-    backimg: Card114,
-    rating: "4.9",
-  },
-  {
-    id: 15,
-    name: "Skybound",
-    description: "Elevating the game with every soaring jump",
-    imageSrc: Card15,
-    backimg: Card115,
-    rating: "4.8",
-  },
-  {
-    id: 16,
-    name: "Reputation",
-    description: "A bold statement of strength, mystery, and transformation. ",
-    imageSrc: Card16,
-    backimg: Card116,
-    rating: "4.9",
-  },
-];
-
-// Server component
 const ExploreDesignsPage = () => {
+  const designs = [
+    {
+      id: 1,
+      name: "1989 Wonderland",
+      description: "A dreamy tribute to 1989 (Taylor’s Version)",
+      imageSrc: Card1,
+      backimg: Card2,
+      rating: "4.9",
+    },
+    {
+      id: 2,
+      name: "Marvel Mayhem",
+      description: "A bold and chaotic fusion of Marvel's classic comic action",
+      imageSrc: Card2,
+      backimg: Card3,
+      rating: "4.8",
+    },
+    {
+      id: 3,
+      name: "Chibi Naruto",
+      description: "A cute and cheerful chibi version of Naruto",
+      imageSrc: Card3,
+      backimg: Card4,
+      rating: "4.7",
+    },
+    {
+      id: 4,
+      name: "Abstract Edge",
+      description: "Geometric design with unique patterns",
+      imageSrc: Card4,
+      backimg: Card5,
+      rating: "4.9",
+    },
+    {
+      id: 5,
+      name: "Shadow Crewmate",
+      description: "Silent. Stealthy. Sus.",
+      imageSrc: Card5,
+      backimg: Card6,
+      rating: "4.8",
+    },
+    {
+      id: 6,
+      name: "Lunar Gold",
+      description: "A luminous golden moon over silent peaks",
+      imageSrc: Card6,
+      backimg: Card7,
+      rating: "4.9",
+    },
+    {
+      id: 7,
+      name: "Shadow Persona",
+      description: "A masked enigma lost in the echoes of the night",
+      imageSrc: Card7,
+      backimg: Card8,
+      rating: "4.8",
+    },
+    {
+      id: 8,
+      name: "Shadow Hustler",
+      description: "Moving in silence, chasing dreams in the shadows",
+      imageSrc: Card8,
+      backimg: Card9,
+      rating: "4.7",
+    },
+    {
+      id: 9,
+      name: "Silver Stallion",
+      description: "A masterpiece of speed and elegance",
+      imageSrc: Card9,
+      backimg: Card10,
+      rating: "4.9",
+    },
+    {
+      id: 10,
+      name: "Speeding Lights",
+      description: "A sleek symphony of shadow and speed",
+      imageSrc: Card10,
+      backimg: Card11,
+      rating: "4.8",
+    },
+    {
+      id: 11,
+      name: "Neon Drift",
+      description: "A lone machine hums under the city’s neon glow",
+      imageSrc: Card11,
+      backimg: Card12,
+      rating: "4.9",
+    },
+    {
+      id: 12,
+      name: "Urban Horizon",
+      description: "The city awakens, engines roar, and dreams race with the dawn",
+      imageSrc: Card12,
+      backimg: Card13,
+      rating: "4.8",
+    },
+    {
+      id: 13,
+      name: "Pika Hustle",
+      description: "Pikachu with urban styles and electric vibes",
+      imageSrc: Card13,
+      backimg: Card14,
+      rating: "4.7",
+    },
+    {
+      id: 14,
+      name: "Spidey Skies",
+      description: "Weaving webs between the stars and the city lights",
+      imageSrc: Card14,
+      backimg: Card15,
+      rating: "4.9",
+    },
+    {
+      id: 15,
+      name: "Skybound",
+      description: "Elevating the game with every soaring jump",
+      imageSrc: Card15,
+      backimg: Card16,
+      rating: "4.8",
+    },
+    {
+      id: 16,
+      name: "Reputation",
+      description: "A bold statement of strength, mystery, and transformation. ",
+      imageSrc: Card16,
+      backimg: Card1,
+      rating: "4.9",
+    },
+  ];
+
   return (
     <div className="relative min-h-screen bg-black px-4 sm:px-6 py-16 sm:py-20 md:px-10 lg:px-16">
       {/* Background */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 opacity-30 animate-pulse"
           style={{
             backgroundImage: `
               radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
@@ -287,7 +272,11 @@ const ExploreDesignsPage = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="mb-10 sm:mb-16 max-w-4xl mx-auto text-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10 sm:mb-16 max-w-4xl mx-auto text-center px-4"
+        >
           <Link
             href="/"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6 sm:mb-8 group"
@@ -303,16 +292,26 @@ const ExploreDesignsPage = () => {
             piece is meticulously crafted and numbered, representing the
             pinnacle of collectible card artistry.
           </p>
-        </div>
+        </motion.div>
 
         {/* Grid of designs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {designs.map((design) => (
-            <div key={design.id}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto"
+        >
+          {designs.map((design, index) => (
+            <motion.div
+              key={design.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * Math.min(index, 5) }}
+            >
               <DesignCard design={design} />
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
