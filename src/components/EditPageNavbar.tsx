@@ -17,7 +17,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
         router.push(`/${userName}`);
     };
 
-    const handleRedirect = () =>{
+    const handleRedirect = () => {
         const { userName } = JSON.parse(localStorage.getItem('user') || '{}');
         router.push(`/${userName}`);
     }
@@ -37,7 +37,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
                         <NavLink href="/products">Products</NavLink>
                         <button
                             onClick={handleRedirect}
-                            className="text-gray-300 hover:text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center gap-2"
+                            className="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-lg font-semibold transition-colors"
                         >
                             Profile
                         </button>
@@ -72,17 +72,17 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 bg-black/50 backdrop-blur-sm">
                         <MobileNavLink href="/">Home</MobileNavLink>
-                        <MobileNavLink href="">Products</MobileNavLink>
+                        <MobileNavLink href="/products">Products</MobileNavLink>
                         <button
                             onClick={handleRedirect}
-                            className="text-gray-300 hover:text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center gap-2"
+                            className="text-gray-300 hover:text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors"
                         >
                             Profile
                         </button>
 
                         <button
                             onClick={handleLogout}
-                            className="text-gray-300 hover:text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center gap-2"
+                            className="text-gray-300 hover:text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors"
                         >
                             Logout
                         </button>
