@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Linkedin, Instagram } from 'lucide-react';
 
 const Footer = () => {
@@ -32,9 +33,9 @@ const Footer = () => {
           <h3 className="font-semibold">Products</h3>
           <ul className="space-y-2">
             <li>
-              <a href="https://www.mytago.tech/products" className="text-zinc-400 hover:text-white transition-colors">
+              <Link href="/products" className="text-zinc-400 hover:text-white transition-colors">
                 Our Products
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -43,19 +44,19 @@ const Footer = () => {
           <h3 className="font-semibold">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <a href="https://www.mytago.tech/login" className="text-zinc-400 hover:text-white transition-colors">
+              <Link href="/login" className="text-zinc-400 hover:text-white transition-colors">
                 Login
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="https://www.mytago.tech/contact" className="text-zinc-400 hover:text-white transition-colors">
+              <Link href="/contact" className="text-zinc-400 hover:text-white transition-colors">
                 Contact Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="https://www.mytago.tech/" className="text-zinc-400 hover:text-white transition-colors">
+              <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
                 Home
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -63,7 +64,9 @@ const Footer = () => {
       
       <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-zinc-800 text-center text-zinc-400 text-sm">
         <div className="mb-4">
-          <a href="https://www.mytago.tech/" className="text-zinc-400 hover:text-white transition-colors">www.mytago.tech</a>
+          <Link href="/" className="text-zinc-400 hover:text-white transition-colors">
+            www.mytago.tech
+          </Link>
         </div>
         © {new Date().getFullYear()} Tago. All rights reserved.
       </div>
