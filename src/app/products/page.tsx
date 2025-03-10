@@ -257,7 +257,7 @@ const designs = [
 // Server component
 const ExploreDesignsPage = () => {
   return (
-    <div className="relative min-h-screen bg-black px-4 sm:px-6 py-16 sm:py-20 md:px-10 lg:px-16">
+    <div className="relative min-h-screen bg-black px-4 sm:px-6 py-16 sm:py-20 md:px-10 lg:px-16 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div

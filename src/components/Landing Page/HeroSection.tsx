@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import RotatingCard from '@/components/Landing Page/RotatingCard';
 import Head from 'next/head';
 
@@ -22,8 +22,8 @@ const HeroSection = () => {
       </Head>
 
       {/* Desktop version */}
-      <div className="relative min-h-screen hidden md:flex items-center justify-center px-4 pt-5" aria-label="Tago NFC Card Hero Section">
-        <div className="absolute inset-0">
+      <div className="relative min-h-screen hidden md:flex items-center justify-center px-4 pt-5 overflow-hidden" aria-label="Tago NFC Card Hero Section">
+      <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
         </div>
@@ -49,7 +49,6 @@ const HeroSection = () => {
                 <button className="px-8 py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">
                   <span className="flex items-center justify-center font-medium">
                     Get Your Card
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </span>
                 </button>
               </Link>
@@ -78,15 +77,14 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Enhanced Mobile version with fixed badge position */}
-      <div className="relative min-h-screen flex md:hidden flex-col justify-center px-6 py-8" aria-label="Tago NFC Card Mobile Hero Section">
-        <div className="absolute inset-0">
+      {/* Mobile version */}
+      <div className="relative min-h-screen flex md:hidden flex-col justify-center px-6 py-8 overflow-hidden" aria-label="Tago NFC Card Mobile Hero Section">
+      <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
         </div>
         
         <div className="relative z-10 flex flex-col items-center space-y-6 mt-8 mb-4">
-          {/* Badge - now part of the main content flow */}
           <div>
             <span className="px-3 py-1.5 rounded-full text-xs bg-zinc-900/80 border border-zinc-700 flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-zinc-400" aria-hidden="true" />
@@ -94,7 +92,6 @@ const HeroSection = () => {
             </span>
           </div>
           
-          {/* Heading and description */}
           <div className="text-center">
             <h1 className="text-4xl font-bold">
               Share Your World
@@ -108,18 +105,15 @@ const HeroSection = () => {
           </div>
         </div>
           
-        {/* Card preview - larger and centered */}
         <div className="relative z-10 w-full flex justify-center items-center py-4">
           <RotatingCard />
         </div>
         
-        {/* CTA buttons with increased spacing and visual presence */}
         <div className="relative z-10 w-full space-y-4 px-4 mt-4">
           <Link href="/login" className="block w-full" aria-label="Get your Tago NFC card">
             <button className="w-full py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 flex items-center justify-center">
               <span className="font-medium flex items-center">
                 Get Your Card
-                <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
               </span>
             </button>
           </Link>
@@ -131,7 +125,6 @@ const HeroSection = () => {
           </Link>
         </div>
         
-        {/* Brief feature list */}
         <div className="relative z-10 text-center mt-4 text-xs text-zinc-500">
           <ul className="flex justify-center gap-4">
             <li>✓ One-tap</li>
