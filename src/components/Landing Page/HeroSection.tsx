@@ -18,7 +18,7 @@ const HeroSection = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Tago - Premium NFC Business Cards" />
         <meta name="twitter:description" content="Share your complete digital identity instantly with Tago's premium NFC cards." />
-        <link rel="canonical" href="https://tagocard.com" />
+        <link rel="canonical" href="https://mytago.tech/" />
       </Head>
 
       {/* Desktop version */}
