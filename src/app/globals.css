@@ -83,7 +83,6 @@
 
 
 
-/* Lock the body in place and prevent overscroll */
 html, body {
   background-color: #000000;
   margin: 0;
@@ -91,13 +90,12 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  overscroll-behavior: none; /* Prevents bounce/rubber-band effect */
+  overscroll-behavior: none; 
   position: relative;
 }
 
-/* Ensure the layout container fills the entire viewport and doesn't allow overflow */
 #__next, 
-.layout-container /* Add this class to your main layout wrapper if you have one */ {
+.layout-container {
   min-height: 100vh;
   width: 100%;
   position: relative;
@@ -106,34 +104,32 @@ html, body {
   flex-direction: column;
 }
 
-/* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b; /* zinc-950 or black */
+  background: #09090b; 
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46; /* zinc-700 */
+  background: #3f3f46; 
   border-radius: 4px;
   transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b; /* zinc-600 */
+  background: #52525b;
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #3f3f46 #09090b; /* thumb track */
+  scrollbar-color: #3f3f46 #09090b; 
 }
 
-/* Disable pull-to-refresh on mobile */
 body {
   overscroll-behavior-y: contain;
 }
