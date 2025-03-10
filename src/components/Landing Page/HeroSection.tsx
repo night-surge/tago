@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import RotatingCard from '@/components/Landing Page/RotatingCard';
 import Head from 'next/head';
 
