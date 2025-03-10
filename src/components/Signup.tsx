@@ -31,7 +31,6 @@ const Signup = () => {
   }
 
   const validateUsername = (username: string) => {
-    // Check for uppercase letters
     if (username !== username.toLowerCase()) {
       setUsernameError("Username must be in lowercase letters only");
       return false;
@@ -76,14 +75,31 @@ const Signup = () => {
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       router.push(`${url}/verify-email?email=${encodeURIComponent(data.email as string)}`);
-        } catch (err: unknown) {
-          if (err instanceof Error) {
-            setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        // Try to extract the API error message from the error object if possible
+        const errorMessage = err.message;
+        
+        try {
+          // The error message from axios might contain the response data
+          if (errorMessage.includes('Request failed with status code')) {
+            const errorObj = JSON.parse(errorMessage.substring(errorMessage.indexOf('{')));
+            if (errorObj && errorObj.message) {
+              setError(errorObj.message);
+            } else {
+              setError(errorMessage);
+            }
           } else {
-            setError("Something went wrong. Please try again.");
+            setError(errorMessage);
           }
+        } catch {
+          // If parsing fails, just use the original error message
+          setError(errorMessage);
         }
-         finally {
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -187,7 +203,7 @@ const Signup = () => {
                 placeholder="*******"
               />
               <p className="mt-1 text-xs text-gray-400">
-                Must contain at least 8 characters, one uppercase letter, and one number
+                Must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and can include special characters
               </p>
             </div>
 

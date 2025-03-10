@@ -1,16 +1,13 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 
-dotenv.config();
-
 const prisma = new PrismaClient();
-const jwtSecret: string = process.env.JWT_SECRET as string;
 
-if (!process.env.JWT_SECRET) {
-  throw new Error('Please add your JWT_SECRET to .env.local');
+const jwtSecret = process.env.JWT_SECRET;
+if (!jwtSecret) {
+  console.error('JWT_SECRET environment variable is not set');
 }
 
 export async function POST(req: Request) {
@@ -63,12 +60,12 @@ export async function POST(req: Request) {
 
     const token = jwt.sign(
       {
-        userId: user.uid,
+        uid: user.uid,
         userName: user.userName,
         email: user.email
       },
-      jwtSecret,
-      { expiresIn: '7d' }
+      jwtSecret as string,
+      { expiresIn: '30d' }
     );
 
     const safeUser = {
@@ -76,7 +73,9 @@ export async function POST(req: Request) {
       password: undefined
     };
 
-    // In your login API route
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 30);
+
     return NextResponse.json(
       {
         message: 'Login successful',
@@ -86,7 +85,7 @@ export async function POST(req: Request) {
       {
         status: 200,
         headers: {
-          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Max-Age=${7 * 24 * 60 * 60}; SameSite=Lax` // Changed SameSite to Lax
+          'Set-Cookie': `token=${token}; Path=/; HttpOnly; Expires=${expirationDate.toUTCString()}; SameSite=Lax; Secure`
         }
       }
     );
@@ -94,7 +93,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { message: 'Error logging in' },
+      { message: 'An error occurred during login. Please try again.' },
       { status: 500 }
     );
   } finally {
