@@ -49,7 +49,7 @@ const HeroSection = () => {
                 <button className="px-8 py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 transform hover:scale-105">
                   <span className="flex items-center justify-center font-medium">
                     Get Your Card
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    {/* <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" /> */}
                   </span>
                 </button>
               </Link>
@@ -119,7 +119,7 @@ const HeroSection = () => {
             <button className="w-full py-4 rounded-full bg-white text-black hover:bg-zinc-200 transition-all duration-300 flex items-center justify-center">
               <span className="font-medium flex items-center">
                 Get Your Card
-                <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
+                {/* <ArrowRight className="ml-2 w-4 h-4" aria-hidden="true" /> */}
               </span>
             </button>
           </Link>
