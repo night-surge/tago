@@ -40,7 +40,7 @@ const FeaturesSection = () => {
 
   return (
     <div className="py-20 px-4 bg-black relative overflow-hidden">
-=      <div className="absolute -right-32 -bottom-32 w-96 h-96 bg-zinc-800/10 rounded-full blur-3xl"></div>
+    <div className="absolute -right-32 -bottom-32 w-96 h-96 bg-zinc-800/10 rounded-full blur-3xl"></div>
       <div className="absolute -left-32 -top-32 w-64 h-64 bg-zinc-800/10 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
@@ -70,7 +70,7 @@ const FeaturesSection = () => {
         </div>
       </div>
       
-=      <div className="absolute bottom-0 left-0 right-0">
+     <div className="absolute bottom-0 left-0 right-0">
             <div className="h-1 w-full bg-zinc-800"></div>
           </div>
     </div>
