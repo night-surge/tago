@@ -22,13 +22,16 @@ const HeroSection = () => {
       </Head>
 
       <div className="relative min-h-screen flex items-center justify-center px-4 py-8 md:py-12" aria-label="Tago NFC Card Hero Section">
+        {/* Background elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />
         </div>
         
+        {/* Main content */}
         <div className="relative z-10 max-w-6xl mx-auto w-full">
           <div className="flex flex-col md:flex-row md:gap-12 items-center">
+            {/* Text content */}
             <div className="text-center md:text-left md:w-1/2 mb-8 md:mb-0">
               <div className="inline-block mb-4">
                 <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm bg-zinc-900/80 border border-zinc-700 flex items-center gap-1.5 md:gap-2">
@@ -75,12 +78,14 @@ const HeroSection = () => {
               </div>
             </div>
             
+            {/* Rotating card component */}
             <div className="flex justify-center items-center md:w-1/2 scale-90 md:scale-110">
               <RotatingCard />
             </div>
           </div>
         </div>
         
+        {/* Bottom border */}
         <div className="absolute bottom-0 left-0 right-0">
           <div className="h-1 w-full bg-zinc-800"></div>
         </div>
@@ -89,4 +94,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection
+export default HeroSection;
