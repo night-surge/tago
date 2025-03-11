@@ -27,6 +27,29 @@ const verifyAuth = async () => {
   }
 };
 
+// Validate different link types
+const validateLink = (link: string): boolean => {
+  // Check if it's an email
+  if (link.startsWith('mailto:')) {
+    const email = link.substring(7);
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  
+  // Check if it's a phone/contact
+  if (link.startsWith('tel:')) {
+    const phone = link.substring(4);
+    return /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/.test(phone);
+  }
+  
+  // Check if URL (including Google Maps)
+  try {
+    const url = new URL(link);
+    return ['http:', 'https:'].includes(url.protocol);
+  } catch {
+    return false;
+  }
+};
+
 export async function addLink(userName: string, newLink: string) {
   'use server';
 
@@ -50,19 +73,33 @@ export async function addLink(userName: string, newLink: string) {
       throw new Error('User not found');
     }
 
-    try {
-      const url = new URL(newLink);
-      if (!['http:', 'https:'].includes(url.protocol)) {
-        throw new Error('Only HTTP and HTTPS protocols are allowed');
-      }
-    } catch {
-      throw new Error('Please enter a valid URL (e.g., https://example.com)');
+    // Format link if needed
+    let formattedLink = newLink;
+    
+    // Add protocol for email if not present
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newLink) && !newLink.startsWith('mailto:')) {
+      formattedLink = `mailto:${newLink}`;
+    }
+    
+    // Add protocol for phone if not present
+    if (/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/.test(newLink) && !newLink.startsWith('tel:')) {
+      formattedLink = `tel:${newLink}`;
+    }
+    
+    // Format Google Maps link if needed (handles coordinates format)
+    if (/^-?\d+\.\d+,-?\d+\.\d+$/.test(newLink)) {
+      formattedLink = `https://www.google.com/maps?q=${newLink}`;
+    }
+
+    // Validate link
+    if (!validateLink(formattedLink)) {
+      throw new Error('Please enter a valid URL, email address, phone number, or map coordinates');
     }
 
     await prisma.user.update({
       where: { userName },
       data: {
-        links: [...user.links, newLink],
+        links: [...user.links, formattedLink],
       },
     });
 
