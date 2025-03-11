@@ -20,7 +20,6 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
           <div className="hidden md:flex md:items-center md:space-x-8">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/products">Products</NavLink>
-            <NavLink href="/working">How it Works</NavLink>
             <NavLink href="/contact">Book a Call</NavLink>
             <NavLink href="/login">Manage your Tago</NavLink>
           </div>
