@@ -45,6 +45,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
           <div className="px-2 pt-2 pb-3 space-y-1 bg-black/50 backdrop-blur-sm">
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/products">Products</MobileNavLink>
+            <MobileNavLink href="/working">How it Works</MobileNavLink>
             <MobileNavLink href="/contact">Book a Call</MobileNavLink>
             <MobileNavLink href="/login">Manage your Tago</MobileNavLink>
           </div>
