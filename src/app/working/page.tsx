@@ -3,7 +3,7 @@ import Link from "next/link";
 import Footer from '@/components/Footer';
 import ScrollNavWrapper from '@/components/ScrollNavWrapper';
 import Navbar from '@/components/Navbar';
-import { Smartphone, ToggleRight, CheckCircle, Zap } from "lucide-react";
+import { Smartphone, CheckCircle, Zap } from "lucide-react";
 
 const Working = () => {
   return (
@@ -27,7 +27,7 @@ const Working = () => {
           </h1>
           <p className="text-zinc-400 mb-8 max-w-2xl mx-auto">
             Share your contact information, social profiles, and more with a
-            simple tap. Here's how to ensure your Tago card works perfectly with
+            simple tap. Here&apos;s how to ensure your Tago card works perfectly with
             any smartphone.
           </p>
         </div>
@@ -75,7 +75,7 @@ const Working = () => {
                 <div>
                   <h3 className="text-lg font-medium mb-2">Open Settings</h3>
                   <p className="text-zinc-400">
-                    Navigate to your phone's Settings menu by swiping down from
+                    Navigate to your phone&apos;s Settings menu by swiping down from
                     the top of your screen and tapping the gear icon.
                   </p>
                 </div>
@@ -90,8 +90,8 @@ const Working = () => {
                     Find Connection Settings
                   </h3>
                   <p className="text-zinc-400">
-                    Look for "Connections," "Connected devices," or "Network &
-                    Internet" (varies by brand).
+                    Look for &quot;Connections,&quot; &quot;Connected devices,&quot; or &quot;Network &
+                    Internet&quot; (varies by brand).
                   </p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ const Working = () => {
                 <div>
                   <h3 className="text-lg font-medium mb-2">Enable NFC</h3>
                   <p className="text-zinc-400">
-                    Find "NFC" or "NFC and payment" and toggle the switch to the
+                    Find &quot;NFC&quot; or &quot;NFC and payment&quot; and toggle the switch to the
                     ON position.
                   </p>
                 </div>
@@ -163,7 +163,7 @@ const Working = () => {
                     No Settings Required
                   </h3>
                   <p className="text-zinc-400">
-                    You don't need to adjust any settings to use your Tago card
+                    You don&apos;t need to adjust any settings to use your Tago card
                     with an iPhone.
                   </p>
                 </div>
@@ -211,7 +211,7 @@ const Working = () => {
               Ready to Transform Your Networking?
             </h2>
             <p className="text-zinc-400 mb-8">
-              Join the future of professional connections with Tago's premium
+              Join the future of professional connections with Tago&apos;s premium
               NFC cards.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
