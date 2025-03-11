@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import RotatingCard from '@/components/Landing Page/RotatingCard';
 import Head from 'next/head';
 
@@ -23,6 +23,13 @@ const HeroSection = () => {
 
       {/* Desktop version */}
       <div className="relative min-h-screen hidden md:flex items-center justify-center px-4 pt-5 overflow-hidden" aria-label="Tago NFC Card Hero Section">
+      <Link href="/working" className="absolute mt-7 top-12 right-4" aria-label="Learn how Tago cards work">
+        <button className="flex items-center justify-center gap-2 text-sm text-white w-25 px-4 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-300 transform hover:scale-105 border border-zinc-700">
+          How It Works
+          {/* <ArrowRight className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> */}
+          <Sparkles className="w-4 h-4 text-zinc-400" aria-hidden="true" />
+        </button>
+      </Link>
       <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/10 via-zinc-800/10 to-transparent" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:24px_24px]" />

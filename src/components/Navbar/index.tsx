@@ -20,6 +20,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
           <div className="hidden md:flex md:items-center md:space-x-8">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/products">Products</NavLink>
+            <NavLink href="/working">How it Works</NavLink>
             <NavLink href="/contact">Book a Call</NavLink>
             <NavLink href="/login">Manage your Tago</NavLink>
           </div>
@@ -45,6 +46,7 @@ const Navbar = ({ logoText = "TAGO" }: NavbarProps) => {
           <div className="px-2 pt-2 pb-3 space-y-1 bg-black/50 backdrop-blur-sm">
             <MobileNavLink href="/">Home</MobileNavLink>
             <MobileNavLink href="/products">Products</MobileNavLink>
+            <MobileNavLink href="/working">How it Works</MobileNavLink>
             <MobileNavLink href="/contact">Book a Call</MobileNavLink>
             <MobileNavLink href="/login">Manage your Tago</MobileNavLink>
           </div>
