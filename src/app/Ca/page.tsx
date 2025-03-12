@@ -1,18 +1,38 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { 
-  Linkedin, 
-  Instagram,
-  Facebook,
-  Mail,
-  Phone,
-  Download,
-  Calendar,
-  Users,
-  Briefcase,
-  ChevronRight,
+    Linkedin, 
+    Instagram,
+    Facebook,
+    Mail,
+    Phone,
+    Download,
+    Calendar,
+    Users,
+    Briefcase,
+    ChevronRight,
 } from 'lucide-react';
+
+const SplashScreen = () => {
+    const [showSplash, setShowSplash] = useState(true);
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowSplash(false);
+        }, 2000);
+        
+        return () => clearTimeout(timer);
+    }, []);
+    
+    if (!showSplash) return null;
+    
+    return (
+        <div className="fixed inset-0 bg-black z-[100000] flex items-center justify-center animate-splash-slide">
+            <div className="text-white text-4xl font-bold tracking-widest">TAGO</div>
+        </div>
+    );
+};
 
 const CABentoLinks = () => {
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
@@ -349,4 +369,13 @@ END:VCARD`;
   );
 };
 
-export default CABentoLinks;
+const CAPage = () => {
+  return (
+    <>
+      <SplashScreen />
+      <CABentoLinks />
+    </>
+  );
+};
+
+export default CAPage;
