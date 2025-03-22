@@ -1,14 +1,14 @@
 'use client';
 import React, { useState } from 'react';
-import CardTypeSelection from '@/components/custom orders/CardTypeSelection';
-import CardDesignUpload from '@/components/custom orders/CardDesignUpload';
-import CardTextCustomization from '@/components/custom orders/CardTextCustomization';
-import CardDetailsForm from '@/components/custom orders/CardDetailsForm';
-import OrderConfirmation from '@/components/custom orders/OrderConfirmation';
-import ProgressIndicator from '@/components/custom orders/ProgressIndicator';
-import PageHeader from '@/components/custom orders/PageHeader';
+import CardTypeSelection from './CardTypeSelection';
+import CardDesignUpload from './CardDesignUpload';
+import CardTextCustomization from './CardTextCustomization';
+import CardDetailsForm from './CardDetailsForm';
+import OrderConfirmation from './OrderConfirmation';
+import ProgressIndicator from './ProgressIndicator';
+import PageHeader from './PageHeader';
 
-
+// Types shared across components
 export type CardType = 'student' | 'professional' | 'business';
 export type FontType = 'sans-serif' | 'serif' | 'monospace';
 
@@ -83,7 +83,7 @@ const CustomCardOrdering: React.FC = () => {
         <div className="absolute inset-0 bg-[linear-gradient(45deg,#ffffff05_1px,transparent_1px),linear-gradient(-45deg,#ffffff05_1px,transparent_1px)] bg-[size:20px_20px]" />
       </div>
       
-      <div className={`${step === 3 ? 'max-w-full px-0' : 'max-w-6xl px-4'} mx-auto py-10 relative z-20`}>
+      <div className="max-w-6xl mx-auto px-4 py-10 relative z-20">
         {/* Header Section */}
         <PageHeader />
         
@@ -91,7 +91,7 @@ const CustomCardOrdering: React.FC = () => {
         <ProgressIndicator step={step} />
         
         {/* Current step content */}
-        <div className={`${step === 3 ? 'max-w-full' : 'max-w-3xl'} mx-auto`}>
+        <div className="max-w-3xl mx-auto">
           {step === 1 && (
             <CardTypeSelection 
               onCardTypeSelect={(type) => {
@@ -114,6 +114,14 @@ const CustomCardOrdering: React.FC = () => {
           {step === 3 && (
             <CardTextCustomization 
               cardImage={cardImage}
+              customText={customText}
+              setCustomText={setCustomText}
+              isEditingText={isEditingText}
+              setIsEditingText={setIsEditingText}
+              textPosition={textPosition}
+              setTextPosition={setTextPosition}
+              selectedFont={selectedFont}
+              setSelectedFont={setSelectedFont}
               onBack={() => setStep(2)}
               onContinue={() => setStep(4)}
             />
