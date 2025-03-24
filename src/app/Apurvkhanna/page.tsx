@@ -22,6 +22,7 @@ const SplashScreen = () => {
         return () => clearTimeout(timer);
     }, []);
     
+    
     if (!showSplash) return null;
     
     return (
