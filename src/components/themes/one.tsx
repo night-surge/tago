@@ -13,6 +13,8 @@ import {
   Twitch,
   Globe
 } from 'lucide-react';
+import { getUsernameFromURL } from '@/utils/getUsername'
+
 
 type Props = {
   user: {

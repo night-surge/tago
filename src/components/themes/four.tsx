@@ -14,6 +14,8 @@ import {
   Sparkles
 } from "lucide-react";
 import Link from "next/link";
+import { getUsernameFromURL } from '@/utils/getUsername'
+
 
 type Props = {
   user: {
@@ -44,15 +46,6 @@ const getBrandColor = (url: string) => {
   if (domain.includes('youtube')) return '#FFE8F0';
   if (domain.includes('dev.to')) return '#FFADC4';
   return '#FF99B4';
-};
-
-const getPlatformName = (url: string) => {
-  try {
-    const domain = new URL(url).hostname.replace('www.', '');
-    return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
-  } catch {
-    return 'Link';
-  }
 };
 
 const FooterCTA = () => (
@@ -100,7 +93,7 @@ const SocialCard = ({ link }: { link: string }) => {
               />
             </div>
             <span className="text-base sm:text-xl font-medium text-pink-100 group-hover:text-white transition-colors duration-300">
-              {getPlatformName(link)}
+              {getUsernameFromURL(link)}
             </span>
           </div>
           <ExternalLink 

@@ -12,6 +12,8 @@ import {
   Link2, 
   Twitch,
   Globe} from 'lucide-react';
+import { getUsernameFromURL } from '@/utils/getUsername'
+
 
 type Props = {
   user: {
@@ -48,15 +50,6 @@ const two = ({user}: Props) => {
     if (domain.includes('twitch')) return '#9146FF';
     if (domain.includes('dev.to')) return '#333333';
     return '#6366F1';
-  };
-
-  const getPlatformName = (url: string) => {
-    try {
-      const domain = new URL(url).hostname.replace('www.', '');
-      return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
-    } catch {
-      return 'Link';
-    }
   };
 
   return (
@@ -136,7 +129,7 @@ const two = ({user}: Props) => {
                         />
                       </div>
                       <span className="text-lg font-medium text-gray-600 group-hover:text-gray-900 transition-colors duration-300">
-                        {getPlatformName(link)}
+                        {getUsernameFromURL(link)}
                       </span>
                     </div>
                     <ExternalLink 

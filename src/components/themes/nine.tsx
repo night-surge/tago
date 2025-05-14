@@ -13,6 +13,8 @@ import {
   Twitch,
   Globe
 } from 'lucide-react';
+import { getUsernameFromURL } from '@/utils/getUsername'
+
 
 type Props = {
   user: {
@@ -49,15 +51,6 @@ const LightCheerfulLinks = ({user}: Props) => {
     if (domain.includes('twitch')) return '#C7A7D9'; // Soft Lilac
     if (domain.includes('dev.to')) return '#A7D9B8'; // Soft Sage
     return '#D9C7A7'; // Soft Peach
-  };
-
-  const getPlatformName = (url: string) => {
-    try {
-      const domain = new URL(url).hostname.replace('www.', '');
-      return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
-    } catch {
-      return 'Link';
-    }
   };
 
   return (
@@ -132,7 +125,7 @@ const LightCheerfulLinks = ({user}: Props) => {
                         />
                       </div>
                       <span className="text-lg font-medium text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
-                        {getPlatformName(link)}
+                        {getUsernameFromURL(link)}
                       </span>
                     </div>
                     <ExternalLink 

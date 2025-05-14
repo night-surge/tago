@@ -13,6 +13,8 @@ import {
   Music
 } from "lucide-react";
 import Link from "next/link";
+import { getUsernameFromURL } from '@/utils/getUsername'
+
 
 type Props = {
   user: {
@@ -46,14 +48,6 @@ const getBrandColor = (url: string) => {
   return '#DCD3FF';
 };
 
-const getPlatformName = (url: string) => {
-  try {
-    const domain = new URL(url).hostname.replace('www.', '');
-    return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
-  } catch {
-    return 'Link';
-  }
-};
 
 const FooterCTA = () => (
   <div className="absolute bottom-8 left-0 right-0 flex justify-center">
@@ -112,7 +106,7 @@ const SocialCard = ({ link }: { link: string }) => {
               />
             </div>
             <span className="text-base sm:text-xl font-medium text-white/80 group-hover:text-white transition-colors duration-300">
-              {getPlatformName(link)}
+              {getUsernameFromURL(link)}
             </span>
           </div>
           <ExternalLink 
