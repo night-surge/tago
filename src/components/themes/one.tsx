@@ -53,15 +53,6 @@ const one = ({user}: Props) => {
     return '#FF8C69';
   };
 
-  const getPlatformName = (url: string) => {
-    try {
-      const domain = new URL(url).hostname.replace('www.', '');
-      return domain.split('.')[0].charAt(0).toUpperCase() + domain.split('.')[0].slice(1);
-    } catch {
-      return 'Link';
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-100 to-blue-200 text-gray-900 relative overflow-hidden">
       {/* Candy-themed background pattern */}
@@ -135,7 +126,7 @@ const one = ({user}: Props) => {
                         />
                       </div>
                       <span className="text-lg font-medium text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                        {getPlatformName(link)}
+                        {getUsernameFromURL(link)}
                       </span>
                     </div>
                     <ExternalLink 
